@@ -1,0 +1,101 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* Chiều cao tối thiểu của body là toàn bộ chiều cao của viewport */
+    margin: 0;
+    /* Bỏ đi khoảng cách mặc định của body */
+    padding: 0;
+    /* Bỏ padding */
+    overflow: hidden;
+    /* Không có thanh cuộn toàn trang */
+    background-color: #f4f4f9;
+    /* Màu nền trang */
+}
+
+h1 {
+    text-align: center;
+    font-size: 45px;
+    height: 40px;
+}
+
+abbr {
+    text-decoration: none !important;
+}
+
+td {
+    height: 15px;
+    width: 50px;
+}
+
+table {
+    margin: 30px;
+    overflow: auto;
+    max-width: 100%;
+    /* Đảm bảo bảng không vượt quá chiều rộng màn hình */
+    max-height: 90vh;
+    /* Đảm bảo bảng không vượt quá chiều cao màn hình */
+    width: auto;
+    /* Cho phép bảng co giãn tự động */
+}
+
+p {
+    text-align: center !important;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.fa {
+    padding: 6px;
+    font-size: 18px;
+    width: 15px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50%;
+}
+
+/* Định dạng cho bảng chi tiết bên cạnh */
+.detail-table {
+    border: 1px solid #ccc;
+    margin-left: 20px;
+    padding: 10px;
+    width: 300px;
+    display: none;
+    /* Ẩn mặc định */
+}
+
+.detail-table h2 {
+    text-align: center;
+}
+
+.detail-table table {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.detail-table td {
+    padding: 5px;
+}
+
+.detail-table .button {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.detail-table .button button {
+    padding: 5px 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+/* Nút "Hướng dẫn đọc" */
+.read-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+}
