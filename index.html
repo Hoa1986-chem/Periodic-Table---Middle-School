@@ -4,38 +4,184 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Periodic Table</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Table Styles */
+        table {
+            margin: 0 auto;
+            margin-top: 5%;
+            width: 80%;
+            border-collapse: collapse;
+            font-size: 16px;
+        }
+
+        abbr[title] {
+            text-decoration: none; /* Loại bỏ gạch chân */
+        }
+        
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: yellow;
+            font-size: 24px;
+        }
+
+        td {
+            cursor: pointer;
+        }
+
+        /* Styling for the elements in the periodic table */
+        td[bgcolor="#df9fe1"] {
+            background-color: #df9fe1;
+        }
+
+        td[bgcolor="#99d3ee"] {
+            background-color: #99d3ee;
+        }
+
+        td[bgcolor="#c6980e"] {
+            background-color: #c6980e;
+        }
+
+        td[bgcolor="orange"] {
+            background-color: orange;
+        }
+
+        td[bgcolor="#eddda8"] {
+            background-color: #eddda8;
+        }
+
+        td[bgcolor="#e8e3ff"] {
+            background-color: #e8e3ff;
+        }
+
+        td[bgcolor="#cfeb88"] {
+            background-color: #cfeb88;
+        }
+
+        /* Keyframe animations for effect */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Detail Table Styles */
+        .detail-table {
+            display: none;
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            border: 2px solid #333;
+            padding: 20px;
+            max-width: 90%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .detail-table h2 {
+            margin-bottom: 20px;
+        }
+
+        .detail-table table {
+            width: 100%;
+        }
+
+        .detail-table td {
+            padding: 8px;
+        }
+
+        .detail-table .button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .detail-table button {
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            th, td {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            .detail-table {
+                max-width: 95%;
+                padding: 15px;
+            }
+
+            .detail-table button {
+                font-size: 14px;
+            }
+
+            td {
+                padding: 5px;
+            }
+        }
+
+        /* Large screen adjustments */
+        @media (min-width: 1024px) {
+            table {
+                font-size: 18px;
+            }
+        }
+
+    </style>
 </head>
 
 <body>
-    <table border=1px>
-        <tr style="background-color: yellow;">
+    <table border="1">
+        <tr>
             <th colspan="18">
                 <h1>THE PERIODIC TABLE</h1>
             </th>
         </tr>
-        <tr style="font-size: large;">
+        <tr>
             <td bgcolor="orange" style="color: green;" onclick="showDetails(event)">
-                1<br><abbr title="Hydrogen"> H</abbr>
+                1<br><abbr title="Hydrogen">H</abbr>
             </td>
-            <th colspan="16" style="empty-cells: hide;"></th>
+            <th colspan="16"></th>
             <td bgcolor="#e8e3ff" style="color: green;" onclick="showDetails(event)">
                 2<br><abbr title="Helium">He</abbr>
             </td>
         </tr>
-        <tr style="font-size: large;">
-            <td bgcolor="#df9fe1">3<br><abbr title="Lithium"> Li</abbr></td>
-            <td bgcolor="#99d3ee">4<br><abbr title="Berylium">Be</abbr></td>
-            <td colspan="10" style="empty-cells: hide;"></td>
-            <td bgcolor="#c6980e">5<br><abbr title="Boron">B</abbr></td>
-            <td bgcolor="orange">6<br><abbr title="Carbon">C</abbr></td>
-            <td bgcolor="orange" style="color: green;">7<br><abbr title="Nitrogen">N</abbr></td>
-            <td bgcolor="orange" style="color: green;">8<br><abbr title="Oxygen">O</abbr></td>
-            <td bgcolor="#eddda8" style="color: green;">9<br><abbr title="Florine">F</abbr></td>
-            <td bgcolor="#e8e3ff" style="color: green;">10<br><abbr title="Neon">Ne</abbr></td>
+        <tr>
+            <td bgcolor="#df9fe1" onclick="showDetails(event)">3<br><abbr title="Lithium">Li</abbr></td>
+            <td bgcolor="#99d3ee" onclick="showDetails(event)">4<br><abbr title="Beryllium">Be</abbr></td>
+            <td colspan="10"></td>
+            <td bgcolor="#c6980e" onclick="showDetails(event)">5<br><abbr title="Boron">B</abbr></td>
+            <td bgcolor="orange" onclick="showDetails(event)">6<br><abbr title="Carbon">C</abbr></td>
+            <td bgcolor="orange" style="color: green;" onclick="showDetails(event)">7<br><abbr title="Nitrogen">N</abbr></td>
+            <td bgcolor="orange" style="color: green;" onclick="showDetails(event)">8<br><abbr title="Oxygen">O</abbr></td>
+            <td bgcolor="#eddda8" style="color: green;" onclick="showDetails(event)">9<br><abbr title="Fluorine">F</abbr></td>
+            <td bgcolor="#e8e3ff" style="color: green;" onclick="showDetails(event)">10<br><abbr title="Neon">Ne</abbr></td>
         </tr>
         <tr style="font-size: large;">
             <td bgcolor="#df9fe1">11<br><abbr title="Sodium">Na</abbr></td>
@@ -163,61 +309,58 @@
             <td bgcolor="#feeff2" style="color: rgb(214, 32, 32);">102 <br><abbr title="Nobelium">No</abbr></td>
             <td bgcolor="#feeff2" style="color: rgb(214, 32, 32);">103<br><abbr title="Lawrencium">Lr</abbr></td>
         </tr>
+        
     </table>
 
-    <!-- Bảng chi tiết -->
+    <!-- Element Details Modal -->
     <div class="detail-table" id="detail-table">
-        <h2>Thông tin về Nguyên tố</h2>
+        <h2>Element Information</h2>
         <table>
             <tr>
-                <td><strong>Tên:</strong></td>
+                <td><strong>Name:</strong></td>
                 <td id="element-name"></td>
             </tr>
             <tr>
-                <td><strong>Hướng dẫn đọc:</strong></td>
+                <td><strong>Reading Guide:</strong></td>
                 <td id="reading-guide"></td>
             </tr>
             <tr>
-                <td><strong>Tính chất, ứng dụng:</strong></td>
+                <td><strong>Properties and Applications:</strong></td>
                 <td id="properties-applications"></td>
             </tr>
         </table>
         <div class="button">
-            <button class="read-button" onclick="readElementName()">Hướng dẫn đọc</button>
-            <button onclick="closeDetails()">Đóng</button>
+            <button class="read-button" onclick="readElementName()">Read Name</button>
+            <button onclick="closeDetails()">Close</button>
         </div>
     </div>
 
     <script>
-        // Hàm hiển thị thông tin chi tiết
         function showDetails(event) {
             const td = event.target;
             const elementName = td.querySelector('abbr') ? td.querySelector('abbr').title : td.innerText;
             const symbol = td.innerText.split("\n")[1] || td.querySelector('abbr').innerText;
 
             document.getElementById('element-name').innerText = elementName;
-            document.getElementById('reading-guide').innerText = `Hướng dẫn đọc ${elementName}`;
-            document.getElementById('properties-applications').innerText = `Tính chất, ứng dụng của ${elementName}`;
+            document.getElementById('reading-guide').innerText = `How to read: ${elementName}`;
+            document.getElementById('properties-applications').innerText = `Properties and Applications of ${elementName}`;
 
             document.getElementById('detail-table').style.display = 'block';
         }
 
-        // Hàm đóng bảng chi tiết
         function closeDetails() {
             document.getElementById('detail-table').style.display = 'none';
         }
 
-        // Hàm đọc tên nguyên tố
         function readElementName() {
             const elementName = document.getElementById('element-name').innerText;
 
-            // Kiểm tra xem trình duyệt có hỗ trợ Web Speech API không
             if ('speechSynthesis' in window) {
                 const utterance = new SpeechSynthesisUtterance(elementName);
-                utterance.lang = 'en-US'; // Đặt ngôn ngữ là tiếng Việt (có thể thay đổi thành en-US nếu bạn muốn tiếng Anh)
-                speechSynthesis.speak(utterance); // Phát âm thanh
+                utterance.lang = 'en-US';
+                speechSynthesis.speak(utterance);
             } else {
-                alert("Trình duyệt không hỗ trợ tính năng phát âm.");
+                alert("Your browser does not support speech synthesis.");
             }
         }
     </script>
