@@ -19,6 +19,66 @@
             font-family: Arial, sans-serif;
         }
 
+
+
+        .quiz-section {
+            margin-top: 15px;
+        }
+
+        .quiz-input {
+            padding: 8px;
+            width: 200px;
+        }
+
+        #element-name {
+            visibility: hidden;
+            font-weight: bold;
+            font-size: 18px;
+            color: blue;
+        }
+
+        .quiz-button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .quiz-result {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        .detail-table #properties-videos iframe {
+            width: 280px;
+            height: 160px;
+            margin: 5px;
+            border: none;
+        }
+
+        .detail-table #applications-image img {
+            max-width: 250px;
+            max-height: 200px;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
+
+        .detail-table {
+            /* Cập nhật kích thước lớn hơn */
+            max-width: 600px;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
         /* Table Styles */
         table {
             margin: 0 auto;
@@ -29,10 +89,12 @@
         }
 
         abbr[title] {
-            text-decoration: none; /* Loại bỏ gạch chân */
+            text-decoration: none;
+            /* Loại bỏ gạch chân */
         }
-        
-        th, td {
+
+        th,
+        td {
             padding: 10px;
             text-align: center;
         }
@@ -90,7 +152,7 @@
         .detail-table {
             display: none;
             position: fixed;
-            top: 30%;
+            top: 10%;
             left: 50%;
             transform: translateX(-50%);
             background-color: white;
@@ -127,7 +189,9 @@
 
         /* Mobile Optimization */
         @media (max-width: 768px) {
-            th, td {
+
+            th,
+            td {
                 font-size: 12px;
                 padding: 8px;
             }
@@ -152,7 +216,6 @@
                 font-size: 18px;
             }
         }
-
     </style>
 </head>
 
@@ -178,10 +241,14 @@
             <td colspan="10"></td>
             <td bgcolor="#c6980e" onclick="showDetails(event)">5<br><abbr title="Boron">B</abbr></td>
             <td bgcolor="orange" onclick="showDetails(event)">6<br><abbr title="Carbon">C</abbr></td>
-            <td bgcolor="orange" style="color: green;" onclick="showDetails(event)">7<br><abbr title="Nitrogen">N</abbr></td>
-            <td bgcolor="orange" style="color: green;" onclick="showDetails(event)">8<br><abbr title="Oxygen">O</abbr></td>
-            <td bgcolor="#eddda8" style="color: green;" onclick="showDetails(event)">9<br><abbr title="Fluorine">F</abbr></td>
-            <td bgcolor="#e8e3ff" style="color: green;" onclick="showDetails(event)">10<br><abbr title="Neon">Ne</abbr></td>
+            <td bgcolor="orange" style="color: green;" onclick="showDetails(event)">7<br><abbr title="Nitrogen">N</abbr>
+            </td>
+            <td bgcolor="orange" style="color: green;" onclick="showDetails(event)">8<br><abbr title="Oxygen">O</abbr>
+            </td>
+            <td bgcolor="#eddda8" style="color: green;" onclick="showDetails(event)">9<br><abbr
+                    title="Fluorine">F</abbr></td>
+            <td bgcolor="#e8e3ff" style="color: green;" onclick="showDetails(event)">10<br><abbr title="Neon">Ne</abbr>
+            </td>
         </tr>
         <tr style="font-size: large;">
             <td bgcolor="#df9fe1">11<br><abbr title="Sodium">Na</abbr></td>
@@ -309,10 +376,11 @@
             <td bgcolor="#feeff2" style="color: rgb(214, 32, 32);">102 <br><abbr title="Nobelium">No</abbr></td>
             <td bgcolor="#feeff2" style="color: rgb(214, 32, 32);">103<br><abbr title="Lawrencium">Lr</abbr></td>
         </tr>
-        
+
     </table>
 
-    <!-- Element Details Modal -->
+
+    <!-- Detail Table -->
     <div class="detail-table" id="detail-table">
         <h2>Element Information</h2>
         <table>
@@ -324,10 +392,27 @@
                 <td><strong>Reading Guide:</strong></td>
                 <td id="reading-guide"></td>
             </tr>
+            <!-- Thêm phần Tính chất với video -->
             <tr>
-                <td><strong>Properties and Applications:</strong></td>
-                <td id="properties-applications"></td>
+                <td><strong>Properties:</strong></td>
+                <td id="properties-videos"></td>
             </tr>
+            <!-- Thêm phần Ứng dụng với ảnh -->
+            <tr>
+                <td><strong>Applications:</strong></td>
+                <td id="applications-image"></td>
+            </tr>
+
+            <div class="quiz-section">
+                <p><strong>Guess the Element:</strong></p>
+                <input type="text" id="quiz-input" class="quiz-input" placeholder="Enter element name">
+                <button onclick="checkAnswer()" class="quiz-button">Check</button>
+                <p id="quiz-result" class="quiz-result"></p>
+                <button onclick="showElementName()" class="quiz-button">Show Name</button>
+                <p><strong>Correct Answer:</strong> <span id="correct-element-name" style="display: none;"></span></p>
+            </div>
+
+
         </table>
         <div class="button">
             <button class="read-button" onclick="readElementName()">Read Name</button>
@@ -336,18 +421,113 @@
     </div>
 
     <script>
-        function showDetails(event) {
-            const td = event.target;
-            const elementName = td.querySelector('abbr') ? td.querySelector('abbr').title : td.innerText;
-            const symbol = td.innerText.split("\n")[1] || td.querySelector('abbr').innerText;
+        let incorrectAttempts = 0;
+        let correctElement = "";
 
-            document.getElementById('element-name').innerText = elementName;
-            document.getElementById('reading-guide').innerText = `How to read: ${elementName}`;
-            document.getElementById('properties-applications').innerText = `Properties and Applications of ${elementName}`;
+        function checkAnswer() {
+            const input = document.getElementById('quiz-input').value.trim().toLowerCase();
+            const resultElement = document.getElementById('quiz-result');
+            const correctNameElement = document.getElementById('correct-element-name');
+            const elementNameElement = document.getElementById('element-name'); // Lấy phần tử hiển thị tên nguyên tố
 
-            document.getElementById('detail-table').style.display = 'block';
+            if (input === correctElement.toLowerCase()) {
+                resultElement.textContent = "Correct!";
+                resultElement.className = "quiz-result correct";
+
+                // Hiển thị tên nguyên tố trong phần "Name" của bảng chi tiết
+                elementNameElement.textContent = correctElement;
+                elementNameElement.style.visibility = "visible"; // Đảm bảo phần "Name" hiển thị
+
+                // Hiển thị phần "Correct Answer"
+                correctNameElement.textContent = correctElement;
+                correctNameElement.style.display = "inline";
+            } else {
+                incorrectAttempts++;
+                resultElement.textContent = "Incorrect, try again!";
+                resultElement.className = "quiz-result incorrect";
+                if (incorrectAttempts >= 3) {
+                    correctNameElement.textContent = correctElement;
+                    correctNameElement.style.display = "inline";
+                }
+            }
         }
 
+        // Sửa hàm showElementName
+        function showElementName() {
+            const correctNameElement = document.getElementById('correct-element-name');
+            if (correctElement) {
+                correctNameElement.textContent = correctElement;
+                correctNameElement.style.display = "inline";
+            } else {
+                alert("No element selected!");
+            }
+        }
+
+        function closeDetails() {
+            document.getElementById('detail-table').style.display = 'none';
+        }
+
+        // Đường dẫn đến thư mục asset
+        const assetPath = './assets';
+
+        // Dữ liệu mẫu cho các nguyên tố
+        const elementData = {
+            'Hydrogen': {
+                image: 'images/hydrogen.png', // Đường dẫn tương đối đến ảnh
+                video: 'videos/hydrogen.mp4'  // Đường dẫn tương đối đến video
+            },
+            'Oxygen': {
+                image: 'images/oxygen.jpg',
+                video: 'videos/oxygen.mp4'
+            },
+            // Thêm dữ liệu cho các nguyên tố khác...
+        };
+
+        function showDetails(event) {
+            const td = event.target.closest('td');
+            const elementAbbr = td.querySelector('abbr');
+            if (!elementAbbr) return; // Kiểm tra tồn tại thẻ abbr
+
+            // Cập nhật thông tin chi tiết
+            const elementName = elementAbbr.title;
+            correctElement = elementName; // Gán tên nguyên tố cho biến toàn cục
+            incorrectAttempts = 0; // Reset số lần sai
+
+            // Reset các trường quiz
+            document.getElementById('quiz-input').value = "";
+            document.getElementById('quiz-result').textContent = "";
+            document.getElementById('correct-element-name').style.display = "none";
+
+            // Cập nhật tên nguyên tố
+            document.getElementById('element-name').textContent = elementName;
+
+            // Lấy dữ liệu từ elementData
+            const data = elementData[elementName] || {};
+
+            // Cập nhật ảnh ứng dụng
+            const appImage = document.getElementById('applications-image');
+            if (data.image) {
+                appImage.innerHTML = `<img src="${assetPath}/${data.image}" alt="Application of ${elementName}">`;
+            } else {
+                appImage.textContent = 'No image available';
+            }
+
+            // Cập nhật video tính chất
+            const videos = document.getElementById('properties-videos');
+            if (data.video) {
+                videos.innerHTML = `
+                    <video controls>
+                        <source src="${assetPath}/${data.video}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                `;
+            } else {
+                videos.textContent = 'No video available';
+            }
+
+            // Hiển thị bảng chi tiết
+            document.getElementById('detail-table').style.display = 'block';
+        }
         function closeDetails() {
             document.getElementById('detail-table').style.display = 'none';
         }
