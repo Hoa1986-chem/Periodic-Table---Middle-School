@@ -533,7 +533,7 @@
         }
 
         function readElementName() {
-            const elementName = document.getElementById('element-name').innerText;
+            const elementName = document.getElementById('element-name').textContent;
 
             if ('speechSynthesis' in window) {
                 const utterance = new SpeechSynthesisUtterance(elementName);
