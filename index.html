@@ -19,7 +19,197 @@
             font-family: Arial, sans-serif;
         }
 
+        /* Thêm dropdown style */
+        .mode-selector {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 8px;
+            font-size: 16px;
+            z-index: 100;
+        }
 
+        @keyframes zoomInOut {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes glowEffect {
+            0% {
+                box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 15px rgba(255, 255, 255, 1);
+            }
+
+            100% {
+                box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        @keyframes pulsate {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+        }
+
+        @keyframes cycleColorChange {
+            0% {
+                background-color: #ff9999;
+            }
+
+            50% {
+                background-color: #ff5555;
+            }
+
+            100% {
+                background-color: #ff9999;
+            }
+        }
+
+        @keyframes groupColorChange {
+            0% {
+                background-color: #99ccff;
+            }
+
+            50% {
+                background-color: #6699ff;
+            }
+
+            100% {
+                background-color: #99ccff;
+            }
+        }
+
+        @keyframes colorCycle {
+            0% {
+                background: linear-gradient(45deg, #ff9999, #ff6666);
+            }
+
+            50% {
+                background: linear-gradient(45deg, #ff6666, #ff3333);
+            }
+
+            100% {
+                background: linear-gradient(45deg, #ff9999, #ff6666);
+            }
+        }
+
+        @keyframes colorGroup {
+            0% {
+                background: linear-gradient(45deg, #99ccff, #6699ff);
+            }
+
+            50% {
+                background: linear-gradient(45deg, #6699ff, #3366ff);
+            }
+
+            100% {
+                background: linear-gradient(45deg, #99ccff, #6699ff);
+            }
+        }
+
+        .highlight-cycle {
+            animation: pulsate 2s infinite ease-in-out, cycleColorChange 3s infinite linear;
+            box-shadow: 0 0 15px rgba(255, 100, 100, 0.7);
+        }
+
+        .highlight-group {
+            animation: pulsate 2s infinite ease-in-out, groupColorChange 3s infinite linear;
+            box-shadow: 0 0 15px rgba(100, 100, 255, 0.7);
+        }
+
+
+        /* Animation cho các ô */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.02);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes zoomEffect {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .highlight-cycle {
+            animation: zoomEffect 1.2s infinite ease-in-out;
+        }
+
+        .highlight-group {
+            animation: zoomEffect 1.2s infinite ease-in-out;
+        }
+
+        .highlight-cycle,
+        .highlight-group {
+            animation: pulse 1.5s infinite;
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(3px);
+            }
+
+            50% {
+                transform: translateX(-3px);
+            }
+
+            75% {
+                transform: translateX(3px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        td:hover {
+            animation: shake 0.4s ease-in-out;
+        }
 
         .quiz-section {
             margin-top: 15px;
@@ -220,6 +410,15 @@
 </head>
 
 <body>
+
+    <select class="mode-selector" id="modeSelector" onchange="toggleHighlight()"
+        title="Chu kỳ: Hàng ngang | Nhóm: Cột dọc">
+        <option value="">-- Chọn chế độ --</option>
+        <option value="cycle">Chu kỳ</option>
+        <option value="group">Nhóm</option>
+    </select>
+
+
     <table border="1">
         <tr>
             <th colspan="18">
@@ -227,154 +426,154 @@
             </th>
         </tr>
         <tr>
-            <td bgcolor="orange" style="color: green;" onclick="showDetails(event)">
+            <td bgcolor="orange" style="color: green;" data-cycle="1" onclick="showDetails(event)">
                 1<br><abbr title="Hydrogen">H</abbr>
             </td>
             <th colspan="16"></th>
-            <td bgcolor="#e8e3ff" style="color: green;" onclick="showDetails(event)">
+            <td bgcolor="#e8e3ff" style="color: green;" data-cycle="1" data-group="18" onclick="showDetails(event)">
                 2<br><abbr title="Helium">He</abbr>
             </td>
         </tr>
         <tr>
-            <td bgcolor="#df9fe1" onclick="showDetails(event)">3<br><abbr title="Lithium">Li</abbr></td>
-            <td bgcolor="#99d3ee" onclick="showDetails(event)">4<br><abbr title="Beryllium">Be</abbr></td>
+            <td bgcolor="#df9fe1" data-cycle="2" data-group="1" onclick="showDetails(event)">3<br><abbr title="Lithium">Li</abbr></td>
+            <td bgcolor="#99d3ee" data-cycle="2" data-group="2" onclick="showDetails(event)">4<br><abbr title="Beryllium">Be</abbr></td>
             <td colspan="10"></td>
-            <td bgcolor="#c6980e" onclick="showDetails(event)">5<br><abbr title="Boron">B</abbr></td>
-            <td bgcolor="orange" onclick="showDetails(event)">6<br><abbr title="Carbon">C</abbr></td>
-            <td bgcolor="orange" style="color: green;" onclick="showDetails(event)">7<br><abbr title="Nitrogen">N</abbr>
+            <td bgcolor="#c6980e" data-cycle="2" data-group="13" onclick="showDetails(event)">5<br><abbr title="Boron">B</abbr></td>
+            <td bgcolor="orange" data-cycle="2" data-group="14" onclick="showDetails(event)">6<br><abbr title="Carbon">C</abbr></td>
+            <td bgcolor="orange" style="color: green;" data-cycle="2" data-group="15" onclick="showDetails(event)">7<br><abbr title="Nitrogen">N</abbr>
             </td>
-            <td bgcolor="orange" style="color: green;" onclick="showDetails(event)">8<br><abbr title="Oxygen">O</abbr>
+            <td bgcolor="orange" style="color: green;"data-cycle="2" data-group="16" onclick="showDetails(event)">8<br><abbr title="Oxygen">O</abbr>
             </td>
-            <td bgcolor="#eddda8" style="color: green;" onclick="showDetails(event)">9<br><abbr
+            <td bgcolor="#eddda8" style="color: green;" data-cycle="2" data-group="17" onclick="showDetails(event)">9<br><abbr
                     title="Fluorine">F</abbr></td>
-            <td bgcolor="#e8e3ff" style="color: green;" onclick="showDetails(event)">10<br><abbr title="Neon">Ne</abbr>
+            <td bgcolor="#e8e3ff" style="color: green;"data-cycle="2" data-group="18" onclick="showDetails(event)">10<br><abbr title="Neon">Ne</abbr>
             </td>
         </tr>
         <tr style="font-size: large;">
-            <td bgcolor="#df9fe1">11<br><abbr title="Sodium">Na</abbr></td>
-            <td bgcolor="#99d3ee">12<br><abbr title="Magnesium">Mg</abbr></td>
+            <td bgcolor="#df9fe1" data-cycle="3" data-group="1">11<br><abbr title="Sodium">Na</abbr></td>
+            <td bgcolor="#99d3ee" data-cycle="3" data-group="2">12<br><abbr title="Magnesium">Mg</abbr></td>
             <td colspan="10" style="empty-cells: hide;"></td>
-            <td bgcolor="#cfeb88">13<br><abbr title="Auminium">Al</abbr></td>
-            <td bgcolor="#c6980e">14<br><abbr title="Silicon">Si</abbr></td>
-            <td bgcolor="orange">15<br><abbr title="Phosphorus">P</abbr></td>
-            <td bgcolor="orange">16<br><abbr title="Sulphur">S</abbr></td>
-            <td bgcolor="#eddda8" style="color: green;">17<br><abbr title="Chlorine">Cl</abbr></td>
-            <td bgcolor="#e8e3ff" style="color: green;">18<br><abbr title="Argon">Ar</abbr></td>
+            <td bgcolor="#cfeb88" data-cycle="3" data-group="13">13<br><abbr title="Auminium">Al</abbr></td>
+            <td bgcolor="#c6980e" data-cycle="3" data-group="14">14<br><abbr title="Silicon">Si</abbr></td>
+            <td bgcolor="orange" data-cycle="3" data-group="15">15<br><abbr title="Phosphorus">P</abbr></td>
+            <td bgcolor="orange" data-cycle="3" data-group="16">16<br><abbr title="Sulphur">S</abbr></td>
+            <td bgcolor="#eddda8" style="color: green;" data-cycle="3" data-group="17">17<br><abbr title="Chlorine">Cl</abbr></td>
+            <td bgcolor="#e8e3ff" style="color: green;" data-cycle="3" data-group="18">18<br><abbr title="Argon">Ar</abbr></td>
         </tr>
         <tr style="font-size: large;">
-            <td bgcolor="#df9fe1">19<br><abbr title="Potassium">K</abbr></td>
-            <td bgcolor="#99d3ee">20<br><abbr title="Calcium">Ca</abbr></td>
-            <td bgcolor="#fcf389">21<br><abbr title="Scandium">Sc</abbr></td>
-            <td bgcolor="#fcf389">22<br><abbr title="Titanium">Ti</abbr></td>
-            <td bgcolor="#fcf389">23<br><abbr title="Vanadium">V</abbr></td>
-            <td bgcolor="#fcf389">24<br><abbr title="Cromium">Cr</abbr></td>
-            <td bgcolor="#fcf389">25<br><abbr title="Manganese">Mn</abbr></td>
-            <td bgcolor="#fcf389">26<br><abbr title="Iron">Fe</abbr></td>
-            <td bgcolor="#fcf389">27<br><abbr title="Cobalt">Co</abbr></td>
-            <td bgcolor="#fcf389">28<br><abbr title="Nickel">Ni</abbr></td>
-            <td bgcolor="#fcf389">29<br><abbr title="Copper">Cu</abbr></td>
-            <td bgcolor="#fcf389">30<br><abbr title="Zinc">Zn</abbr></td>
-            <td bgcolor="#cfeb88" style="color: blue;">31<br><abbr title="Gallium">Ga</abbr></td>
-            <td bgcolor="#c6980e">32<br><abbr title="Germanium">Ge</abbr></td>
-            <td bgcolor="#c6980e">33<br><abbr title="Arsenic">As</abbr></td>
-            <td bgcolor="orange">34<br><abbr title="Selenium">Se</abbr></td>
-            <td bgcolor="#eddda8" style="color: blue;">35<br><abbr title="Bromine">Br</abbr></td>
-            <td bgcolor="#e8e3ff" style="color: green;">36<br><abbr title="Krypton">Kr</abbr></td>
+            <td bgcolor="#df9fe1" data-cycle="4" data-group="1">19<br><abbr title="Potassium">K</abbr></td>
+            <td bgcolor="#99d3ee" data-cycle="4" data-group="2">20<br><abbr title="Calcium">Ca</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="4" data-group="3">21<br><abbr title="Scandium">Sc</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="4" data-group="4">22<br><abbr title="Titanium">Ti</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="4" data-group="5">23<br><abbr title="Vanadium">V</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="4" data-group="6">24<br><abbr title="Cromium">Cr</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="4" data-group="7">25<br><abbr title="Manganese">Mn</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="4" data-group="8">26<br><abbr title="Iron">Fe</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="4" data-group="9">27<br><abbr title="Cobalt">Co</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="4" data-group="10">28<br><abbr title="Nickel">Ni</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="4" data-group="11">29<br><abbr title="Copper">Cu</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="4" data-group="12">30<br><abbr title="Zinc">Zn</abbr></td>
+            <td bgcolor="#cfeb88" style="color: blue;" data-cycle="4" data-group="13">31<br><abbr title="Gallium">Ga</abbr></td>
+            <td bgcolor="#c6980e" data-cycle="4" data-group="14">32<br><abbr title="Germanium">Ge</abbr></td>
+            <td bgcolor="#c6980e" data-cycle="4" data-group="15">33<br><abbr title="Arsenic">As</abbr></td>
+            <td bgcolor="orange" data-cycle="4" data-group="16">34<br><abbr title="Selenium">Se</abbr></td>
+            <td bgcolor="#eddda8" style="color: blue;" data-cycle="4" data-group="17">35<br><abbr title="Bromine">Br</abbr></td>
+            <td bgcolor="#e8e3ff" style="color: green;" data-cycle="4" data-group="18">36<br><abbr title="Krypton">Kr</abbr></td>
         </tr>
         <tr style="font-size: large;">
-            <td bgcolor="#df9fe1">37<br><abbr title="Rubidium">Rb</abbr></td>
-            <td bgcolor="#99d3ee">38<br><abbr title="Strontium">Sr</abbr></td>
-            <td bgcolor="#fcf389">39<br><abbr title="Yttrium">Y</abbr></td>
-            <td bgcolor="#fcf389">40<br><abbr title="Zirconium">Zr</abbr></td>
-            <td bgcolor="#fcf389">41<br><abbr title="Niobium">Nb</abbr></td>
-            <td bgcolor="#fcf389">42<br><abbr title="Molybdenum">Mo</abbr></td>
-            <td bgcolor="#fcf389">43<br><abbr title="Technetium">Tc</abbr></td>
-            <td bgcolor="#fcf389">44<br><abbr title="Ruthenium">Ru</abbr></td>
-            <td bgcolor="#fcf389">45<br><abbr title="Rhodium">Rh</abbr></td>
-            <td bgcolor="#fcf389">46<br><abbr title="Palladium">Pd</abbr></td>
-            <td bgcolor="#fcf389">47<br><abbr title="Silver">Ag</abbr></td>
-            <td bgcolor="#fcf389">48<br><abbr title="Cadmium">Cd</abbr></td>
-            <td bgcolor="#cfeb88">49<br><abbr title="Indium">In</abbr></td>
-            <td bgcolor="#cfeb88">50<br><abbr title="Tin">Sn</abbr></td>
-            <td bgcolor="#c6980e">51<br><abbr title="Antimony">Sb</abbr></td>
-            <td bgcolor="#c6980e">52<br><abbr title="Tellurium">Te</abbr></td>
-            <td bgcolor="#eddda8">53<br><abbr title="Iodine">I</abbr></td>
-            <td bgcolor="#e8e3ff" style="color: green;">54<br><abbr title="Xenon">Xe</abbr></td>
+            <td bgcolor="#df9fe1" data-cycle="5" data-group="1">37<br><abbr title="Rubidium">Rb</abbr></td>
+            <td bgcolor="#99d3ee" data-cycle="5" data-group="2">38<br><abbr title="Strontium">Sr</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="5" data-group="3">39<br><abbr title="Yttrium">Y</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="5" data-group="4">40<br><abbr title="Zirconium">Zr</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="5" data-group="5">41<br><abbr title="Niobium">Nb</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="5" data-group="6">42<br><abbr title="Molybdenum">Mo</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="5" data-group="7">43<br><abbr title="Technetium">Tc</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="5" data-group="8">44<br><abbr title="Ruthenium">Ru</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="5" data-group="9">45<br><abbr title="Rhodium">Rh</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="5" data-group="10">46<br><abbr title="Palladium">Pd</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="5" data-group="11">47<br><abbr title="Silver">Ag</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="5" data-group="12">48<br><abbr title="Cadmium">Cd</abbr></td>
+            <td bgcolor="#cfeb88" data-cycle="5" data-group="13">49<br><abbr title="Indium">In</abbr></td>
+            <td bgcolor="#cfeb88" data-cycle="5" data-group="14">50<br><abbr title="Tin">Sn</abbr></td>
+            <td bgcolor="#c6980e" data-cycle="5" data-group="15">51<br><abbr title="Antimony">Sb</abbr></td>
+            <td bgcolor="#c6980e" data-cycle="5" data-group="16">52<br><abbr title="Tellurium">Te</abbr></td>
+            <td bgcolor="#eddda8" data-cycle="5" data-group="17">53<br><abbr title="Iodine">I</abbr></td>
+            <td bgcolor="#e8e3ff" style="color: green;" data-cycle="5" data-group="18">54<br><abbr title="Xenon">Xe</abbr></td>
         </tr>
         <tr style="font-size: large;">
-            <td bgcolor="#df9fe1" style="color: blue;">55<br><abbr title="Ceasium">Cs</abbr></td>
-            <td bgcolor="#99d3ee">56<br><abbr title="Barium">Ba</abbr></td>
+            <td bgcolor="#df9fe1" data-cycle="6" data-group="1" style="color: blue;">55<br><abbr title="Ceasium">Cs</abbr></td>
+            <td bgcolor="#99d3ee" data-cycle="6" data-group="2">56<br><abbr title="Barium">Ba</abbr></td>
             <td>57-71</td>
-            <td bgcolor="#fcf389">72<br><abbr title="Hafnium">Hf</abbr></td>
-            <td bgcolor="#fcf389">73<br><abbr title="Tantalum">Ta</abbr></td>
-            <td bgcolor="#fcf389">74<br><abbr title="Tungsten">W</abbr></td>
-            <td bgcolor="#fcf389">75<br><abbr title="Rhenium">Re</abbr></td>
-            <td bgcolor="#fcf389">76<br><abbr title="Osmium">Os</abbr></td>
-            <td bgcolor="#fcf389">77<br><abbr title="Iridium">Ir</abbr></td>
-            <td bgcolor="#fcf389">78<br><abbr title="Platium">Pt</abbr></td>
-            <td bgcolor="#fcf389">79<br><abbr title="Gold">Au</abbr></td>
-            <td bgcolor="#fcf389" style="color: blue;">80<br><abbr title="Mercury">Hg</abbr></td>
-            <td bgcolor="#cfeb88">81<br><abbr title="Thallium">Tl</abbr></td>
-            <td bgcolor="#cfeb88">82<br><abbr title="Lead">Pb</abbr></td>
-            <td bgcolor="#cfeb88">83<br><abbr title="Bismuth">Bi</abbr></td>
-            <td bgcolor="#c6980e">84<br><abbr title="Polonium">Po</abbr></td>
-            <td bgcolor="#eddda8">85<br><abbr title="Astatine">At</abbr></td>
-            <td bgcolor="#e8e3ff" style="color: green;">86<br><abbr title="Radon">Rn</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="6" data-group="4">72<br><abbr title="Hafnium">Hf</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="6" data-group="5">73<br><abbr title="Tantalum">Ta</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="6" data-group="6">74<br><abbr title="Tungsten">W</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="6" data-group="7">75<br><abbr title="Rhenium">Re</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="6" data-group="8">76<br><abbr title="Osmium">Os</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="6" data-group="9">77<br><abbr title="Iridium">Ir</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="6" data-group="10">78<br><abbr title="Platium">Pt</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="6" data-group="11">79<br><abbr title="Gold">Au</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="6" data-group="12" style="color: blue;">80<br><abbr title="Mercury">Hg</abbr></td>
+            <td bgcolor="#cfeb88" data-cycle="6" data-group="13">81<br><abbr title="Thallium">Tl</abbr></td>
+            <td bgcolor="#cfeb88" data-cycle="6" data-group="14">82<br><abbr title="Lead">Pb</abbr></td>
+            <td bgcolor="#cfeb88" data-cycle="6" data-group="15">83<br><abbr title="Bismuth">Bi</abbr></td>
+            <td bgcolor="#c6980e" data-cycle="6" data-group="16">84<br><abbr title="Polonium">Po</abbr></td>
+            <td bgcolor="#eddda8" data-cycle="6" data-group="17">85<br><abbr title="Astatine">At</abbr></td>
+            <td bgcolor="#e8e3ff" data-cycle="6" data-group="18" style="color: green;">86<br><abbr title="Radon">Rn</abbr></td>
         </tr>
         <tr style="font-size: large;">
-            <td bgcolor="#df9fe1" style="color: blue;">87<br><abbr title="Francium">Fr</abbr></td>
-            <td bgcolor="#99d3ee">88<br><abbr title="Radium">Ra</abbr></td>
+            <td bgcolor="#df9fe1" data-cycle="7" data-group="1" style="color: blue;">87<br><abbr title="Francium">Fr</abbr></td>
+            <td bgcolor="#99d3ee" data-cycle="7" data-group="2">88<br><abbr title="Radium">Ra</abbr></td>
             <td>89-103</td>
-            <td bgcolor="#fcf389">104<br><abbr title="Rutherfordium">Rf</abbr></td>
-            <td bgcolor="#fcf389">105<br><abbr title="Dubnium">Db</abbr></td>
-            <td bgcolor="#fcf389">106<br><abbr title="Seaborgium">Sg</abbr></td>
-            <td bgcolor="#fcf389">107<br><abbr title="Bohrium">Bh</abbr></td>
-            <td bgcolor="#fcf389">108<br><abbr title="Hassium">Hs</abbr></td>
-            <td bgcolor="#fcf389">109<br><abbr title="Meitnerium">Mt</abbr></td>
-            <td bgcolor="#fcf389">110<br><abbr title="Darmstadtium">Ds</abbr></td>
-            <td bgcolor="#fcf389">111<br><abbr title="Roentgenium">Rg</abbr></td>
-            <td bgcolor="#fcf389">112<br><abbr title="Copernicium">Cn</abbr></td>
-            <td style="color: rgb(214, 32, 32);">113<br><abbr title="Nihonium">Nh</abbr></td>
-            <td style="color: rgb(214, 32, 32);">114<br><abbr title="Flerovium">Fl</abbr></td>
-            <td style="color: rgb(214, 32, 32);">115<br><abbr title="Moscovium">Mc</abbr></td>
-            <td style="color: rgb(214, 32, 32);">116<br><abbr title="Livermorium">Lv</abbr></td>
-            <td style="color: rgb(214, 32, 32);">117<br><abbr title="Tennessine">Ts</abbr></td>
-            <td style="color: rgb(214, 32, 32);">118<br><abbr title="Oganesson">Og</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="7" data-group="4">104<br><abbr title="Rutherfordium">Rf</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="7" data-group="5">105<br><abbr title="Dubnium">Db</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="7" data-group="6">106<br><abbr title="Seaborgium">Sg</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="7" data-group="7">107<br><abbr title="Bohrium">Bh</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="7" data-group="8">108<br><abbr title="Hassium">Hs</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="7" data-group="9">109<br><abbr title="Meitnerium">Mt</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="7" data-group="10">110<br><abbr title="Darmstadtium">Ds</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="7" data-group="11">111<br><abbr title="Roentgenium">Rg</abbr></td>
+            <td bgcolor="#fcf389" data-cycle="7" data-group="12">112<br><abbr title="Copernicium">Cn</abbr></td>
+            <td style="color: rgb(214, 32, 32);" data-cycle="7" data-group="13">113<br><abbr title="Nihonium">Nh</abbr></td>
+            <td style="color: rgb(214, 32, 32);" data-cycle="7" data-group="14">114<br><abbr title="Flerovium">Fl</abbr></td>
+            <td style="color: rgb(214, 32, 32);" data-cycle="7" data-group="15">115<br><abbr title="Moscovium">Mc</abbr></td>
+            <td style="color: rgb(214, 32, 32);" data-cycle="7" data-group="16">116<br><abbr title="Livermorium">Lv</abbr></td>
+            <td style="color: rgb(214, 32, 32);" data-cycle="7" data-group="17">117<br><abbr title="Tennessine">Ts</abbr></td>
+            <td style="color: rgb(214, 32, 32);" data-cycle="7" data-group="18">118<br><abbr title="Oganesson">Og</abbr></td>
         </tr>
         <tr style="font-size: large;">
             <td rowspan="2" colspan="2" style="empty-cells: hide;"></td>
-            <td bgcolor="#feeff2">57<br><abbr title="Lanthanum">La</abbr></td>
-            <td bgcolor="#feeff2">58<br><abbr title="Cerium">Ce</abbr></td>
-            <td bgcolor="#feeff2">59<br><abbr title="Praseodymium">Pr</abbr></td>
-            <td bgcolor="#feeff2">60<br><abbr title="Neodymium">Nd</abbr></td>
-            <td bgcolor="#feeff2" style="color: rgb(214, 32, 32);">61<br><abbr title="Promethium">Pm</abbr></td>
-            <td bgcolor="#feeff2">62<br><abbr title="Samarium">Sm</abbr></td>
-            <td bgcolor="#feeff2">63<br><abbr title="Europium">Eu</abbr></td>
-            <td bgcolor="#feeff2">64<br><abbr title="Gadolinium">Gd</abbr></td>
-            <td bgcolor="#feeff2">65<br><abbr title="Terbium">Tb</abbr></td>
-            <td bgcolor="#feeff2">66<br><abbr title="Dysprosium">Dy</abbr></td>
-            <td bgcolor="#feeff2">67<br><abbr title="Holmium">Ho</abbr></td>
-            <td bgcolor="#feeff2">68<br><abbr title="Erbium">Er</abbr></td>
-            <td bgcolor="#feeff2">69 <br><abbr title="Thulium">Tm</abbr></td>
-            <td bgcolor="#feeff2">70<br><abbr title="Yttterbium">Yb</abbr></td>
-            <td bgcolor="#feeff2">71<br><abbr title="Lutetium">Lu</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="8" data-group="1">57<br><abbr title="Lanthanum">La</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="8" data-group="2">58<br><abbr title="Cerium">Ce</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="8" data-group="3">59<br><abbr title="Praseodymium">Pr</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="8" data-group="4">60<br><abbr title="Neodymium">Nd</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="8" data-group="5" style="color: rgb(214, 32, 32);">61<br><abbr title="Promethium">Pm</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="8" data-group="6">62<br><abbr title="Samarium">Sm</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="8" data-group="7">63<br><abbr title="Europium">Eu</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="8" data-group="8">64<br><abbr title="Gadolinium">Gd</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="8" data-group="9">65<br><abbr title="Terbium">Tb</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="8" data-group="10">66<br><abbr title="Dysprosium">Dy</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="8" data-group="11">67<br><abbr title="Holmium">Ho</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="8" data-group="12">68<br><abbr title="Erbium">Er</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="8" data-group="13">69 <br><abbr title="Thulium">Tm</abbr></td>
+            <td bgcolor="#feeff2"data-cycle="8" data-group="14">70<br><abbr title="Yttterbium">Yb</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="8" data-group="15">71<br><abbr title="Lutetium">Lu</abbr></td>
         </tr>
         <tr style="font-size: large;">
-            <td bgcolor="#feeff2">89<br><abbr title="Actinium">Ac</abbr></td>
-            <td bgcolor="#feeff2">90<br><abbr title="Thorium">Th</abbr></td>
-            <td bgcolor="#feeff2">91<br><abbr title="Protactinium">Pa</abbr></td>
-            <td bgcolor="#feeff2">92<br><abbr title="Uranium">U</abbr></td>
-            <td bgcolor="#feeff2" style="color: rgb(214, 32, 32);">93<br><abbr title="Neptunium">Np</abbr></td>
-            <td bgcolor="#feeff2" style="color: rgb(214, 32, 32);">94<br><abbr title="Plutonium">Pu</abbr></td>
-            <td bgcolor="#feeff2" style="color: rgb(214, 32, 32);">95<br><abbr title="Americium">Am</abbr></td>
-            <td bgcolor="#feeff2" style="color: rgb(214, 32, 32);">96<br><abbr title="Curium">Cm</abbr></td>
-            <td bgcolor="#feeff2" style="color: rgb(214, 32, 32);">97<br><abbr title="Berkelium">Bk</abbr></td>
-            <td bgcolor="#feeff2" style="color: rgb(214, 32, 32);">98<br><abbr title="Californium">Cf</abbr></td>
-            <td bgcolor="#feeff2" style="color: rgb(214, 32, 32);">99<br><abbr title="Einsteinium">Es</abbr></td>
-            <td bgcolor="#feeff2" style="color: rgb(214, 32, 32);">100<br><abbr title="Fermium">Fm</abbr></td>
-            <td bgcolor="#feeff2" style="color: rgb(214, 32, 32);">101<br><abbr title="Mendelevium">Md</abbr></td>
-            <td bgcolor="#feeff2" style="color: rgb(214, 32, 32);">102 <br><abbr title="Nobelium">No</abbr></td>
-            <td bgcolor="#feeff2" style="color: rgb(214, 32, 32);">103<br><abbr title="Lawrencium">Lr</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="9" data-group="1">89<br><abbr title="Actinium">Ac</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="9" data-group="2">90<br><abbr title="Thorium">Th</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="9" data-group="3">91<br><abbr title="Protactinium">Pa</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="9" data-group="4">92<br><abbr title="Uranium">U</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="9" data-group="5" style="color: rgb(214, 32, 32);">93<br><abbr title="Neptunium">Np</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="9" data-group="6" style="color: rgb(214, 32, 32);">94<br><abbr title="Plutonium">Pu</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="9" data-group="7" style="color: rgb(214, 32, 32);">95<br><abbr title="Americium">Am</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="9" data-group="8" style="color: rgb(214, 32, 32);">96<br><abbr title="Curium">Cm</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="9" data-group="9" style="color: rgb(214, 32, 32);">97<br><abbr title="Berkelium">Bk</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="9" data-group="10" style="color: rgb(214, 32, 32);">98<br><abbr title="Californium">Cf</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="9" data-group="11" style="color: rgb(214, 32, 32);">99<br><abbr title="Einsteinium">Es</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="9" data-group="12" style="color: rgb(214, 32, 32);">100<br><abbr title="Fermium">Fm</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="9" data-group="13" style="color: rgb(214, 32, 32);">101<br><abbr title="Mendelevium">Md</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="9" data-group="14" style="color: rgb(214, 32, 32);">102 <br><abbr title="Nobelium">No</abbr></td>
+            <td bgcolor="#feeff2" data-cycle="9" data-group="15" style="color: rgb(214, 32, 32);">103<br><abbr title="Lawrencium">Lr</abbr></td>
         </tr>
 
     </table>
@@ -473,25 +672,44 @@
         // Dữ liệu mẫu cho các nguyên tố
         const elementData = {
             'Hydrogen': {
-                image: 'images/hydrogen.png', // Đường dẫn tương đối đến ảnh
-                video: 'videos/hydrogen.mp4'  // Đường dẫn tương đối đến video
+                readingGuide: 'Hy-dro-gen',
+                properties: 'Hydrogen is the lightest element and highly flammable.',
+                applications: 'Used in fuel cells, rocket fuel, and ammonia production.',
+                image: 'assets/images/hydrogen.png',
+                video: 'assets/videos/hydrogen.mp4'
             },
             'Oxygen': {
+                readingGuide: 'Ox-y-gen',
+                properties: 'Oxygen supports combustion and is essential for respiration.',
+                applications: 'Used in medical treatments, welding, and space suits.',
                 image: 'images/oxygen.jpg',
                 video: 'videos/oxygen.mp4'
             },
-            // Thêm dữ liệu cho các nguyên tố khác...
+            'Carbon': {
+                readingGuide: 'Car-bon',
+                properties: 'Carbon is the basis of all known life and has many allotropes.',
+                applications: 'Used in steel production, batteries, and diamond industry.',
+                image: 'images/carbon.jpg',
+                video: 'videos/carbon.mp4'
+            },
+            'Gold': {
+                readingGuide: 'Gold',
+                properties: 'Gold is highly conductive and does not tarnish.',
+                applications: 'Used in jewelry, electronics, and aerospace technology.',
+                image: 'images/gold.jpg',
+                video: 'videos/gold.mp4'
+            }
         };
+
 
         function showDetails(event) {
             const td = event.target.closest('td');
             const elementAbbr = td.querySelector('abbr');
-            if (!elementAbbr) return; // Kiểm tra tồn tại thẻ abbr
+            if (!elementAbbr) return;
 
-            // Cập nhật thông tin chi tiết
             const elementName = elementAbbr.title;
-            correctElement = elementName; // Gán tên nguyên tố cho biến toàn cục
-            incorrectAttempts = 0; // Reset số lần sai
+            correctElement = elementName;
+            incorrectAttempts = 0;
 
             // Reset các trường quiz
             document.getElementById('quiz-input').value = "";
@@ -504,30 +722,35 @@
             // Lấy dữ liệu từ elementData
             const data = elementData[elementName] || {};
 
+            // Cập nhật cách đọc
+            document.getElementById('reading-guide').textContent = data.readingGuide || "No data available";
+
+            // Cập nhật tính chất
+            document.getElementById('properties-videos').textContent = data.properties || "No data available";
+
+            // Cập nhật ứng dụng
+            document.getElementById('applications-image').textContent = data.applications || "No data available";
+
             // Cập nhật ảnh ứng dụng
-            const appImage = document.getElementById('applications-image');
             if (data.image) {
-                appImage.innerHTML = `<img src="${assetPath}/${data.image}" alt="Application of ${elementName}">`;
-            } else {
-                appImage.textContent = 'No image available';
+                document.getElementById('applications-image').innerHTML = `<img src="${data.image}" alt="Application of ${elementName}">`;
             }
 
             // Cập nhật video tính chất
-            const videos = document.getElementById('properties-videos');
             if (data.video) {
-                videos.innerHTML = `
+                document.getElementById('properties-videos').innerHTML = `
                     <video controls>
-                        <source src="${assetPath}/${data.video}" type="video/mp4">
+                        <source src="${data.video}" type="video/mp4">
                         Your browser does not support the video tag.
                     </video>
                 `;
-            } else {
-                videos.textContent = 'No video available';
             }
 
             // Hiển thị bảng chi tiết
             document.getElementById('detail-table').style.display = 'block';
         }
+
+        // Close Table
         function closeDetails() {
             document.getElementById('detail-table').style.display = 'none';
         }
@@ -543,6 +766,65 @@
                 alert("Your browser does not support speech synthesis.");
             }
         }
+
+        const cycleMap = new Map();
+        const groupMap = new Map();
+
+        // Khởi tạo dữ liệu một lần duy nhất
+        document.querySelectorAll('td').forEach(cell => {
+            const cycle = cell.getAttribute('data-cycle');
+            const group = cell.getAttribute('data-group');
+
+            if (cycle) {
+                if (!cycleMap.has(cycle)) cycleMap.set(cycle, []);
+                cycleMap.get(cycle).push(cell);
+            }
+
+            if (group) {
+                if (!groupMap.has(group)) groupMap.set(group, []);
+                groupMap.get(group).push(cell);
+            }
+        });
+
+        function toggleHighlight() {
+            const mode = document.getElementById('modeSelector').value;
+            const allCells = document.querySelectorAll('td');
+
+            // Xóa tất cả hiệu ứng cũ trước khi áp dụng mới
+            allCells.forEach(cell => {
+                cell.classList.remove('highlight-cycle', 'highlight-group');
+            });
+
+            if (mode === 'cycle') {
+                cycleMap.forEach((cells) => {
+                    cells.forEach(cell => {
+                        cell.classList.add('highlight-cycle');
+                    });
+                });
+            } else if (mode === 'group') {
+                groupMap.forEach((cells) => {
+                    cells.forEach(cell => {
+                        cell.classList.add('highlight-group');
+                    });
+                });
+            }
+        }
+
+
+
+
+        // Thêm xử lý hover cho minh họa
+        document.querySelectorAll('td').forEach(cell => {
+            cell.addEventListener('mouseover', function () {
+                if (document.getElementById('modeSelector').value === 'cycle') {
+                    this.style.transform = 'scale(1.05)';
+                }
+            });
+
+            cell.addEventListener('mouseout', function () {
+                this.style.transform = 'scale(1)';
+            });
+        });
     </script>
 </body>
 
