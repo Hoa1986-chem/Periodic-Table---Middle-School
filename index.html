@@ -1,829 +1,795 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Periodic Table</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Bảng Tuần Hoàn Hoá Học</title>
     <style>
-        /* CSS Reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
             font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
         }
 
-        /* Thêm dropdown style */
-        .mode-selector {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            padding: 8px;
-            font-size: 16px;
-            z-index: 100;
-        }
-
-        @keyframes zoomInOut {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.15);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        @keyframes glowEffect {
-            0% {
-                box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-            }
-
-            50% {
-                box-shadow: 0 0 15px rgba(255, 255, 255, 1);
-            }
-
-            100% {
-                box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-            }
-        }
-
-        @keyframes pulsate {
-            0% {
-                transform: scale(1);
-                opacity: 0.8;
-            }
-
-            50% {
-                transform: scale(1.1);
-                opacity: 1;
-            }
-
-            100% {
-                transform: scale(1);
-                opacity: 0.8;
-            }
-        }
-
-        @keyframes cycleColorChange {
-            0% {
-                background-color: #ff9999;
-            }
-
-            50% {
-                background-color: #ff5555;
-            }
-
-            100% {
-                background-color: #ff9999;
-            }
-        }
-
-        @keyframes groupColorChange {
-            0% {
-                background-color: #99ccff;
-            }
-
-            50% {
-                background-color: #6699ff;
-            }
-
-            100% {
-                background-color: #99ccff;
-            }
-        }
-
-        @keyframes colorCycle {
-            0% {
-                background: linear-gradient(45deg, #ff9999, #ff6666);
-            }
-
-            50% {
-                background: linear-gradient(45deg, #ff6666, #ff3333);
-            }
-
-            100% {
-                background: linear-gradient(45deg, #ff9999, #ff6666);
-            }
-        }
-
-        @keyframes colorGroup {
-            0% {
-                background: linear-gradient(45deg, #99ccff, #6699ff);
-            }
-
-            50% {
-                background: linear-gradient(45deg, #6699ff, #3366ff);
-            }
-
-            100% {
-                background: linear-gradient(45deg, #99ccff, #6699ff);
-            }
-        }
-
-        .highlight-cycle {
-            animation: pulsate 2s infinite ease-in-out, cycleColorChange 3s infinite linear;
-            box-shadow: 0 0 15px rgba(255, 100, 100, 0.7);
-        }
-
-        .highlight-group {
-            animation: pulsate 2s infinite ease-in-out, groupColorChange 3s infinite linear;
-            box-shadow: 0 0 15px rgba(100, 100, 255, 0.7);
-        }
-
-
-        /* Animation cho các ô */
-        @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.02);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        @keyframes zoomEffect {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.1);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-
-        .highlight-cycle {
-            animation: zoomEffect 1.2s infinite ease-in-out;
-        }
-
-        .highlight-group {
-            animation: zoomEffect 1.2s infinite ease-in-out;
-        }
-
-        .highlight-cycle,
-        .highlight-group {
-            animation: pulse 1.5s infinite;
+        .container {
             position: relative;
-            z-index: 1;
+            max-width: 1200px;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        @keyframes shake {
-            0% {
-                transform: translateX(0);
-            }
-
-            25% {
-                transform: translateX(3px);
-            }
-
-            50% {
-                transform: translateX(-3px);
-            }
-
-            75% {
-                transform: translateX(3px);
-            }
-
-            100% {
-                transform: translateX(0);
-            }
+        .periodic-table {
+            display: grid;
+            grid-template-columns: repeat(18, 1fr);
+            gap: 2px;
+            margin: 20px 0;
         }
 
-        td:hover {
-            animation: shake 0.4s ease-in-out;
-        }
 
-        .quiz-section {
-            margin-top: 15px;
-        }
-
-        .quiz-input {
-            padding: 8px;
-            width: 200px;
-        }
-
-        #element-name {
-            visibility: hidden;
-            font-weight: bold;
-            font-size: 18px;
-            color: blue;
-        }
-
-        .quiz-button {
-            padding: 8px 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
+        .element {
+            border: 1px solid #ccc;
+            padding: 4px;
+            font-size: 12px;
+            position: relative;
+            transition: all 0.2s;
+            background-color: #fff;
+            min-height: 60px;
             cursor: pointer;
         }
 
-        .quiz-result {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        .correct {
-            color: green;
-        }
-
-        .incorrect {
-            color: red;
-        }
-
-        .detail-table #properties-videos iframe {
-            width: 280px;
-            height: 160px;
-            margin: 5px;
-            border: none;
-        }
-
-        .detail-table #applications-image img {
-            max-width: 250px;
-            max-height: 200px;
-            margin-top: 10px;
-            border-radius: 8px;
-        }
-
-        .detail-table {
-            /* Cập nhật kích thước lớn hơn */
-            max-width: 600px;
-            overflow-y: auto;
-            max-height: 90vh;
-        }
-
-        /* Table Styles */
-        table {
-            margin: 0 auto;
-            margin-top: 5%;
-            width: 80%;
-            border-collapse: collapse;
-            font-size: 16px;
-        }
-
-        abbr[title] {
-            text-decoration: none;
-            /* Loại bỏ gạch chân */
-        }
-
-        th,
-        td {
-            padding: 10px;
-            text-align: center;
-        }
-
-        th {
-            background-color: yellow;
-            font-size: 24px;
-        }
-
-        td {
-            cursor: pointer;
-        }
-
-        /* Styling for the elements in the periodic table */
-        td[bgcolor="#df9fe1"] {
-            background-color: #df9fe1;
-        }
-
-        td[bgcolor="#99d3ee"] {
-            background-color: #99d3ee;
-        }
-
-        td[bgcolor="#c6980e"] {
-            background-color: #c6980e;
-        }
-
-        td[bgcolor="orange"] {
-            background-color: orange;
-        }
-
-        td[bgcolor="#eddda8"] {
-            background-color: #eddda8;
-        }
-
-        td[bgcolor="#e8e3ff"] {
-            background-color: #e8e3ff;
-        }
-
-        td[bgcolor="#cfeb88"] {
-            background-color: #cfeb88;
-        }
-
-        /* Keyframe animations for effect */
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
-
-        /* Detail Table Styles */
-        .detail-table {
+        .modal {
             display: none;
             position: fixed;
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: white;
-            border: 2px solid #333;
-            padding: 20px;
-            max-width: 90%;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        .detail-table h2 {
-            margin-bottom: 20px;
-        }
-
-        .detail-table table {
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
         }
 
-        .detail-table td {
-            padding: 8px;
+        .compare-section {
+            margin: 30px 0;
+            padding: 20px;
+            width: 100%;
+            max-width: 800px;
         }
 
-        .detail-table .button {
-            text-align: center;
+        .selected-elements {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 10px 0;
+        }
+
+        .element-tag {
+            background: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            cursor: pointer;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
             margin-top: 20px;
         }
 
-        .detail-table button {
-            padding: 8px 16px;
-            font-size: 16px;
-            cursor: pointer;
-            margin: 5px;
+        .comparison-table td,
+        .comparison-table th {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
         }
 
-        /* Mobile Optimization */
         @media (max-width: 768px) {
+            .element {
+                font-size: 8px;
+                min-height: 40px;
+            }
 
-            th,
-            td {
+            .symbol {
                 font-size: 12px;
-                padding: 8px;
-            }
-
-            .detail-table {
-                max-width: 95%;
-                padding: 15px;
-            }
-
-            .detail-table button {
-                font-size: 14px;
-            }
-
-            td {
-                padding: 5px;
             }
         }
 
-        /* Large screen adjustments */
-        @media (min-width: 1024px) {
-            table {
-                font-size: 18px;
-            }
+        .element:hover {
+            transform: scale(1.1);
+            z-index: 1;
+        }
+
+        .atomic-number {
+            font-size: 8px;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+        }
+
+        .symbol {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .details {
+            font-size: 8px;
+            text-align: center;
+            margin-top: 2px;
+        }
+
+        /* Màu sắc các nhóm */
+        .alkali-metal {
+            background-color: #FF6666 !important;
+        }
+
+        .alkaline-earth {
+            background-color: #FFDEAD !important;
+        }
+
+        .transition-metal {
+            background-color: #FFB6C1 !important;
+        }
+
+        .post-transition {
+            background-color: #D3D3D3 !important;
+        }
+
+        .metalloid {
+            background-color: #98FB98 !important;
+        }
+
+        .nonmetal {
+            background-color: #87CEEB !important;
+        }
+
+        .halogen {
+            background-color: #7FFFD4 !important;
+        }
+
+        .noble-gas {
+            background-color: #DDA0DD !important;
+        }
+
+        .lanthanoid {
+            background-color: #FFA07A !important;
+        }
+
+        .actinoid {
+            background-color: #FFD700 !important;
+        }
+
+        .controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            padding: 8px 12px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background: #f0f0f0;
+        }
+
+        .highlight:not(.alkali-metal):not(.alkaline-earth):not(.transition-metal):not(.post-transition):not(.metalloid):not(.nonmetal):not(.halogen):not(.noble-gas):not(.lanthanoid):not(.actinoid) {
+            background: white !important;
+            color: black !important;
+        }
+
+        .lanthanoid-actinoid-series {
+            display: grid;
+            grid-template-columns: repeat(15, 1fr);
+            /* 14 nguyên tố lanthanoids */
+            gap: 2px;
+            margin-top: 10px;
+            width: 100%;
+            /* Căn chỉnh độ rộng phù hợp */
+            margin-left: 12%;
+            /* Căn lề trái để khớp vị trí */
+        }
+
+        .empty-cell {
+            background-color: transparent !important;
+            border: none !important;
+        }
+
+        /* Thêm phần này vào style */
+        .group-numbers {
+            display: grid;
+            grid-template-columns: repeat(18, 1fr);
+            gap: 2px;
+            width: 100%;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .period-numbers {
+            display: grid;
+            grid-template-rows: repeat(7, 60px);
+            align-items: center;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .table-wrapper {
+            display: flex;
+        }
+
+        /* Thêm vào cuối phần style */
+        .element[symbol="57-71"] {
+            grid-column: 3;
+            grid-row: 6;
+            background-color: #FFA07A !important;
+        }
+
+        .element[symbol="89-103"] {
+            grid-column: 3;
+            grid-row: 7;
+            background-color: #FFD700 !important;
+        }
+
+        /* Thêm vào cuối phần style */
+        /* Modal cải tiến */
+        .modal-content {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+        }
+
+        .symbol-pronunciation {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .symbol-modal {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        .pronunciation-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .speak-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            font-size: 1.2em;
+        }
+
+        .name-guess-section {
+            text-align: center;
+        }
+
+        #hiddenName {
+            font-size: 1.8em;
+            color: #666;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        #guessContainer {
+            margin-top: 15px;
+        }
+
+        #guessInput {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+
+        #guessContainer button {
+            padding: 8px 15px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        #guessFeedback {
+            color: red;
+            margin-top: 8px;
+            min-height: 20px;
+        }
+
+        .property-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 12px 0;
+        }
+
+        .property-label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .media-element {
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 8px;
+            display: none;
+            /* Ẩn mặc định */
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .close:hover {
+            color: #333;
         }
     </style>
 </head>
 
 <body>
+    <div class="controls">
+        <button class="control-btn" data-category="alkali-metal">Kim loại kiềm</button>
+        <button class="control-btn" data-category="alkaline-earth">Kiềm thổ</button>
+        <button class="control-btn" data-category="transition-metal">Kim loại chuyển tiếp</button>
+        <button class="control-btn" data-category="metalloid">Á kim</button>
+        <button class="control-btn" data-category="nonmetal">Phi kim</button>
+        <button class="control-btn" data-category="halogen">Halogen</button>
+        <button class="control-btn" data-category="noble-gas">Khí hiếm</button>
+        <button class="control-btn" data-category="lanthanoid">Họ Lantan</button>
+        <button class="control-btn" data-category="actinoid">Họ Actini</button>
+    </div>
 
-    <select class="mode-selector" id="modeSelector" onchange="toggleHighlight()"
-        title="Chu kỳ: Hàng ngang | Nhóm: Cột dọc">
-        <option value="">-- Chọn chế độ --</option>
-        <option value="cycle">Chu kỳ</option>
-        <option value="group">Nhóm</option>
-    </select>
-
-
-    <table border="1">
-        <tr>
-            <th colspan="18">
-                <h1>THE PERIODIC TABLE</h1>
-            </th>
-        </tr>
-        <tr>
-            <td bgcolor="orange" style="color: green;" data-cycle="1" onclick="showDetails(event)">
-                1<br><abbr title="Hydrogen">H</abbr>
-            </td>
-            <th colspan="16"></th>
-            <td bgcolor="#e8e3ff" style="color: green;" data-cycle="1" data-group="18" onclick="showDetails(event)">
-                2<br><abbr title="Helium">He</abbr>
-            </td>
-        </tr>
-        <tr>
-            <td bgcolor="#df9fe1" data-cycle="2" data-group="1" onclick="showDetails(event)">3<br><abbr title="Lithium">Li</abbr></td>
-            <td bgcolor="#99d3ee" data-cycle="2" data-group="2" onclick="showDetails(event)">4<br><abbr title="Beryllium">Be</abbr></td>
-            <td colspan="10"></td>
-            <td bgcolor="#c6980e" data-cycle="2" data-group="13" onclick="showDetails(event)">5<br><abbr title="Boron">B</abbr></td>
-            <td bgcolor="orange" data-cycle="2" data-group="14" onclick="showDetails(event)">6<br><abbr title="Carbon">C</abbr></td>
-            <td bgcolor="orange" style="color: green;" data-cycle="2" data-group="15" onclick="showDetails(event)">7<br><abbr title="Nitrogen">N</abbr>
-            </td>
-            <td bgcolor="orange" style="color: green;"data-cycle="2" data-group="16" onclick="showDetails(event)">8<br><abbr title="Oxygen">O</abbr>
-            </td>
-            <td bgcolor="#eddda8" style="color: green;" data-cycle="2" data-group="17" onclick="showDetails(event)">9<br><abbr
-                    title="Fluorine">F</abbr></td>
-            <td bgcolor="#e8e3ff" style="color: green;"data-cycle="2" data-group="18" onclick="showDetails(event)">10<br><abbr title="Neon">Ne</abbr>
-            </td>
-        </tr>
-        <tr style="font-size: large;">
-            <td bgcolor="#df9fe1" data-cycle="3" data-group="1">11<br><abbr title="Sodium">Na</abbr></td>
-            <td bgcolor="#99d3ee" data-cycle="3" data-group="2">12<br><abbr title="Magnesium">Mg</abbr></td>
-            <td colspan="10" style="empty-cells: hide;"></td>
-            <td bgcolor="#cfeb88" data-cycle="3" data-group="13">13<br><abbr title="Auminium">Al</abbr></td>
-            <td bgcolor="#c6980e" data-cycle="3" data-group="14">14<br><abbr title="Silicon">Si</abbr></td>
-            <td bgcolor="orange" data-cycle="3" data-group="15">15<br><abbr title="Phosphorus">P</abbr></td>
-            <td bgcolor="orange" data-cycle="3" data-group="16">16<br><abbr title="Sulphur">S</abbr></td>
-            <td bgcolor="#eddda8" style="color: green;" data-cycle="3" data-group="17">17<br><abbr title="Chlorine">Cl</abbr></td>
-            <td bgcolor="#e8e3ff" style="color: green;" data-cycle="3" data-group="18">18<br><abbr title="Argon">Ar</abbr></td>
-        </tr>
-        <tr style="font-size: large;">
-            <td bgcolor="#df9fe1" data-cycle="4" data-group="1">19<br><abbr title="Potassium">K</abbr></td>
-            <td bgcolor="#99d3ee" data-cycle="4" data-group="2">20<br><abbr title="Calcium">Ca</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="4" data-group="3">21<br><abbr title="Scandium">Sc</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="4" data-group="4">22<br><abbr title="Titanium">Ti</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="4" data-group="5">23<br><abbr title="Vanadium">V</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="4" data-group="6">24<br><abbr title="Cromium">Cr</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="4" data-group="7">25<br><abbr title="Manganese">Mn</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="4" data-group="8">26<br><abbr title="Iron">Fe</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="4" data-group="9">27<br><abbr title="Cobalt">Co</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="4" data-group="10">28<br><abbr title="Nickel">Ni</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="4" data-group="11">29<br><abbr title="Copper">Cu</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="4" data-group="12">30<br><abbr title="Zinc">Zn</abbr></td>
-            <td bgcolor="#cfeb88" style="color: blue;" data-cycle="4" data-group="13">31<br><abbr title="Gallium">Ga</abbr></td>
-            <td bgcolor="#c6980e" data-cycle="4" data-group="14">32<br><abbr title="Germanium">Ge</abbr></td>
-            <td bgcolor="#c6980e" data-cycle="4" data-group="15">33<br><abbr title="Arsenic">As</abbr></td>
-            <td bgcolor="orange" data-cycle="4" data-group="16">34<br><abbr title="Selenium">Se</abbr></td>
-            <td bgcolor="#eddda8" style="color: blue;" data-cycle="4" data-group="17">35<br><abbr title="Bromine">Br</abbr></td>
-            <td bgcolor="#e8e3ff" style="color: green;" data-cycle="4" data-group="18">36<br><abbr title="Krypton">Kr</abbr></td>
-        </tr>
-        <tr style="font-size: large;">
-            <td bgcolor="#df9fe1" data-cycle="5" data-group="1">37<br><abbr title="Rubidium">Rb</abbr></td>
-            <td bgcolor="#99d3ee" data-cycle="5" data-group="2">38<br><abbr title="Strontium">Sr</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="5" data-group="3">39<br><abbr title="Yttrium">Y</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="5" data-group="4">40<br><abbr title="Zirconium">Zr</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="5" data-group="5">41<br><abbr title="Niobium">Nb</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="5" data-group="6">42<br><abbr title="Molybdenum">Mo</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="5" data-group="7">43<br><abbr title="Technetium">Tc</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="5" data-group="8">44<br><abbr title="Ruthenium">Ru</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="5" data-group="9">45<br><abbr title="Rhodium">Rh</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="5" data-group="10">46<br><abbr title="Palladium">Pd</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="5" data-group="11">47<br><abbr title="Silver">Ag</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="5" data-group="12">48<br><abbr title="Cadmium">Cd</abbr></td>
-            <td bgcolor="#cfeb88" data-cycle="5" data-group="13">49<br><abbr title="Indium">In</abbr></td>
-            <td bgcolor="#cfeb88" data-cycle="5" data-group="14">50<br><abbr title="Tin">Sn</abbr></td>
-            <td bgcolor="#c6980e" data-cycle="5" data-group="15">51<br><abbr title="Antimony">Sb</abbr></td>
-            <td bgcolor="#c6980e" data-cycle="5" data-group="16">52<br><abbr title="Tellurium">Te</abbr></td>
-            <td bgcolor="#eddda8" data-cycle="5" data-group="17">53<br><abbr title="Iodine">I</abbr></td>
-            <td bgcolor="#e8e3ff" style="color: green;" data-cycle="5" data-group="18">54<br><abbr title="Xenon">Xe</abbr></td>
-        </tr>
-        <tr style="font-size: large;">
-            <td bgcolor="#df9fe1" data-cycle="6" data-group="1" style="color: blue;">55<br><abbr title="Ceasium">Cs</abbr></td>
-            <td bgcolor="#99d3ee" data-cycle="6" data-group="2">56<br><abbr title="Barium">Ba</abbr></td>
-            <td>57-71</td>
-            <td bgcolor="#fcf389" data-cycle="6" data-group="4">72<br><abbr title="Hafnium">Hf</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="6" data-group="5">73<br><abbr title="Tantalum">Ta</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="6" data-group="6">74<br><abbr title="Tungsten">W</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="6" data-group="7">75<br><abbr title="Rhenium">Re</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="6" data-group="8">76<br><abbr title="Osmium">Os</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="6" data-group="9">77<br><abbr title="Iridium">Ir</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="6" data-group="10">78<br><abbr title="Platium">Pt</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="6" data-group="11">79<br><abbr title="Gold">Au</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="6" data-group="12" style="color: blue;">80<br><abbr title="Mercury">Hg</abbr></td>
-            <td bgcolor="#cfeb88" data-cycle="6" data-group="13">81<br><abbr title="Thallium">Tl</abbr></td>
-            <td bgcolor="#cfeb88" data-cycle="6" data-group="14">82<br><abbr title="Lead">Pb</abbr></td>
-            <td bgcolor="#cfeb88" data-cycle="6" data-group="15">83<br><abbr title="Bismuth">Bi</abbr></td>
-            <td bgcolor="#c6980e" data-cycle="6" data-group="16">84<br><abbr title="Polonium">Po</abbr></td>
-            <td bgcolor="#eddda8" data-cycle="6" data-group="17">85<br><abbr title="Astatine">At</abbr></td>
-            <td bgcolor="#e8e3ff" data-cycle="6" data-group="18" style="color: green;">86<br><abbr title="Radon">Rn</abbr></td>
-        </tr>
-        <tr style="font-size: large;">
-            <td bgcolor="#df9fe1" data-cycle="7" data-group="1" style="color: blue;">87<br><abbr title="Francium">Fr</abbr></td>
-            <td bgcolor="#99d3ee" data-cycle="7" data-group="2">88<br><abbr title="Radium">Ra</abbr></td>
-            <td>89-103</td>
-            <td bgcolor="#fcf389" data-cycle="7" data-group="4">104<br><abbr title="Rutherfordium">Rf</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="7" data-group="5">105<br><abbr title="Dubnium">Db</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="7" data-group="6">106<br><abbr title="Seaborgium">Sg</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="7" data-group="7">107<br><abbr title="Bohrium">Bh</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="7" data-group="8">108<br><abbr title="Hassium">Hs</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="7" data-group="9">109<br><abbr title="Meitnerium">Mt</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="7" data-group="10">110<br><abbr title="Darmstadtium">Ds</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="7" data-group="11">111<br><abbr title="Roentgenium">Rg</abbr></td>
-            <td bgcolor="#fcf389" data-cycle="7" data-group="12">112<br><abbr title="Copernicium">Cn</abbr></td>
-            <td style="color: rgb(214, 32, 32);" data-cycle="7" data-group="13">113<br><abbr title="Nihonium">Nh</abbr></td>
-            <td style="color: rgb(214, 32, 32);" data-cycle="7" data-group="14">114<br><abbr title="Flerovium">Fl</abbr></td>
-            <td style="color: rgb(214, 32, 32);" data-cycle="7" data-group="15">115<br><abbr title="Moscovium">Mc</abbr></td>
-            <td style="color: rgb(214, 32, 32);" data-cycle="7" data-group="16">116<br><abbr title="Livermorium">Lv</abbr></td>
-            <td style="color: rgb(214, 32, 32);" data-cycle="7" data-group="17">117<br><abbr title="Tennessine">Ts</abbr></td>
-            <td style="color: rgb(214, 32, 32);" data-cycle="7" data-group="18">118<br><abbr title="Oganesson">Og</abbr></td>
-        </tr>
-        <tr style="font-size: large;">
-            <td rowspan="2" colspan="2" style="empty-cells: hide;"></td>
-            <td bgcolor="#feeff2" data-cycle="8" data-group="1">57<br><abbr title="Lanthanum">La</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="8" data-group="2">58<br><abbr title="Cerium">Ce</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="8" data-group="3">59<br><abbr title="Praseodymium">Pr</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="8" data-group="4">60<br><abbr title="Neodymium">Nd</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="8" data-group="5" style="color: rgb(214, 32, 32);">61<br><abbr title="Promethium">Pm</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="8" data-group="6">62<br><abbr title="Samarium">Sm</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="8" data-group="7">63<br><abbr title="Europium">Eu</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="8" data-group="8">64<br><abbr title="Gadolinium">Gd</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="8" data-group="9">65<br><abbr title="Terbium">Tb</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="8" data-group="10">66<br><abbr title="Dysprosium">Dy</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="8" data-group="11">67<br><abbr title="Holmium">Ho</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="8" data-group="12">68<br><abbr title="Erbium">Er</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="8" data-group="13">69 <br><abbr title="Thulium">Tm</abbr></td>
-            <td bgcolor="#feeff2"data-cycle="8" data-group="14">70<br><abbr title="Yttterbium">Yb</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="8" data-group="15">71<br><abbr title="Lutetium">Lu</abbr></td>
-        </tr>
-        <tr style="font-size: large;">
-            <td bgcolor="#feeff2" data-cycle="9" data-group="1">89<br><abbr title="Actinium">Ac</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="9" data-group="2">90<br><abbr title="Thorium">Th</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="9" data-group="3">91<br><abbr title="Protactinium">Pa</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="9" data-group="4">92<br><abbr title="Uranium">U</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="9" data-group="5" style="color: rgb(214, 32, 32);">93<br><abbr title="Neptunium">Np</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="9" data-group="6" style="color: rgb(214, 32, 32);">94<br><abbr title="Plutonium">Pu</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="9" data-group="7" style="color: rgb(214, 32, 32);">95<br><abbr title="Americium">Am</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="9" data-group="8" style="color: rgb(214, 32, 32);">96<br><abbr title="Curium">Cm</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="9" data-group="9" style="color: rgb(214, 32, 32);">97<br><abbr title="Berkelium">Bk</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="9" data-group="10" style="color: rgb(214, 32, 32);">98<br><abbr title="Californium">Cf</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="9" data-group="11" style="color: rgb(214, 32, 32);">99<br><abbr title="Einsteinium">Es</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="9" data-group="12" style="color: rgb(214, 32, 32);">100<br><abbr title="Fermium">Fm</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="9" data-group="13" style="color: rgb(214, 32, 32);">101<br><abbr title="Mendelevium">Md</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="9" data-group="14" style="color: rgb(214, 32, 32);">102 <br><abbr title="Nobelium">No</abbr></td>
-            <td bgcolor="#feeff2" data-cycle="9" data-group="15" style="color: rgb(214, 32, 32);">103<br><abbr title="Lawrencium">Lr</abbr></td>
-        </tr>
-
-    </table>
-
-
-    <!-- Detail Table -->
-    <div class="detail-table" id="detail-table">
-        <h2>Element Information</h2>
-        <table>
-            <tr>
-                <td><strong>Name:</strong></td>
-                <td id="element-name"></td>
-            </tr>
-            <tr>
-                <td><strong>Reading Guide:</strong></td>
-                <td id="reading-guide"></td>
-            </tr>
-            <!-- Thêm phần Tính chất với video -->
-            <tr>
-                <td><strong>Properties:</strong></td>
-                <td id="properties-videos"></td>
-            </tr>
-            <!-- Thêm phần Ứng dụng với ảnh -->
-            <tr>
-                <td><strong>Applications:</strong></td>
-                <td id="applications-image"></td>
-            </tr>
-
-            <div class="quiz-section">
-                <p><strong>Guess the Element:</strong></p>
-                <input type="text" id="quiz-input" class="quiz-input" placeholder="Enter element name">
-                <button onclick="checkAnswer()" class="quiz-button">Check</button>
-                <p id="quiz-result" class="quiz-result"></p>
-                <button onclick="showElementName()" class="quiz-button">Show Name</button>
-                <p><strong>Correct Answer:</strong> <span id="correct-element-name" style="display: none;"></span></p>
+    <div class="container">
+        <div class="group-numbers">
+            <div>1</div>
+            <div>2</div>
+            <div>3</div>
+            <div>4</div>
+            <div>5</div>
+            <div>6</div>
+            <div>7</div>
+            <div>8</div>
+            <div>9</div>
+            <div>10</div>
+            <div>11</div>
+            <div>12</div>
+            <div>13</div>
+            <div>14</div>
+            <div>15</div>
+            <div>16</div>
+            <div>17</div>
+            <div>18</div>
+        </div>
+        <div class="table-wrapper">
+            <div class="period-numbers">
+                <div>1</div>
+                <div>2</div>
+                <div>3</div>
+                <div>4</div>
+                <div>5</div>
+                <div>6</div>
+                <div>7</div>
             </div>
 
-
-        </table>
-        <div class="button">
-            <button class="read-button" onclick="readElementName()">Read Name</button>
-            <button onclick="closeDetails()">Close</button>
+            <div class="periodic-table" id="periodicTable">
+                <!-- Các nguyên tố chính -->
+            </div>
         </div>
+        <div class="lanthanoid-actinoid-series" id="lanthanoidactinoidSeries"></div>
+
+        <!-- Modal thông tin -->
+        <div id="elementModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <div class="modal-header">
+                    <div class="symbol-pronunciation">
+                        <h2 id="elementSymbol" class="symbol-modal"></h2>
+                        <div class="pronunciation-container">
+                            <span id="elementPronunciation"></span>
+                            <button class="speak-btn" onclick="speakName()">🔊</button>
+                        </div>
+                    </div>
+                    <div class="name-guess-section">
+                        <div id="hiddenName">???</div>
+                        <div id="guessContainer">
+                            <input type="text" id="guessInput" placeholder="Nhập tên nguyên tố">
+                            <button onclick="checkGuess()">Kiểm tra</button>
+                            <div id="guessFeedback"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <div class="property-row">
+                        <span class="property-label">Số nguyên tử:</span>
+                        <span id="elementAtomicNumber" class="property-value"></span>
+                    </div>
+                    <div class="property-row">
+                        <span class="property-label">Khối lượng:</span>
+                        <span id="elementMass" class="property-value"></span>
+                    </div>
+                    <div class="property-row">
+                        <span class="property-label">Độ âm điện:</span>
+                        <span id="elementElectronegativity" class="property-value"></span>
+                    </div>
+                    <div class="property-row">
+                        <span class="property-label">Cấu hình electron:</span>
+                        <span id="elementElectronConfig" class="property-value"></span>
+                    </div>
+
+                    <div id="mediaContainer">
+                        <video id="elementVideo" controls class="media-element"></video>
+                        <img id="elementImage" class="media-element">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 
     <script>
-        let incorrectAttempts = 0;
-        let correctElement = "";
+        let currentElement; // Thêm ở đầu script
 
-        function checkAnswer() {
-            const input = document.getElementById('quiz-input').value.trim().toLowerCase();
-            const resultElement = document.getElementById('quiz-result');
-            const correctNameElement = document.getElementById('correct-element-name');
-            const elementNameElement = document.getElementById('element-name'); // Lấy phần tử hiển thị tên nguyên tố
+        //Thông tin các nguyên tố 
+        const elements = [
+            { symbol: 'H', name: 'Hydrogen', atomicNumber: 1, mass: 1.008, category: 'nonmetal', group: 1, period: 1 },
+            { symbol: 'He', name: 'Helium', atomicNumber: 2, mass: 4.0026, category: 'noble-gas', group: 18, period: 1 },
+            { symbol: 'Li', name: 'Lithium', atomicNumber: 3, mass: 6.94, category: 'alkali-metal', group: 1, period: 2 },
+            { symbol: 'Be', name: 'Beryllium', atomicNumber: 4, mass: 9.0122, category: 'alkaline-earth', group: 2, period: 2 },
+            { symbol: 'B', name: 'Boron', atomicNumber: 5, mass: 10.81, category: 'metalloid', group: 13, period: 2 },
+            { symbol: 'C', name: 'Carbon', atomicNumber: 6, mass: 12.011, category: 'nonmetal', group: 14, period: 2 },
+            { symbol: 'N', name: 'Nitrogen', atomicNumber: 7, mass: 14.007, category: 'nonmetal', group: 15, period: 2 },
+            { symbol: 'O', name: 'Oxygen', atomicNumber: 8, mass: 15.999, category: 'nonmetal', group: 16, period: 2 },
+            { symbol: 'F', name: 'Fluorine', atomicNumber: 9, mass: 18.998, category: 'halogen', group: 17, period: 2 },
+            { symbol: 'Ne', name: 'Neon', atomicNumber: 10, mass: 20.180, category: 'noble-gas', group: 18, period: 2 },
+            {
+                symbol: 'Na',
+                name: 'Sodium',
+                pronunciation: 'SOH-dee-əm',
+                atomicNumber: 11,
+                mass: 22.990,
+                category: 'alkali-metal',
+                group: 1,
+                period: 3,
+                electronegativity: 0.93,
+                meltingPoint: 97.72,
+                boilingPoint: 883,
+                electronConfig: '[Ne] 3s¹',
+                state: 'Solid',
+                video: 'videos/sodium.mp4',
+                image: 'images/sodium.jpg',
+                guessed: false,     // Đã đoán đúng chưa
+                revealed: false   // Đã mở ra chưa
+            }, { symbol: 'Mg', name: 'Magnesium', atomicNumber: 12, mass: 24.305, category: 'alkaline-earth', group: 2, period: 3 },
+            { symbol: 'Al', name: 'Aluminum', atomicNumber: 13, mass: 26.982, category: 'metal', group: 13, period: 3 },
+            { symbol: 'Si', name: 'Silicon', atomicNumber: 14, mass: 28.085, category: 'metalloid', group: 14, period: 3 },
+            { symbol: 'P', name: 'Phosphorus', atomicNumber: 15, mass: 30.974, category: 'nonmetal', group: 15, period: 3 },
+            { symbol: 'S', name: 'Sulfur', atomicNumber: 16, mass: 32.06, category: 'nonmetal', group: 16, period: 3 },
+            { symbol: 'Cl', name: 'Chlorine', atomicNumber: 17, mass: 35.45, category: 'halogen', group: 17, period: 3 },
+            { symbol: 'Ar', name: 'Argon', atomicNumber: 18, mass: 39.948, category: 'noble-gas', group: 18, period: 3 },
+            { symbol: 'K', name: 'Potassium', atomicNumber: 19, mass: 39.098, category: 'alkali-metal', group: 1, period: 4 },
+            { symbol: 'Ca', name: 'Calcium', atomicNumber: 20, mass: 40.078, category: 'alkaline-earth', group: 2, period: 4 },
+            { symbol: 'Sc', name: 'Scandium', atomicNumber: 21, mass: 44.956, category: 'transition-metal', group: 3, period: 4 },
+            { symbol: 'Ti', name: 'Titanium', atomicNumber: 22, mass: 47.867, category: 'transition-metal', group: 4, period: 4 },
+            { symbol: 'V', name: 'Vanadium', atomicNumber: 23, mass: 50.942, category: 'transition-metal', group: 5, period: 4 },
+            { symbol: 'Cr', name: 'Chromium', atomicNumber: 24, mass: 52.0, category: 'transition-metal', group: 6, period: 4 },
+            { symbol: 'Mn', name: 'Manganese', atomicNumber: 25, mass: 54.938, category: 'transition-metal', group: 7, period: 4 },
+            { symbol: 'Fe', name: 'Iron', atomicNumber: 26, mass: 55.845, category: 'transition-metal', group: 8, period: 4 },
+            { symbol: 'Co', name: 'Cobalt', atomicNumber: 27, mass: 58.933, category: 'transition-metal', group: 9, period: 4 },
+            { symbol: 'Ni', name: 'Nickel', atomicNumber: 28, mass: 58.693, category: 'transition-metal', group: 10, period: 4 },
+            { symbol: 'Cu', name: 'Copper', atomicNumber: 29, mass: 63.546, category: 'transition-metal', group: 11, period: 4 },
+            { symbol: 'Zn', name: 'Zinc', atomicNumber: 30, mass: 65.38, category: 'transition-metal', group: 12, period: 4 },
+            { symbol: 'Ga', name: 'Gallium', atomicNumber: 31, mass: 69.723, category: 'metal', group: 13, period: 4 },
+            { symbol: 'Ge', name: 'Germanium', atomicNumber: 32, mass: 72.63, category: 'metalloid', group: 14, period: 4 },
+            { symbol: 'As', name: 'Arsenic', atomicNumber: 33, mass: 74.922, category: 'metalloid', group: 15, period: 4 },
+            { symbol: 'Se', name: 'Selenium', atomicNumber: 34, mass: 78.971, category: 'nonmetal', group: 16, period: 4 },
+            { symbol: 'Br', name: 'Bromine', atomicNumber: 35, mass: 79.904, category: 'halogen', group: 17, period: 4 },
+            { symbol: 'Kr', name: 'Krypton', atomicNumber: 36, mass: 83.798, category: 'noble-gas', group: 18, period: 4 },
+            { symbol: 'Rb', name: 'Rubidium', atomicNumber: 37, mass: 85.468, category: 'alkali-metal', group: 1, period: 5 },
+            { symbol: 'Sr', name: 'Strontium', atomicNumber: 38, mass: 87.62, category: 'alkaline-earth', group: 2, period: 5 },
+            { symbol: 'Y', name: 'Yttrium', atomicNumber: 39, mass: 88.906, category: 'transition-metal', group: 3, period: 5 },
+            { symbol: 'Zr', name: 'Zirconium', atomicNumber: 40, mass: 91.224, category: 'transition-metal', group: 4, period: 5 },
+            { symbol: 'Nb', name: 'Niobium', atomicNumber: 41, mass: 92.906, category: 'transition-metal', group: 5, period: 5 },
+            { symbol: 'Mo', name: 'Molybdenum', atomicNumber: 42, mass: 95.95, category: 'transition-metal', group: 6, period: 5 },
+            { symbol: 'Tc', name: 'Technetium', atomicNumber: 43, mass: 98, category: 'transition-metal', group: 7, period: 5 },
+            { symbol: 'Ru', name: 'Ruthenium', atomicNumber: 44, mass: 101.07, category: 'transition-metal', group: 8, period: 5 },
+            { symbol: 'Rh', name: 'Rhodium', atomicNumber: 45, mass: 102.91, category: 'transition-metal', group: 9, period: 5 },
+            { symbol: 'Pd', name: 'Palladium', atomicNumber: 46, mass: 106.42, category: 'transition-metal', group: 10, period: 5 },
+            { symbol: 'Ag', name: 'Silver', atomicNumber: 47, mass: 107.868, category: 'transition-metal', group: 11, period: 5 },
+            { symbol: 'Cd', name: 'Cadmium', atomicNumber: 48, mass: 112.411, category: 'transition-metal', group: 12, period: 5 },
+            { symbol: 'In', name: 'Indium', atomicNumber: 49, mass: 114.818, category: 'metal', group: 13, period: 5 },
+            { symbol: 'Sn', name: 'Tin', atomicNumber: 50, mass: 118.710, category: 'metal', group: 14, period: 5 },
+            { symbol: 'Sb', name: 'Antimony', atomicNumber: 51, mass: 121.760, category: 'metalloid', group: 15, period: 5 },
+            { symbol: 'Te', name: 'Tellurium', atomicNumber: 52, mass: 127.60, category: 'metalloid', group: 16, period: 5 },
+            { symbol: 'I', name: 'Iodine', atomicNumber: 53, mass: 126.904, category: 'halogen', group: 17, period: 5 },
+            { symbol: 'Xe', name: 'Xenon', atomicNumber: 54, mass: 131.293, category: 'noble-gas', group: 18, period: 5 },
+            { symbol: 'Cs', name: 'Cesium', atomicNumber: 55, mass: 132.905, category: 'alkali-metal', group: 1, period: 6 },
+            { symbol: 'Ba', name: 'Barium', atomicNumber: 56, mass: 137.327, category: 'alkaline-earth', group: 2, period: 6 },
+            { symbol: '57-71', name: 'lanthanoids', atomicNumber: 57, mass: 'various', category: 'lanthanoid', group: '3', period: '6' },
+            { symbol: 'Hf', name: 'Hafnium', atomicNumber: 72, mass: 178.49, category: 'transition-metal', group: 4, period: 6 },
+            { symbol: 'Ta', name: 'Tantalum', atomicNumber: 73, mass: 180.9479, category: 'transition-metal', group: 5, period: 6 },
+            { symbol: 'W', name: 'Tungsten', atomicNumber: 74, mass: 183.84, category: 'transition-metal', group: 6, period: 6 },
+            { symbol: 'Re', name: 'Rhenium', atomicNumber: 75, mass: 186.207, category: 'transition-metal', group: 7, period: 6 },
+            { symbol: 'Os', name: 'Osmium', atomicNumber: 76, mass: 190.23, category: 'transition-metal', group: 8, period: 6 },
+            { symbol: 'Ir', name: 'Iridium', atomicNumber: 77, mass: 192.217, category: 'transition-metal', group: 9, period: 6 },
+            { symbol: 'Pt', name: 'Platinum', atomicNumber: 78, mass: 195.084, category: 'transition-metal', group: 10, period: 6 },
+            { symbol: 'Au', name: 'Gold', atomicNumber: 79, mass: 196.967, category: 'transition-metal', group: 11, period: 6 },
+            { symbol: 'Hg', name: 'Mercury', atomicNumber: 80, mass: 200.592, category: 'transition-metal', group: 12, period: 6 },
+            { symbol: 'Tl', name: 'Thallium', atomicNumber: 81, mass: 204.38, category: 'metal', group: 13, period: 6 },
+            { symbol: 'Pb', name: 'Lead', atomicNumber: 82, mass: 207.2, category: 'metal', group: 14, period: 6 },
+            { symbol: 'Bi', name: 'Bismuth', atomicNumber: 83, mass: 208.980, category: 'metal', group: 15, period: 6 },
+            { symbol: 'Po', name: 'Polonium', atomicNumber: 84, mass: 209.982, category: 'metalloid', group: 16, period: 6 },
+            { symbol: 'At', name: 'Astatine', atomicNumber: 85, mass: 210, category: 'halogen', group: 17, period: 6 },
+            { symbol: 'Rn', name: 'Radon', atomicNumber: 86, mass: 222, category: 'noble-gas', group: 18, period: 6 },
+            { symbol: 'Fr', name: 'Francium', atomicNumber: 87, mass: 223, category: 'alkali-metal', group: 1, period: 7 },
+            { symbol: 'Ra', name: 'Radium', atomicNumber: 88, mass: 226, category: 'alkaline-earth', group: 2, period: 7 },
+            { symbol: '89-103', name: 'actinoids', atomicNumber: 89, mass: 'various', category: 'actinoid', group: '3', period: '7' },
+            { symbol: 'Rf', name: 'Rutherfordium', atomicNumber: 104, mass: 267, category: 'transition-metal', group: 4, period: 7 },
+            { symbol: 'Db', name: 'Dubnium', atomicNumber: 105, mass: 270, category: 'transition-metal', group: 5, period: 7 },
+            { symbol: 'Sg', name: 'Seaborgium', atomicNumber: 106, mass: 271, category: 'transition-metal', group: 6, period: 7 },
+            { symbol: 'Bh', name: 'Bohrium', atomicNumber: 107, mass: 270, category: 'transition-metal', group: 7, period: 7 },
+            { symbol: 'Hs', name: 'Hassium', atomicNumber: 108, mass: 277, category: 'transition-metal', group: 8, period: 7 },
+            { symbol: 'Mt', name: 'Meitnerium', atomicNumber: 109, mass: 278, category: 'transition-metal', group: 9, period: 7 },
+            { symbol: 'Ds', name: 'Darmstadtium', atomicNumber: 110, mass: 281, category: 'transition-metal', group: 10, period: 7 },
+            { symbol: 'Rg', name: 'Roentgenium', atomicNumber: 111, mass: 280, category: 'transition-metal', group: 11, period: 7 },
+            { symbol: 'Cn', name: 'Copernicium', atomicNumber: 112, mass: 285, category: 'transition-metal', group: 12, period: 7 },
+            { symbol: 'Nh', name: 'Nihonium', atomicNumber: 113, mass: 284, category: 'metal', group: 13, period: 7 },
+            { symbol: 'Fl', name: 'Flerovium', atomicNumber: 114, mass: 289, category: 'metal', group: 14, period: 7 },
+            { symbol: 'Mc', name: 'Moscovium', atomicNumber: 115, mass: 288, category: 'metal', group: 15, period: 7 },
+            { symbol: 'Lv', name: 'Livermorium', atomicNumber: 116, mass: 293, category: 'metal', group: 16, period: 7 },
+            { symbol: 'Ts', name: 'Tennessine', atomicNumber: 117, mass: 294, category: 'halogen', group: 17, period: 7 },
+            { symbol: 'Og', name: 'Oganesson', atomicNumber: 118, mass: 294, category: 'noble-gas', group: 18, period: 7 }, { symbol: 'La', name: 'Lanthanum', atomicNumber: 57, mass: 138.905, category: 'lanthanoid', group: 'N/A', period: 6 },
+            { symbol: 'Ce', name: 'Cerium', atomicNumber: 58, mass: 140.116, category: 'lanthanoid', group: 'N/A', period: 6 },
+            { symbol: 'Pr', name: 'Praseodymium', atomicNumber: 59, mass: 140.907, category: 'lanthanoid', group: 'N/A', period: 6 },
+            { symbol: 'Nd', name: 'Neodymium', atomicNumber: 60, mass: 144.242, category: 'lanthanoid', group: 'N/A', period: 6 },
+            { symbol: 'Pm', name: 'Promethium', atomicNumber: 61, mass: 145, category: 'lanthanoid', group: 'N/A', period: 6 },
+            { symbol: 'Sm', name: 'Samarium', atomicNumber: 62, mass: 150.36, category: 'lanthanoid', group: 'N/A', period: 6 },
+            { symbol: 'Eu', name: 'Europium', atomicNumber: 63, mass: 151.964, category: 'lanthanoid', group: 'N/A', period: 6 },
+            { symbol: 'Gd', name: 'Gadolinium', atomicNumber: 64, mass: 157.25, category: 'lanthanoid', group: 'N/A', period: 6 },
+            { symbol: 'Tb', name: 'Terbium', atomicNumber: 65, mass: 158.925, category: 'lanthanoid', group: 'N/A', period: 6 },
+            { symbol: 'Dy', name: 'Dysprosium', atomicNumber: 66, mass: 162.5, category: 'lanthanoid', group: 'N/A', period: 6 },
+            { symbol: 'Ho', name: 'Holmium', atomicNumber: 67, mass: 164.930, category: 'lanthanoid', group: 'N/A', period: 6 },
+            { symbol: 'Er', name: 'Erbium', atomicNumber: 68, mass: 167.259, category: 'lanthanoid', group: 'N/A', period: 6 },
+            { symbol: 'Tm', name: 'Thulium', atomicNumber: 69, mass: 168.934, category: 'lanthanoid', group: 'N/A', period: 6 },
+            { symbol: 'Yb', name: 'Ytterbium', atomicNumber: 70, mass: 173.04, category: 'lanthanoid', group: 'N/A', period: 6 },
+            { symbol: 'Lu', name: 'Lutetium', atomicNumber: 71, mass: 174.966, category: 'lanthanoid', group: 'N/A', period: 6 },
+            { symbol: 'Ac', name: 'Actinium', atomicNumber: 89, mass: 227, category: 'actinoid', group: 'N/A', period: 7 },
+            { symbol: 'Th', name: 'Thorium', atomicNumber: 90, mass: 232.038, category: 'actinoid', group: 'N/A', period: 7 },
+            { symbol: 'Pa', name: 'Protactinium', atomicNumber: 91, mass: 231.03588, category: 'actinoid', group: 'N/A', period: 7 },
+            { symbol: 'U', name: 'Uranium', atomicNumber: 92, mass: 238.0289, category: 'actinoid', group: 'N/A', period: 7 },
+            { symbol: 'Np', name: 'Neptunium', atomicNumber: 93, mass: 237, category: 'actinoid', group: 'N/A', period: 7 },
+            { symbol: 'Pu', name: 'Plutonium', atomicNumber: 94, mass: 244, category: 'actinoid', group: 'N/A', period: 7 },
+            { symbol: 'Am', name: 'Americium', atomicNumber: 95, mass: 243, category: 'actinoid', group: 'N/A', period: 7 },
+            { symbol: 'Cm', name: 'Curium', atomicNumber: 96, mass: 247, category: 'actinoid', group: 'N/A', period: 7 },
+            { symbol: 'Bk', name: 'Berkelium', atomicNumber: 97, mass: 247, category: 'actinoid', group: 'N/A', period: 7 },
+            { symbol: 'Cf', name: 'Californium', atomicNumber: 98, mass: 251, category: 'actinoid', group: 'N/A', period: 7 },
+            { symbol: 'Es', name: 'Einsteinium', atomicNumber: 99, mass: 252, category: 'actinoid', group: 'N/A', period: 7 },
+            { symbol: 'Fm', name: 'Fermium', atomicNumber: 100, mass: 257, category: 'actinoid', group: 'N/A', period: 7 },
+            { symbol: 'Md', name: 'Mendelevium', atomicNumber: 101, mass: 258, category: 'actinoid', group: 'N/A', period: 7 },
+            { symbol: 'No', name: 'Nobelium', atomicNumber: 102, mass: 259, category: 'actinoid', group: 'N/A', period: 7 },
+            { symbol: 'Lr', name: 'Lawrencium', atomicNumber: 103, mass: 262, category: 'actinoid', group: 'N/A', period: 7 }
+        ];
 
-            if (input === correctElement.toLowerCase()) {
-                resultElement.textContent = "Correct!";
-                resultElement.className = "quiz-result correct";
+        // Tạo bảng tuần hoàn
+        const table = document.getElementById('periodicTable');
+        const lanthanoidactinoidSeries = document.getElementById('lanthanoidactinoidSeries');
 
-                // Hiển thị tên nguyên tố trong phần "Name" của bảng chi tiết
-                elementNameElement.textContent = correctElement;
-                elementNameElement.style.visibility = "visible"; // Đảm bảo phần "Name" hiển thị
+        // Tạo bảng tuần hoàn chính
+        elements.forEach(element => {
+            const el = document.createElement('div');
+            el.className = `element ${element.category}`;
+            el.dataset.atomicNumber = element.atomicNumber;
 
-                // Hiển thị phần "Correct Answer"
-                correctNameElement.textContent = correctElement;
-                correctNameElement.style.display = "inline";
-            } else {
-                incorrectAttempts++;
-                resultElement.textContent = "Incorrect, try again!";
-                resultElement.className = "quiz-result incorrect";
-                if (incorrectAttempts >= 3) {
-                    correctNameElement.textContent = correctElement;
-                    correctNameElement.style.display = "inline";
-                }
+            // Xử lý các ô đặc biệt (57-71 và 89-103)
+            if (element.symbol === '57-71' || element.symbol === '89-103') {
+                // Thêm vào bảng chính
+                el.style.gridColumn = 3; // Cột 3
+                el.style.gridRow = element.period; // Hàng tương ứng (6 hoặc 7)
+                table.appendChild(el);
             }
-        }
-
-        // Sửa hàm showElementName
-        function showElementName() {
-            const correctNameElement = document.getElementById('correct-element-name');
-            if (correctElement) {
-                correctNameElement.textContent = correctElement;
-                correctNameElement.style.display = "inline";
-            } else {
-                alert("No element selected!");
+            // Xử lý các nguyên tố họ Lantan và Actini
+            else if (element.category === 'lanthanoid' || element.category === 'actinoid') {
+                // Tính toán vị trí cho lanthanoids/actinoids
+                const position = element.atomicNumber - (element.category === 'lanthanoid' ? 56 : 88);
+                el.style.gridColumn = position;
+                lanthanoidactinoidSeries.appendChild(el);
             }
-        }
-
-        function closeDetails() {
-            document.getElementById('detail-table').style.display = 'none';
-        }
-
-        // Đường dẫn đến thư mục asset
-        const assetPath = './assets';
-
-        // Dữ liệu mẫu cho các nguyên tố
-        const elementData = {
-            'Hydrogen': {
-                readingGuide: 'Hy-dro-gen',
-                properties: 'Hydrogen is the lightest element and highly flammable.',
-                applications: 'Used in fuel cells, rocket fuel, and ammonia production.',
-                image: 'assets/images/hydrogen.png',
-                video: 'assets/videos/hydrogen.mp4'
-            },
-            'Oxygen': {
-                readingGuide: 'Ox-y-gen',
-                properties: 'Oxygen supports combustion and is essential for respiration.',
-                applications: 'Used in medical treatments, welding, and space suits.',
-                image: 'images/oxygen.jpg',
-                video: 'videos/oxygen.mp4'
-            },
-            'Carbon': {
-                readingGuide: 'Car-bon',
-                properties: 'Carbon is the basis of all known life and has many allotropes.',
-                applications: 'Used in steel production, batteries, and diamond industry.',
-                image: 'images/carbon.jpg',
-                video: 'videos/carbon.mp4'
-            },
-            'Gold': {
-                readingGuide: 'Gold',
-                properties: 'Gold is highly conductive and does not tarnish.',
-                applications: 'Used in jewelry, electronics, and aerospace technology.',
-                image: 'images/gold.jpg',
-                video: 'videos/gold.mp4'
-            }
-        };
-
-
-        function showDetails(event) {
-            const td = event.target.closest('td');
-            const elementAbbr = td.querySelector('abbr');
-            if (!elementAbbr) return;
-
-            const elementName = elementAbbr.title;
-            correctElement = elementName;
-            incorrectAttempts = 0;
-
-            // Reset các trường quiz
-            document.getElementById('quiz-input').value = "";
-            document.getElementById('quiz-result').textContent = "";
-            document.getElementById('correct-element-name').style.display = "none";
-
-            // Cập nhật tên nguyên tố
-            document.getElementById('element-name').textContent = elementName;
-
-            // Lấy dữ liệu từ elementData
-            const data = elementData[elementName] || {};
-
-            // Cập nhật cách đọc
-            document.getElementById('reading-guide').textContent = data.readingGuide || "No data available";
-
-            // Cập nhật tính chất
-            document.getElementById('properties-videos').textContent = data.properties || "No data available";
-
-            // Cập nhật ứng dụng
-            document.getElementById('applications-image').textContent = data.applications || "No data available";
-
-            // Cập nhật ảnh ứng dụng
-            if (data.image) {
-                document.getElementById('applications-image').innerHTML = `<img src="${data.image}" alt="Application of ${elementName}">`;
+            // Xử lý các nguyên tố khác
+            else {
+                // Thêm vào bảng chính
+                el.style.gridColumn = element.group;
+                el.style.gridRow = element.period;
+                table.appendChild(el);
             }
 
-            // Cập nhật video tính chất
-            if (data.video) {
-                document.getElementById('properties-videos').innerHTML = `
-                    <video controls>
-                        <source src="${data.video}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                `;
-            }
-
-            // Hiển thị bảng chi tiết
-            document.getElementById('detail-table').style.display = 'block';
-        }
-
-        // Close Table
-        function closeDetails() {
-            document.getElementById('detail-table').style.display = 'none';
-        }
-
-        function readElementName() {
-            const elementName = document.getElementById('element-name').textContent;
-
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(elementName);
-                utterance.lang = 'en-US';
-                speechSynthesis.speak(utterance);
-            } else {
-                alert("Your browser does not support speech synthesis.");
-            }
-        }
-
-        const cycleMap = new Map();
-        const groupMap = new Map();
-
-        // Khởi tạo dữ liệu một lần duy nhất
-        document.querySelectorAll('td').forEach(cell => {
-            const cycle = cell.getAttribute('data-cycle');
-            const group = cell.getAttribute('data-group');
-
-            if (cycle) {
-                if (!cycleMap.has(cycle)) cycleMap.set(cycle, []);
-                cycleMap.get(cycle).push(cell);
-            }
-
-            if (group) {
-                if (!groupMap.has(group)) groupMap.set(group, []);
-                groupMap.get(group).push(cell);
-            }
+            el.innerHTML = `
+        <div class="atomic-number">${element.atomicNumber}</div>
+        <div class="symbol">${element.symbol}</div>
+        <div class="details">
+            ${element.name}<br>
+            ${element.mass}
+        </div>
+    `;
         });
 
-        function toggleHighlight() {
-            const mode = document.getElementById('modeSelector').value;
-            const allCells = document.querySelectorAll('td');
 
-            // Xóa tất cả hiệu ứng cũ trước khi áp dụng mới
-            allCells.forEach(cell => {
-                cell.classList.remove('highlight-cycle', 'highlight-group');
+        // Xử lý hover
+        document.querySelectorAll('.control-btn').forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                const category = btn.dataset.category;
+                document.querySelectorAll('.element').forEach(el => {
+                    if (!el.classList.contains(category)) {
+                        el.classList.add('highlight');
+                    }
+                });
             });
 
-            if (mode === 'cycle') {
-                cycleMap.forEach((cells) => {
-                    cells.forEach(cell => {
-                        cell.classList.add('highlight-cycle');
-                    });
+            btn.addEventListener('mouseleave', () => {
+                document.querySelectorAll('.element').forEach(el => {
+                    el.classList.remove('highlight');
                 });
-            } else if (mode === 'group') {
-                groupMap.forEach((cells) => {
-                    cells.forEach(cell => {
-                        cell.classList.add('highlight-group');
-                    });
-                });
-            }
+            });
+        });
+
+        // Modal logic
+        let selectedElements = [];
+
+        function removeElement(atomicNumber) {
+            selectedElements = selectedElements.filter(e => e.atomicNumber !== atomicNumber);
+            updateSelectedElements();
         }
 
+        document.querySelectorAll('.element').forEach(element => {
+            element.addEventListener('click', function () {
+                const atomicNumber = parseInt(this.dataset.atomicNumber);
+                const elementData = elements.find(e => e.atomicNumber === atomicNumber);
+                showElementModal(elementData);
+            });
+        });
 
+        function showElementModal(element) {
+            currentElement = element;
+            wrongAttempts = 0;
 
+            // Reset UI chỉ khi chưa đoán đúng và chưa reveal
+            if (!element.guessed && !element.revealed) {
+                document.getElementById('hiddenName').textContent = '???';
+                document.getElementById('hiddenName').style.color = '#666';
+                document.getElementById('guessContainer').style.display = 'block';
+            } else {
+                document.getElementById('hiddenName').textContent = element.name;
+                document.getElementById('guessContainer').style.display = 'none';
 
-        // Thêm xử lý hover cho minh họa
-        document.querySelectorAll('td').forEach(cell => {
-            cell.addEventListener('mouseover', function () {
-                if (document.getElementById('modeSelector').value === 'cycle') {
-                    this.style.transform = 'scale(1.05)';
+                if (element.guessed) {
+                    document.getElementById('hiddenName').style.color = '#4CAF50';
+                } else {
+                    document.getElementById('hiddenName').style.color = 'orange';
                 }
+            }
+
+            // Hiển thị thông tin
+            document.getElementById('elementSymbol').textContent = element.symbol;
+            document.getElementById('elementAtomicNumber').textContent = element.atomicNumber;
+            document.getElementById('elementMass').textContent = element.mass;
+            document.getElementById('elementElectronegativity').textContent = element.electronegativity || 'N/A';
+            document.getElementById('elementElectronConfig').textContent = element.electronConfig || 'N/A';
+            document.getElementById('elementPronunciation').textContent = element.pronunciation || 'N/A';
+
+            // Xử lý media
+            const videoElement = document.getElementById('elementVideo');
+            const imgElement = document.getElementById('elementImage');
+            videoElement.style.display = element.video ? 'block' : 'none';
+            imgElement.style.display = element.image ? 'block' : 'none';
+            videoElement.src = element.video || '';
+            imgElement.src = element.image || '';
+
+            // Hiển thị modal
+            document.getElementById('elementModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('elementModal').style.display = 'none';
+        }
+
+        function speakName() {
+            const synth = window.speechSynthesis;
+            const utterance = new SpeechSynthesisUtterance(currentElement.name); // Sửa ở đây
+            utterance.lang = 'en-US';
+            synth.speak(utterance);
+        }
+
+        function getPropertyName(prop) {
+            const names = {
+                atomicNumber: 'Số nguyên tử',
+                mass: 'Khối lượng nguyên tử',
+                electronegativity: 'Độ âm điện',
+                meltingPoint: 'Điểm nóng chảy (°C)',
+                boilingPoint: 'Điểm sôi (°C)'
+            };
+            return names[prop] || prop;
+        }
+
+        // Kiểm tra xem người dùng đã đoán đúng tên nguyên tố chưa
+        function checkGuess() {
+            const userGuess = document.getElementById('guessInput').value.trim().toLowerCase();
+            const correctName = currentElement.name.toLowerCase();
+            const feedbackEl = document.getElementById('guessFeedback');
+
+            if (userGuess === correctName) {
+                currentElement.guessed = true;
+                document.getElementById('hiddenName').textContent = currentElement.name;
+                document.getElementById('hiddenName').style.color = '#4CAF50';
+                feedbackEl.textContent = '';
+                document.getElementById('guessContainer').style.display = 'none';
+            } else {
+                wrongAttempts++;
+                feedbackEl.textContent = `Sai! (${wrongAttempts}/5 lần)`;
+                feedbackEl.style.color = 'red';
+
+                if (wrongAttempts >= 5) {
+                    currentElement.revealed = true;
+                    document.getElementById('hiddenName').textContent = currentElement.name;
+                    document.getElementById('hiddenName').style.color = 'orange';
+                    document.getElementById('guessContainer').style.display = 'none';
+                }
+            }
+        }
+        // Hover effect
+        document.querySelectorAll('.control-btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function () {
+                const category = this.dataset.category;
+                document.querySelectorAll('.element').forEach(el => {
+                    el.style.opacity = el.classList.contains(category) ? 1 : 0.3;
+                });
             });
 
-            cell.addEventListener('mouseout', function () {
-                this.style.transform = 'scale(1)';
+            btn.addEventListener('mouseleave', function () {
+                document.querySelectorAll('.element').forEach(el => {
+                    el.style.opacity = 1;
+                });
             });
+        });
+
+        // Responsive
+        window.addEventListener('resize', () => {
+            const elements = document.querySelectorAll('.element');
+            if (window.innerWidth < 768) {
+                elements.forEach(el => el.style.fontSize = '8px');
+            } else {
+                elements.forEach(el => el.style.fontSize = '12px');
+            }
         });
     </script>
 </body>
