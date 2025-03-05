@@ -495,9 +495,7 @@
         .element-large {
             grid-column: 6 / 10;
             grid-row: 1 / 4;
-            background: inherit !important;
-            /* Thêm !important */
-            color: inherit !important;
+            color: inherit;
             border: 3px solid currentColor !important;
             display: none;
             flex-direction: column;
@@ -1055,21 +1053,16 @@
         // Xử lý sự kiện hover (mouseenter và mouseleave) cho các phần tử trong bảng tuần hoàn
         document.querySelectorAll('.element').forEach(el => {
             el.addEventListener('mouseenter', function () {
-                // Lấy số nguyên tử từ thuộc tính data
                 const atomicNumber = parseInt(this.dataset.atomicNumber);
-
-                // Tìm thông tin nguyên tố từ mảng elements
                 const element = elements.find(e => e.atomicNumber === atomicNumber);
-
-                // Lấy phần tử lớn để hiển thị thông tin chi tiết
                 const largeBox = document.getElementById('largeElementBox');
 
-                // Lấy màu nền thực tế từ computed style của phần tử được hover
+                // Lấy màu từ computed style và thêm !important
                 const computedColor = window.getComputedStyle(this).backgroundColor;
+                largeBox.style.cssText = `background-color: ${computedColor} !important; 
+                            color: ${window.getComputedStyle(this).color} !important;`;
 
-                // Thiết lập class và màu nền cho phần tử lớn
                 largeBox.className = `element-large ${element.category} active`;
-                largeBox.style.backgroundColor = computedColor; // Áp dụng màu nền
 
                 // Điền thông tin vào phần tử lớn
                 largeBox.innerHTML = `
