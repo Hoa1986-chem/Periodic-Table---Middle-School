@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Bảng Tuần Hoàn Hoá Học</title>
-    <link rel="icon" href="images/faviconpng.png" type="image/x-icon">  <!-- Đường dẫn tới favicon của bạn -->
+    <link rel="icon" href="images/faviconpng.png" type="image/x-icon"> <!-- Đường dẫn tới favicon của bạn -->
     <style>
         body {
             display: flex;
@@ -43,7 +43,11 @@
             transition: all 0.2s;
             background-color: #fff;
             min-height: 60px;
+            min-width: 60px;
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .modal {
@@ -224,14 +228,14 @@
             gap: 2px;
             margin-top: 10px;
             width: 100%;
-            /* Căn chỉnh độ rộng phù hợp */
-            margin-left: 12%;
-            /* Căn lề trái để khớp vị trí */
+
         }
 
         .empty-cell {
-            background-color: transparent !important;
+            background: transparent !important;
             border: none !important;
+            box-shadow: none !important;
+            pointer-events: none !important;
         }
 
         .group-numbers {
@@ -742,14 +746,215 @@
                 left: 3%;
             }
         }
+
+        /* Chế độ game */
+        .game-mode .element .details,
+        .game-mode .element:hover {
+            transform: none !important;
+            z-index: auto !important;
+        }
+
+        .game-mode .element {
+            background-color: #f0f0f0 !important;
+            /* Override màu nhóm */
+            color: #333 !important;
+            cursor: pointer;
+        }
+
+        .blur-period {
+            opacity: 0.3;
+            filter: blur(1px);
+            pointer-events: none;
+        }
+
+        .mode-switcher {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            display: flex;
+            gap: 15px;
+            margin: 20px;
+            text-align: center;
+        }
+
+        .mode-switcher button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 5px;
+            color: #333;
+        }
+
+        .mode-switcher .active-mode {
+            border-bottom: 2px solid #2196F3;
+            font-weight: bold;
+        }
+
+        .game-controls {
+            position: absolute;
+            top: 150px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            z-index: 1000;
+            display: none;
+            /* Ẩn mặc định */
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            flex-direction: column;
+    align-items: center;
+        }
+
+        .game-mode .game-controls {
+            display: block;
+            /* Hiện khi vào game */
+        }
+
+        #endGameBtn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+
+        #gameInfo {
+            text-align: center;
+            font-size: 18px;
+            margin: 10px;
+        }
+
+        /* Thêm các style mới */
+        .game-mode .element .details {
+            display: none !important;
+        }
+
+        .game-mode .element.blur-period {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .game-mode.hard-mode .atomic-number,
+        .game-mode.hard-mode .symbol {
+            display: none !important;
+        }
+
+        .game-mode.medium-mode .symbol {
+            display: none !important;
+        }
+
+        #timerBar {
+            height: 5px;
+            background: #4CAF50;
+            width: 100%;
+            /* Thêm vào */
+            transition: width linear;
+            border-radius: 2px;
+            /* Thêm vào */
+        }
+
+        .game-result {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            border: 3px solid #4CAF50;
+        }
+
+        .game-result.low {
+            border-color: #ff4444;
+        }
+
+        .timer-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .time-label {
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        #timerBar {
+            flex-grow: 1;
+            height: 5px;
+            transition: none;
+            /* Sửa trong hàm startTimer */
+        }
+
+        /* Tắt hover và click trong game */
+        .game-mode .element {
+            pointer-events: auto !important;
+            transform: none !important;
+        }
+
+        /* Màu cho ô đã chọn đúng */
+        .element.correct {
+            background: #4CAF50 !important;
+            animation: none !important;
+        }
     </style>
 </head>
 
 <body>
     <audio id="correctSound" src="sounds/correct.mp3"></audio>
     <audio id="wrongSound" src="sounds/wrong.mp3"></audio>
-    <h2 style="text-align: center;">Bảng tuần hoàn hóa học</h2>
-    <!-- Thêm ngay sau thẻ mở <body> -->
+    <h2 style="text-align: center;">BẢNG TUẦN HOÀN CÁC NGUYÊN TỐ HÓA HỌC <br>Periodic Table of the Elements</h2>
+    <!-- Đặt phần này ngay dưới thẻ h2 -->
+    <div id="gameResult" class="game-result" style="display: none;">
+        <h3>Kết quả trò chơi</h3>
+        <p>Tổng điểm: <span id="finalScore">0</span></p>
+        <p>Số câu đúng: <span id="totalCorrect">0</span></p>
+    </div>
+
+    <!-- Thêm phần chuyển đổi chế độ -->
+    <div class="mode-switcher">
+        <button class="active-mode" onclick="showPeriodicTable()">Bảng Tuần Hoàn</button>
+        <button onclick="showGameMode()">Chơi Game</button>
+    </div>
+
+    <div id="highScore" style="position: fixed; top: 60px; right: 20px;">
+        Điểm cao nhất: <span>${highScore}</span>
+    </div>
+
+    <div id="gameResult" class="game-result">
+        <h3>Kết quả trò chơi</h3>
+        <p>Tổng điểm: <span id="finalScore">0</span></p>
+        <p>Số câu đúng: <span id="totalCorrect">0</span></p>
+        <button onclick="closeResult()">Đóng</button>
+    </div>
+
+    <!-- Thêm vào phần HTML -->
+    <div id="gamePanel" style="display: none;">
+        <div class="game-controls">
+            <select id="difficulty">
+                <option value="easy">Dễ (Chu kỳ 1-3, 10s)</option>
+                <option value="medium">Trung Bình (Chu kỳ 1-4, 7s)</option>
+                <option value="hard">Khó (Chu kỳ 1-6, 3s)</option>
+            </select>
+            <button onclick="startGame()">Bắt đầu Game</button>
+            <button onclick="endGame()" id="endGameBtn" style="display: none;">Kết thúc</button>
+        </div>
+        <div id="gameInfo">
+            <div class="timer-container">
+                <span class="time-label">Thời gian: </span>
+                <div id="timerBar"></div>
+            </div>
+            <p>Điểm: <span id="score">0</span></p>
+            <p>Tìm nguyên tố: <strong id="targetElement"></strong></p>
+        </div>
+    </div>
+
     <div class="vertical-controls">
         <button class="control-btn nonmetal">Phi kim</button>
         <button class="control-btn metal">Kim loại</button>
@@ -882,7 +1087,6 @@
             <button class="control-btn alkali-metal">Kim loại kiềm</button>
             <button class="control-btn alkaline-earth">Kiềm thổ</button>
             <button class="control-btn transition-metal">Kim loại chuyển tiếp</button>
-            <button class="control-btn group-a-metal">Kim loại nhóm A</button>
             <button class="control-btn halogen">Halogen</button>
             <button class="control-btn lanthanoid">Họ Lantan</button>
             <button class="control-btn actinoid">Họ Actini</button>
@@ -2668,7 +2872,7 @@
                 category: 'lanthanoid metal',
                 group: 'N/A',
                 period: 6,
-                block: 'f-block',
+                block: '',
                 electronegativity: 1.1,
                 meltingPoint: 920,
                 boilingPoint: 3464,
@@ -2968,7 +3172,7 @@
                 category: 'actinoid metal',
                 group: 'N/A',
                 period: 7,
-                block: 'f-block',
+                block: '',
                 electronegativity: 1.1,
                 meltingPoint: 1050,
                 boilingPoint: 3200,
@@ -3265,15 +3469,15 @@
                 name: 'Khối các nguyên tố s',
                 info: [
                     'Electron cuối cùng điền vào phân lớp s.',
-                    'Bao gồm nhóm IA và IIA (kim loại kiềm, kiềm thổ).',
-                    'Dễ mất electron, tính kim loại cao.'
+                    'Bao gồm nhóm IA và IIA và He (nhóm VIIIA).',
+                    'Dễ mất electron, tính kim loại cao.',
                 ]
             },
             'p-block': {
                 name: 'Khối các nguyên tố p',
                 info: [
                     'Electron cuối cùng điền vào phân lớp p.',
-                    'Bao gồm nhóm IIIA đến VIIIA.',
+                    'Bao gồm nhóm IIIA đến VIIIA (trừ He).',
                     'Có tính phi kim và oxy hóa mạnh.'
                 ]
             },
@@ -3281,7 +3485,7 @@
                 name: 'Khối các nguyên tố d',
                 info: [
                     'Electron cuối cùng điền vào phân lớp d.',
-                    'Bao gồm kim loại chuyển tiếp nhóm IIIB đến IIB.',
+                    'Bao gồm nguyên tố nhóm B.',
                     'Dẫn điện tốt, tính kim loại rõ rệt.'
                 ]
             },
@@ -3289,7 +3493,7 @@
                 name: 'Khối các nguyên tố f ',
                 info: [
                     'Electron cuối cùng điền vào phân lớp f.',
-                    'Bao gồm nguyên tố Lantan và Actini (đất hiếm, phóng xạ).',
+                    'Nguyên tố hai hàng cuối bảng tuần hoàn, gồm 14 nguyên tố Lanthanide (Ce-Lu) và 14 Actinide (Th-Lr).',
                     'Có tính phóng xạ mạnh.'
                 ]
             }
@@ -3376,6 +3580,9 @@
 
         document.querySelectorAll('.element').forEach(element => {
             element.addEventListener('click', function () {
+                if (document.body.classList.contains('game-mode')) {
+                    return; // Không mở modal khi ở chế độ chơi
+                }
                 const atomicNumber = parseInt(this.dataset.atomicNumber);
                 const elementData = elements.find(e => e.atomicNumber === atomicNumber);
                 showElementModal(elementData);
@@ -3385,6 +3592,9 @@
         // Xử lý sự kiện hover (mouseenter và mouseleave) cho các phần tử trong bảng tuần hoàn
         document.querySelectorAll('.element').forEach(el => {
             el.addEventListener('mouseenter', function () {
+                if (document.body.classList.contains('game-mode')) {
+                    return; // Không làm gì khi ở chế độ chơi
+                }
                 const atomicNumber = parseInt(this.dataset.atomicNumber);
                 const element = elements.find(e => e.atomicNumber === atomicNumber);
                 const largeBox = document.getElementById('largeElementBox');
@@ -3581,10 +3791,10 @@
             'nonmetal': {
                 name: 'PHI KIM',
                 info: [
-                    'Cách điện (trừ than chì)',
-                    'Thường tồn tại dạng khí',
-                    'Độ âm điện cao',
-                    'Có tính oxy hóa mạnh'
+                    'Nguyên tử có 5, 6, 7 electron ngoài cùng là phi kim.',
+                    'Nguyên tử có 4 electron có thể là kim loại hoặc phi kim.',
+                    'Tính phi kim là khả năng nhận electron.',
+                    'Trong chu kì, tính phi kim tăng; trong nhóm, tính phi kim giảm.'
                 ]
             },
             'halogen': {
@@ -3597,10 +3807,7 @@
             'noble-gas': {
                 name: 'KHÍ HIẾM',
                 info: [
-                    'Trơ về mặt hóa học',
-                    'Cấu hình electron bền',
-                    'Không màu, không mùi',
-                    'Ứng dụng chiếu sáng'
+                    'Nguyên tử có 8 electron ở lớp ngoài cùng là khí hiếm (trừ HHelium có 2 electron lớp ngoài cùng).',
                 ]
             },
             'lanthanoid': {
@@ -3615,9 +3822,10 @@
             'metal': {
                 name: 'KIM LOẠI',
                 info: [
-                    'Bao gồm kim loại kiềm, kiềm thổ, chuyển tiếp và nhóm A',
-                    'Dẫn điện tốt, có ánh kim',
-                    'Dễ mất electron tạo cation'
+                    'Nguyên tử có 1, 2, 3 electron ngoài cùng là kim loại (trừ H, He, B).',
+                    'Nguyên tử có 4 electron có thể là kim loại hoặc phi kim.',
+                    'Tính kim loại là khả năng nhường electron.',
+                    'Trong chu kì, tính kim loại giảm; trong nhóm, tính kim loại tăng.'
                 ]
             },
             'group-a-metal': {
@@ -3694,7 +3902,6 @@
                     'Nguyên tố có cấu hình electron và tính chất hóa học tương tự được xếp vào các nhóm.',
                     'Bảng tuần hoàn có 18 cột, gồm 8 nhóm A và 8 nhóm B, nhóm VIIIB có 3 cột.',
                     'Số thứ tự nhóm A bằng số electron lớp ngoài cùng.',
-                    'Các nhóm phân loại nguyên tố theo tính chất và cấu hình electron.',
                 ]
             }
         };
@@ -3731,6 +3938,219 @@
         document.querySelector('.group-title').addEventListener('mouseleave', function () {
             document.querySelector('.category-info').classList.remove('active');
             document.querySelectorAll('.group-numbers div').forEach(el => el.classList.remove('highlight-group'));
+        });
+        // Thêm các biến toàn cục
+        let currentGame = {
+            isPlaying: false,
+            score: 0,
+            targetElement: null,
+            timer: null,
+            timeLimit: 0,
+            remainingElements: [],
+            difficulty: 'easy',
+            totalCorrect: 0
+        };
+
+        // Hàm chuyển đổi chế độ
+        function showPeriodicTable() {
+            document.body.classList.remove('game-mode');
+            document.getElementById('gamePanel').style.display = 'none';
+            // Hiện lại controls
+            document.querySelector('.vertical-controls').style.display = 'flex';
+            document.querySelector('.controls').style.display = 'block';
+        }
+
+        function showGameMode() {
+            document.body.classList.add('game-mode');
+            document.getElementById('gamePanel').style.display = 'block';
+
+            // Ẩn tất cả controls
+            document.querySelector('.vertical-controls').style.display = 'none';
+            document.querySelector('.controls').style.display = 'none';
+
+        }
+
+        let highScore = localStorage.getItem('highScore') || 0;
+        document.querySelector('#highScore span').textContent = highScore;
+        // Hàm khởi tạo game
+        // Cập nhật hàm startGame
+        function startGame() {
+            currentGame.difficulty = document.getElementById('difficulty').value;
+            document.getElementById('gameResult').style.display = 'none';
+            document.body.className = `game-mode ${currentGame.difficulty}-mode`;
+
+            // Reset game state
+            currentGame.score = 0;
+            currentGame.totalCorrect = 0;
+            updateScore();
+            document.getElementById('endGameBtn').style.display = 'inline';
+            currentGame.isPlaying = true;
+
+            // Xác định phạm vi chu kỳ
+            let maxPeriod;
+            switch (currentGame.difficulty) {
+                case 'easy': maxPeriod = 3; break;
+                case 'medium': maxPeriod = 4; break;
+                case 'hard': maxPeriod = 6; break;
+            }
+
+            // Làm mờ các chu kỳ không liên quan
+            document.querySelectorAll('.element').forEach(el => {
+                const period = parseInt(el.dataset.period); // Thêm data-period cho các element
+                if (period > maxPeriod) {
+                    el.classList.add('blur-period');
+                    el.style.pointerEvents = 'none';
+                } else {
+                    el.classList.remove('blur-period');
+                    el.style.pointerEvents = 'auto';
+                }
+            });
+
+            // Khởi tạo danh sách nguyên tố
+            currentGame.remainingElements = elements.filter(el =>
+                el.period <= maxPeriod &&
+                typeof el.atomicNumber === 'number' &&
+                !['La-Lu', 'Ac-Lr'].includes(el.symbol)
+            );
+
+            nextRound();
+        }
+
+        // Thêm hàm xử lý timer
+        function startTimer() {
+            const timerBar = document.getElementById('timerBar');
+            timerBar.style.width = '100%';
+            timerBar.style.transition = 'none'; // Reset transition
+            void timerBar.offsetWidth; // Trigger reflow
+
+            timerBar.style.transition = `width ${currentGame.timeLimit / 1000}s linear`;
+            timerBar.style.width = '0%';
+
+            currentGame.timer = setTimeout(() => {
+                handleTimeout();
+            }, currentGame.timeLimit);
+        }
+
+        function handleTimeout() {
+            let penalty = { easy: 5, medium: 10, hard: 20 }[currentGame.difficulty];
+            currentGame.score = Math.max(0, currentGame.score - penalty);
+            updateScore();
+            nextRound();
+        }
+
+        // Cập nhật hàm nextRound
+        function nextRound() {
+            if (!currentGame.remainingElements.length) {
+                endGame();
+                return;
+            }
+
+            // Chọn ngẫu nhiên nguyên tố
+            const randomIndex = Math.floor(Math.random() * currentGame.remainingElements.length);
+            currentGame.targetElement = currentGame.remainingElements[randomIndex];
+            document.getElementById('targetElement').textContent = currentGame.targetElement.name;
+
+            // Cài đặt thời gian
+            currentGame.timeLimit = {
+                easy: 10000,
+                medium: 7000,
+                hard: 3000
+            }[currentGame.difficulty];
+
+            startTimer();
+        }
+
+
+        // Hàm cập nhật điểm
+        function updateScore() {
+            document.getElementById('score').textContent = currentGame.score;
+        }
+
+        // Cập nhật hàm endGame
+        function endGame() {
+
+            currentGame.isPlaying = false;
+            clearTimeout(currentGame.timer);
+            alert(`Kết thúc!\nĐiểm: ${currentGame.score}\nSố nguyên tố đúng: ${currentGame.totalCorrect}`);
+            document.getElementById('endGameBtn').style.display = 'none';
+            document.querySelectorAll('.element').forEach(el => {
+                el.classList.remove('blur-period');
+                el.style.pointerEvents = 'auto';
+            });
+            const resultEl = document.getElementById('gameResult');
+            resultEl.style.display = 'block';
+            document.getElementById('finalScore').textContent = currentGame.score;
+            document.getElementById('totalCorrect').textContent = currentGame.totalCorrect;
+
+            // Trong hàm endGame
+            if (currentGame.score > highScore) {
+                highScore = currentGame.score;
+                localStorage.setItem('highScore', highScore);
+            }
+
+            //Change1
+            document.getElementById('gamePanel').style.display = 'none';
+
+            // Đổi màu theo điểm
+            resultEl.className = 'game-result ' + (
+                currentGame.score >= 200 ? 'high' :
+                    currentGame.score >= 100 ? 'medium' : 'low'
+            );
+            const messages = [
+                { threshold: 0, text: "Don't give up, try again!" },
+                { threshold: 100, text: "Good effort!" },
+                { threshold: 200, text: "Excellent work!" }
+            ];
+
+            let message = messages[0].text;
+            for (let msg of messages) {
+                if (currentGame.score >= msg.threshold) message = msg.text;
+            }
+
+            document.getElementById('gameResult').innerHTML = `
+        <h3>Kết quả</h3>
+        <p>Tìm thấy ${currentGame.totalCorrect}/118 nguyên tố</p>
+        <p>Điểm số: ${currentGame.score}</p>
+        <p>${message}</p>
+        <button onclick="closeResult()">Đóng</button>`;
+        }
+
+        // Cập nhật sự kiện click nguyên tố
+        document.querySelectorAll('.element').forEach(el => {
+            el.addEventListener('click', function () {
+                if (!currentGame.isPlaying) return;
+
+                const atomicNumber = parseInt(this.dataset.atomicNumber);
+                let isCorrect = false;
+
+                if (atomicNumber === currentGame.targetElement.atomicNumber) {
+                    currentGame.score += 50;
+                    currentGame.totalCorrect++;
+                    currentGame.remainingElements = currentGame.remainingElements.filter(
+                        el => el.atomicNumber !== atomicNumber
+                    );
+                    isCorrect = true;
+                } else {
+                    currentGame.score -= 30;
+                }
+
+                if (isCorrect) {
+                    this.classList.add('correct');
+                    this.style.pointerEvents = 'none'; // Ngăn chọn lại
+                }
+
+                // Hiệu ứng visual
+                this.style.transform = isCorrect ? 'scale(1.2)' : 'scale(0.9)';
+                this.style.backgroundColor = isCorrect ? '#4CAF50' : '#ff4444';
+                setTimeout(() => {
+                    this.style.transform = '';
+                    this.style.backgroundColor = '';
+                }, 500);
+
+                updateScore();
+                clearTimeout(currentGame.timer);
+                if (currentGame.isPlaying) nextRound();
+            });
         });
     </script>
 </body>
