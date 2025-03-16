@@ -767,7 +767,7 @@
         }
 
         .blur-period {
-            opacity: 0.3;
+            opacity: 0.1;
             filter: blur(1px);
             pointer-events: none;
         }
@@ -840,7 +840,7 @@
         }
 
         .game-mode .element.blur-period {
-            opacity: 0.3;
+            opacity: 0.1;
             pointer-events: none;
         }
 
@@ -1006,7 +1006,7 @@
         }
 
         .highlight-series~.element:not(.highlight-series) {
-            opacity: 0.2 !important;
+            opacity: 0.1 !important;
         }
 
         @keyframes glow {
@@ -1074,6 +1074,24 @@
         .element[symbol="Ac-Lr"]:hover {
             transform: scale(1.1);
             z-index: 1;
+        }
+
+        /* Responsive for Prediotric Table */
+        @media (max-width: 1024px) {
+            .mode-switcher {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mode-switcher {
+                position: static;
+            }
+        }
+
+        #highScore,
+        #recentScore {
+            display: none;
         }
     </style>
 </head>
@@ -3051,7 +3069,7 @@
                 category: 'lanthanoid metal',
                 group: 'N/A',
                 period: 6,
-                block: '',
+                block: 'd-block',
                 electronegativity: 1.1,
                 meltingPoint: 920,
                 boilingPoint: 3464,
@@ -3351,7 +3369,7 @@
                 category: 'actinoid metal',
                 group: 'N/A',
                 period: 7,
-                block: '',
+                block: 'd-block',
                 electronegativity: 1.1,
                 meltingPoint: 1050,
                 boilingPoint: 3200,
@@ -3716,7 +3734,7 @@
             // Trong phần tạo element, thêm sự kiện hover
             if (element.symbol === 'La-Lu') {
                 el.addEventListener('mouseenter', () => {
-                    document.querySelectorAll('.element:not(.lanthanoid)').forEach(el => el.style.opacity = '0.3');
+                    document.querySelectorAll('.element:not(.lanthanoid)').forEach(el => el.style.opacity = '0.1');
                     document.querySelectorAll('.lanthanoid').forEach(el => el.style.opacity = '1');
                 });
                 el.addEventListener('mouseleave', () => {
@@ -3726,7 +3744,7 @@
             // Tương tự cho Ac-Lr
             if (element.symbol === 'Ac-Lr') {
                 el.addEventListener('mouseenter', () => {
-                    document.querySelectorAll('.element:not(.actinoid)').forEach(el => el.style.opacity = '0.3');
+                    document.querySelectorAll('.element:not(.actinoid)').forEach(el => el.style.opacity = '0.1');
                     document.querySelectorAll('.actinoid').forEach(el => el.style.opacity = '1');
                 });
                 el.addEventListener('mouseleave', () => {
@@ -3760,7 +3778,7 @@
 
                 // Highlight các nguyên tố
                 document.querySelectorAll('.element').forEach(el => {
-                    el.style.opacity = el.classList.contains(category) ? 1 : 0.3;
+                    el.style.opacity = el.classList.contains(category) ? 1 : 0.1;
                 });
             });
 
@@ -3932,7 +3950,7 @@
                 const block = this.classList[1];
                 document.querySelectorAll('.element').forEach(el => {
                     if (!el.classList.contains(block)) {
-                        el.style.opacity = '0.3'; // Làm mờ các block khác
+                        el.style.opacity = '0.1'; // Làm mờ các block khác
                     } else {
                         el.style.opacity = '1'; // Giữ nguyên màu block hiện tại
                     }
@@ -4055,7 +4073,7 @@
 
                 // Xử lý highlight
                 document.querySelectorAll('.element').forEach(el => {
-                    el.style.opacity = el.classList.contains(category) ? 1 : 0.3;
+                    el.style.opacity = el.classList.contains(category) ? 1 : 0.1;
                 });
 
                 // Hiển thị thông tin nhóm
@@ -4172,6 +4190,10 @@
             // Ẩn tất cả controls
             document.querySelector('.vertical-controls').style.display = 'none';
             document.querySelector('.controls').style.display = 'none';
+
+            // Hiển thị điểm cao nhất và lượt gần nhất
+            document.getElementById("highScore").style.display = "block";
+            document.getElementById("recentScore").style.display = "block";
 
             // Cập nhật active mode
             document.querySelectorAll('.mode-switcher button').forEach(btn => btn.classList.remove('active-mode'));
@@ -4371,6 +4393,9 @@
                     isCorrect = true;
                 } else {
                     currentGame.score -= 30;
+                    currentGame.remainingElements = currentGame.remainingElements.filter(
+                        el => el.atomicNumber !== currentGame.targetElement.atomicNumber
+                    );
                 }
 
                 if (isCorrect) {

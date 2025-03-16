@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Bảng Tuần Hoàn Hoá Học</title>
-    <link rel="icon" href="images/faviconpng.png" type="image/x-icon">  <!-- Đường dẫn tới favicon của bạn -->
+    <link rel="icon" href="images/faviconpng.png" type="image/x-icon"> <!-- Đường dẫn tới favicon của bạn -->
     <style>
         body {
             display: flex;
@@ -42,8 +42,13 @@
             position: relative;
             transition: all 0.2s;
             background-color: #fff;
-            min-height: 60px;
+            min-height: 50px;
+            min-width: 50px;
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transition: all 0.3s ease, background-color 0.3s ease !important;
         }
 
         .modal {
@@ -135,6 +140,10 @@
             background-color: #FF6666 !important;
         }
 
+        .color-custom {
+            background: linear-gradient(90deg, #FFD700, #FF8C00);
+        }
+
         .alkaline-earth {
             background-color: #FFDEAD !important;
         }
@@ -224,14 +233,14 @@
             gap: 2px;
             margin-top: 10px;
             width: 100%;
-            /* Căn chỉnh độ rộng phù hợp */
-            margin-left: 12%;
-            /* Căn lề trái để khớp vị trí */
+
         }
 
         .empty-cell {
-            background-color: transparent !important;
+            background: transparent !important;
             border: none !important;
+            box-shadow: none !important;
+            pointer-events: none !important;
         }
 
         .group-numbers {
@@ -264,7 +273,6 @@
             display: flex;
         }
 
-        /* Thêm vào cuối phần style */
         .element[symbol="La-Lu"] {
             grid-column: 3;
             grid-row: 6;
@@ -742,7 +750,343 @@
                 left: 3%;
             }
         }
-        
+
+        /* Chế độ game */
+        .game-mode .element .details,
+        .game-mode .element:hover {
+            transform: none !important;
+            z-index: auto !important;
+        }
+
+        .game-mode .element {
+            background-color: transparent !important;
+            /* Override màu nhóm */
+            color: #333 !important;
+            cursor: pointer;
+            background: transparent;
+        }
+
+        .blur-period {
+            opacity: 0.1;
+            filter: blur(1px);
+            pointer-events: none;
+        }
+
+        .mode-switcher {
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            display: flex;
+            gap: 15px;
+            margin: 20px;
+            text-align: center;
+        }
+
+        .mode-switcher button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 5px;
+            color: #333;
+        }
+
+        .mode-switcher .active-mode {
+            border-bottom: 2px solid #2196F3;
+            font-weight: bold;
+        }
+
+        .mode-switcher button.active-mode {
+            border-bottom: 2px solid #2196F3;
+            font-weight: bold;
+        }
+
+        .game-controls {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform: translateX(-50%);
+            width: 100%;
+            z-index: 1000;
+            display: none;
+            /* Ẩn mặc định */
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .game-mode .game-controls {
+            display: contents;
+            /* Hiện khi vào game */
+        }
+
+        #endGameBtn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+
+        #gameInfo {
+            text-align: center;
+            font-size: 18px;
+            margin: 10px;
+        }
+
+        /* Thêm các style mới */
+        .game-mode .element .details {
+            display: none !important;
+        }
+
+        .game-mode .element.blur-period {
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .game-mode.hard-mode .atomic-number,
+        .game-mode.hard-mode .symbol {
+            display: none !important;
+        }
+
+        .game-mode.medium-mode .symbol {
+            display: none !important;
+        }
+
+        #timerBar {
+            height: 5px;
+            background: #4CAF50;
+            width: 100%;
+            /* Thêm vào */
+            transition: width linear;
+            border-radius: 2px;
+            /* Thêm vào */
+        }
+
+        .game-result {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            border: 3px solid #4CAF50;
+            text-align: center;
+            min-width: 300px;
+        }
+
+        .game-result.low {
+            border-color: #ff4444;
+        }
+
+        .game-result.medium {
+            border-color: #ffc107;
+        }
+
+        .game-result.high {
+            border-color: #4CAF50;
+        }
+
+        .game-result button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+
+        .game-result button:hover {
+            background: #45a049;
+        }
+
+        #endGameBtn {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        #endGameBtn:hover {
+            background: #cc0000;
+            transform: scale(1.05);
+        }
+
+        #difficulty {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 2px solid #4CAF50;
+            background: white;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        #startGameBtn {
+            background: #23cd29 !important;
+            color: white !important;
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+            min-width: 100px;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        #startGameBtn:hover {
+            background: #1976D2 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .timer-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .time-label {
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        #timerBar {
+            flex-grow: 1;
+            height: 5px;
+            transition: none;
+            /* Sửa trong hàm startTimer */
+        }
+
+        /* Tắt hover và click trong game */
+        .game-mode .element {
+            pointer-events: auto !important;
+            transform: none !important;
+        }
+
+        /* Màu cho ô đã chọn đúng */
+        .element.correct {
+            background: #4CAF50 !important;
+            animation: none !important;
+        }
+
+        /* Thêm vào cuối phần style */
+        .lanthanoid-actinoid-series.highlight,
+        .lanthanoid-actinoid-series.highlight .element {
+            background-color: #ffd700 !important;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .highlight-series .element {
+            animation: glow 1s infinite alternate;
+            background-color: #ffd700 !important;
+            box-shadow: 0 0 10px #ffd700;
+        }
+
+        .highlight-series~.element:not(.highlight-series) {
+            opacity: 0.1 !important;
+        }
+
+        @keyframes glow {
+            from {
+                opacity: 0.8;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+
+        @keyframes correctGuess {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+                box-shadow: 0 0 15px #4CAF50;
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes wrongGuess {
+            0% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-10px);
+            }
+
+            50% {
+                transform: translateX(10px);
+            }
+
+            75% {
+                transform: translateX(-10px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background: #ddd;
+            margin: 10px 0;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #4CAF50;
+            transition: width 0.3s ease;
+        }
+
+        .element[symbol="La-Lu"]:hover,
+        .element[symbol="Ac-Lr"]:hover {
+            transform: scale(1.1);
+            z-index: 1;
+        }
+        /* Responsive for Prediotric Table */
+        @media (max-width: 1024px) {
+            .mode-switcher {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mode-switcher {
+                position: static;
+            }
+        }
     </style>
 </head>
 
@@ -750,8 +1094,58 @@
     <audio id="correctSound" src="sounds/correct.mp3"></audio>
     <audio id="wrongSound" src="sounds/wrong.mp3"></audio>
     <h2 style="text-align: center;">BẢNG TUẦN HOÀN CÁC NGUYÊN TỐ HÓA HỌC <br>Periodic Table of the Elements</h2>
-    
-    <!-- Thêm ngay sau thẻ mở <body> -->
+    <!-- Đặt phần này ngay dưới thẻ h2 -->
+    <div id="gameResult" class="game-result" style="display: none;">
+        <h3>Kết quả trò chơi</h3>
+        <p>Tìm thấy <span id="foundElements">0</span>/<span id="totalElements">0</span> nguyên tố</p>
+        <p>Điểm số: <span id="finalScore">0</span></p>
+        <p id="resultMessage"></p>
+        <button onclick="closeResult()">Đóng</button>
+    </div>
+
+    <!-- Thêm phần chuyển đổi chế độ -->
+    <div class="mode-switcher">
+        <button class="active-mode" onclick="showPeriodicTable()">Bảng Tuần Hoàn</button>
+        <button onclick="showGameMode()">Chơi Game</button>
+    </div>
+
+    <div id="highScore" style="position: fixed; top: 60px; right: 20px;">
+        Điểm cao nhất: <span>${highScore}</span>
+    </div>
+    <div id="recentScore" style="position: fixed; top: 90px; right: 20px;">
+        Lượt gần nhất: <span id="recentScoreValue">0</span> (Mức: <span id="recentDifficulty">-</span>)
+    </div>
+
+    <div id="gameResult" class="game-result">
+        <h3>Kết quả trò chơi</h3>
+        <p>Tổng điểm: <span id="finalScore">0</span></p>
+        <p>Số câu đúng: <span id="totalCorrect">0</span></p>
+        <button onclick="closeResult()">Đóng</button>
+    </div>
+
+    <!-- Thêm vào phần HTML -->
+    <div id="gamePanel" style="display: none;">
+        <div class="game-controls">
+            <div class="game-instruction">
+                🎮 Chọn mức độ và nhấn "Bắt đầu" để bắt đầu chơi!
+            </div>
+            <select id="difficulty">
+                <option value="easy">Dễ (Chu kỳ 1-3)</option>
+                <option value="medium">Trung Bình (Chu kỳ 1-4)</option>
+                <option value="hard">Khó (Chu kỳ 1-6)</option>
+            </select>
+            <button id="startGameBtn" onclick="startGame()">Bắt đầu</button>
+            <button onclick="endGame()" id="endGameBtn" style="display: none;">Kết thúc</button>
+        </div>
+        <div id="gameInfo">
+            <div class="progress-container">
+                <div class="progress-bar" id="timerBar"></div>
+            </div>
+            <p>Điểm: <span id="score">0</span></p>
+            <p>Tìm nguyên tố: <strong id="targetElement"></strong></p>
+        </div>
+    </div>
+
     <div class="vertical-controls">
         <button class="control-btn nonmetal">Phi kim</button>
         <button class="control-btn metal">Kim loại</button>
@@ -2018,7 +2412,7 @@
                 guessed: false,
                 revealed: false
             },
-            { symbol: 'La-Lu', name: 'Lanthanides', atomicNumber: '57-71', mass: ' ', category: 'lanthanoid metal', group: '3', period: '6', block: 'f-block' },
+            { symbol: 'La-Lu', name: 'Lanthanides', atomicNumber: '57-71', mass: ' ', category: 'color-custom lanthanoid metal', group: '3', period: '6', block: '' },
             {
                 symbol: 'Hf',
                 name: 'Hafnium',
@@ -2359,7 +2753,7 @@
                 guessed: false,
                 revealed: false
             },
-            { symbol: 'Ac-Lr', name: 'Actinides', atomicNumber: '89-103', mass: ' ', category: 'actinoid metal', group: '3', period: '7', block: 'f-block' },
+            { symbol: 'Ac-Lr', name: 'Actinides - Lawrencium', atomicNumber: '89-103', mass: ' ', category: 'color-custom actinoid metal', group: '3', period: '7', block: '' },
             {
                 symbol: 'Rf',
                 name: 'Rutherfordium',
@@ -2669,7 +3063,7 @@
                 category: 'lanthanoid metal',
                 group: 'N/A',
                 period: 6,
-                block: '',
+                block: 'd-block',
                 electronegativity: 1.1,
                 meltingPoint: 920,
                 boilingPoint: 3464,
@@ -2969,7 +3363,7 @@
                 category: 'actinoid metal',
                 group: 'N/A',
                 period: 7,
-                block: '',
+                block: 'd-block',
                 electronegativity: 1.1,
                 meltingPoint: 1050,
                 boilingPoint: 3200,
@@ -3312,6 +3706,7 @@
                 el.style.gridRow = element.period; // Hàng tương ứng (6 hoặc 7)
                 table.appendChild(el);
             }
+
             // Xử lý các nguyên tố họ Lantan và Actini
             else if (element.category === 'lanthanoid metal') {
                 const position = element.atomicNumber - 56; // Tính vị trí từ La (57)
@@ -3329,6 +3724,26 @@
                 el.style.gridColumn = element.group;
                 el.style.gridRow = element.period;
                 table.appendChild(el);
+            }
+            // Trong phần tạo element, thêm sự kiện hover
+            if (element.symbol === 'La-Lu') {
+                el.addEventListener('mouseenter', () => {
+                    document.querySelectorAll('.element:not(.lanthanoid)').forEach(el => el.style.opacity = '0.1');
+                    document.querySelectorAll('.lanthanoid').forEach(el => el.style.opacity = '1');
+                });
+                el.addEventListener('mouseleave', () => {
+                    document.querySelectorAll('.element').forEach(el => el.style.opacity = '1');
+                });
+            }
+            // Tương tự cho Ac-Lr
+            if (element.symbol === 'Ac-Lr') {
+                el.addEventListener('mouseenter', () => {
+                    document.querySelectorAll('.element:not(.actinoid)').forEach(el => el.style.opacity = '0.1');
+                    document.querySelectorAll('.actinoid').forEach(el => el.style.opacity = '1');
+                });
+                el.addEventListener('mouseleave', () => {
+                    document.querySelectorAll('.element').forEach(el => el.style.opacity = '1');
+                });
             }
 
             el.innerHTML = `
@@ -3357,7 +3772,7 @@
 
                 // Highlight các nguyên tố
                 document.querySelectorAll('.element').forEach(el => {
-                    el.style.opacity = el.classList.contains(category) ? 1 : 0.3;
+                    el.style.opacity = el.classList.contains(category) ? 1 : 0.1;
                 });
             });
 
@@ -3377,6 +3792,9 @@
 
         document.querySelectorAll('.element').forEach(element => {
             element.addEventListener('click', function () {
+                if (document.body.classList.contains('game-mode')) {
+                    return; // Không mở modal khi ở chế độ chơi
+                }
                 const atomicNumber = parseInt(this.dataset.atomicNumber);
                 const elementData = elements.find(e => e.atomicNumber === atomicNumber);
                 showElementModal(elementData);
@@ -3386,6 +3804,9 @@
         // Xử lý sự kiện hover (mouseenter và mouseleave) cho các phần tử trong bảng tuần hoàn
         document.querySelectorAll('.element').forEach(el => {
             el.addEventListener('mouseenter', function () {
+                if (document.body.classList.contains('game-mode')) {
+                    return; // Không làm gì khi ở chế độ chơi
+                }
                 const atomicNumber = parseInt(this.dataset.atomicNumber);
                 const element = elements.find(e => e.atomicNumber === atomicNumber);
                 const largeBox = document.getElementById('largeElementBox');
@@ -3523,7 +3944,7 @@
                 const block = this.classList[1];
                 document.querySelectorAll('.element').forEach(el => {
                     if (!el.classList.contains(block)) {
-                        el.style.opacity = '0.3'; // Làm mờ các block khác
+                        el.style.opacity = '0.1'; // Làm mờ các block khác
                     } else {
                         el.style.opacity = '1'; // Giữ nguyên màu block hiện tại
                     }
@@ -3646,7 +4067,7 @@
 
                 // Xử lý highlight
                 document.querySelectorAll('.element').forEach(el => {
-                    el.style.opacity = el.classList.contains(category) ? 1 : 0.3;
+                    el.style.opacity = el.classList.contains(category) ? 1 : 0.1;
                 });
 
                 // Hiển thị thông tin nhóm
@@ -3729,6 +4150,272 @@
         document.querySelector('.group-title').addEventListener('mouseleave', function () {
             document.querySelector('.category-info').classList.remove('active');
             document.querySelectorAll('.group-numbers div').forEach(el => el.classList.remove('highlight-group'));
+        });
+        // Thêm các biến toàn cục
+        let currentGame = {
+            isPlaying: false,
+            score: 0,
+            targetElement: null,
+            timer: null,
+            timeLimit: 0,
+            remainingElements: [],
+            difficulty: 'easy',
+            totalCorrect: 0
+        };
+
+        // Hàm chuyển đổi chế độ
+        function showPeriodicTable() {
+            document.body.classList.remove('game-mode');
+            document.getElementById('gamePanel').style.display = 'none';
+            // Hiện lại controls
+            document.querySelector('.vertical-controls').style.display = 'flex';
+            document.querySelector('.controls').style.display = 'block';
+            // Cập nhật active mode
+            document.querySelectorAll('.mode-switcher button').forEach(btn => btn.classList.remove('active-mode'));
+            document.querySelector('.mode-switcher button:first-child').classList.add('active-mode');
+            document.getElementById('highScore').style.display = 'none';
+            document.getElementById('recentScore').style.display = 'none';
+        }
+
+        function showGameMode() {
+            document.body.classList.add('game-mode');
+            document.getElementById('gamePanel').style.display = 'block';
+
+            // Ẩn tất cả controls
+            document.querySelector('.vertical-controls').style.display = 'none';
+            document.querySelector('.controls').style.display = 'none';
+
+            // Cập nhật active mode
+            document.querySelectorAll('.mode-switcher button').forEach(btn => btn.classList.remove('active-mode'));
+            document.querySelector('.mode-switcher button:last-child').classList.add('active-mode');
+
+        }
+
+        let highScore = localStorage.getItem('highScore') || 0;
+        document.querySelector('#highScore span').textContent = highScore;
+        // Hàm khởi tạo game
+        // Cập nhật hàm startGame
+        function startGame() {
+            currentGame.difficulty = document.getElementById('difficulty').value;
+            document.getElementById('gameResult').style.display = 'none';
+            document.body.className = `game-mode ${currentGame.difficulty}-mode`;
+
+            document.getElementById('startGameBtn').style.display = 'none'; // Ẩn nút bắt đầu
+            document.getElementById('endGameBtn').style.display = 'inline-block'; // Hiện nút kết thúc
+
+
+            currentGame.timeLimit = {
+                easy: 10000,
+                medium: 7000,
+                hard: 3000
+            }[currentGame.difficulty]; // Thêm đoạn này vào hàm startGame()
+
+            // Reset game state
+            currentGame.score = 0;
+            currentGame.totalCorrect = 0;
+            updateScore();
+            document.getElementById('endGameBtn').style.display = 'inline';
+            currentGame.isPlaying = true;
+
+            // Tính tổng số nguyên tố theo độ khó
+            const totalElements = {
+                easy: elements.filter(el => el.period <= 3 && typeof el.atomicNumber === 'number').length,
+                medium: elements.filter(el => el.period <= 4 && typeof el.atomicNumber === 'number').length,
+                hard: elements.filter(el => el.period <= 6 && typeof el.atomicNumber === 'number').length
+            }[currentGame.difficulty];
+            document.getElementById('totalElements').textContent = totalElements;
+
+            // Xác định phạm vi chu kỳ
+            let maxPeriod;
+            switch (currentGame.difficulty) {
+                case 'easy': maxPeriod = 3; break;
+                case 'medium': maxPeriod = 4; break;
+                case 'hard': maxPeriod = 6; break;
+            }
+
+            // Làm mờ các chu kỳ không liên quan
+            document.querySelectorAll('.element').forEach(el => {
+                const period = parseInt(el.dataset.period); // Thêm data-period cho các element
+                if (period > maxPeriod) {
+                    el.classList.add('blur-period');
+                    el.style.pointerEvents = 'none';
+                } else {
+                    el.classList.remove('blur-period');
+                    el.style.pointerEvents = 'auto';
+                }
+            });
+
+            // Khởi tạo danh sách nguyên tố
+            currentGame.remainingElements = elements.filter(el =>
+                el.period <= maxPeriod &&
+                typeof el.atomicNumber === 'number' &&
+                !['La-Lu', 'Ac-Lr'].includes(el.symbol)
+            );
+
+            nextRound();
+        }
+
+        // Thêm hàm xử lý timer
+        function startTimer() {
+            const timerBar = document.getElementById('timerBar');
+            timerBar.style.transition = 'none';
+            timerBar.style.width = '100%';
+            void timerBar.offsetWidth; // Reset animation
+            timerBar.style.transition = `width ${currentGame.timeLimit / 1000}s linear`;
+            timerBar.style.width = '0%';
+            currentGame.timer = setTimeout(handleTimeout, currentGame.timeLimit);
+        }
+
+        function handleTimeout() {
+            let penalty = { easy: 5, medium: 10, hard: 20 }[currentGame.difficulty];
+            currentGame.score = Math.max(0, currentGame.score - penalty);
+            updateScore();
+            nextRound();
+        }
+
+        function updateProgress() {
+            const total = document.getElementById('totalElements').textContent;
+            const progress = (currentGame.totalCorrect / total) * 100;
+            document.getElementById('elementProgress').style.width = progress + '%';
+        }
+
+        // Cập nhật hàm nextRound
+        function nextRound() {
+            if (!currentGame.remainingElements.length) {
+                endGame();
+                return;
+            }
+
+            // Chọn ngẫu nhiên nguyên tố
+            const randomIndex = Math.floor(Math.random() * currentGame.remainingElements.length);
+            currentGame.targetElement = currentGame.remainingElements[randomIndex];
+            document.getElementById('targetElement').textContent = currentGame.targetElement.name;
+
+            // Cài đặt thời gian
+            currentGame.timeLimit = {
+                easy: 10000,
+                medium: 7000,
+                hard: 3000
+            }[currentGame.difficulty];
+
+            startTimer();
+        }
+
+
+        // Hàm cập nhật điểm
+        function updateScore() {
+            document.getElementById('score').textContent = currentGame.score;
+        }
+
+        // Cập nhật hàm endGame
+        function endGame() {
+            currentGame.isPlaying = false;
+            clearTimeout(currentGame.timer);
+
+            // Cập nhật điểm gần nhất
+            document.getElementById('recentScoreValue').textContent = currentGame.score;
+            document.getElementById('recentDifficulty').textContent =
+                currentGame.difficulty === 'easy' ? 'Dễ' :
+                    currentGame.difficulty === 'medium' ? 'Trung Bình' : 'Khó';
+
+            const resultEl = document.getElementById('gameResult');
+            const totalElements = parseInt(document.getElementById('totalElements').textContent);
+
+
+            // Cập nhật kết quả
+            document.getElementById('foundElements').textContent = currentGame.totalCorrect;
+            document.getElementById('finalScore').textContent = currentGame.score;
+
+            document.getElementById('startGameBtn').style.display = 'inline-block'; // Ẩn nút bắt đầu
+            document.getElementById('endGameBtn').style.display = 'none'; // Hiện nút kết thúc
+            // Đánh giá kết quả
+            let message = '';
+            if (currentGame.totalCorrect === totalElements) {
+                message = "Xuất sắc! Bạn đã tìm thấy tất cả!";
+                resultEl.className = 'game-result high';
+            } else if (currentGame.totalCorrect >= totalElements * 0.7) {
+                message = "Làm tốt lắm! Tiếp tục phát huy!";
+                resultEl.className = 'game-result medium';
+            } else {
+                message = "Đừng nản! Hãy thử lại nhé!";
+                resultEl.className = 'game-result low';
+            }
+
+            document.getElementById('resultMessage').textContent = message;
+            resultEl.style.display = 'block';
+
+            // Cập nhật điểm cao
+            if (currentGame.score > highScore) {
+                highScore = currentGame.score;
+                localStorage.setItem('highScore', highScore);
+                document.querySelector('#highScore span').textContent = highScore;
+            }
+        }
+
+        function closeResult() {
+            document.getElementById('gameResult').style.display = 'none';
+
+            // Reset màu các nguyên tố
+            document.querySelectorAll('.element.correct').forEach(el => {
+                el.classList.remove('correct');
+                el.style.backgroundColor = '';
+            });
+        }
+
+        // Cập nhật sự kiện click nguyên tố
+        document.querySelectorAll('.element').forEach(el => {
+            el.addEventListener('click', function () {
+                if (!currentGame.isPlaying) return;
+
+                // Thêm dòng này để reset màu khi click mới
+                this.style.backgroundColor = '';
+
+
+                const atomicNumber = parseInt(this.dataset.atomicNumber);
+                let isCorrect = false;
+
+                if (atomicNumber === currentGame.targetElement.atomicNumber) {
+                    currentGame.score += 50;
+                    currentGame.totalCorrect++;
+                    currentGame.remainingElements = currentGame.remainingElements.filter(
+                        el => el.atomicNumber !== atomicNumber
+                    );
+                    isCorrect = true;
+                } else {
+                    currentGame.score -= 30;
+                    currentGame.remainingElements = currentGame.remainingElements.filter(
+                        el => el.atomicNumber !== currentGame.targetElement.atomicNumber
+                    );
+                }
+
+                if (isCorrect) {
+                    this.classList.add('correct');
+                    this.style.animation = 'correctGuess 0.5s';
+                    this.style.pointerEvents = 'none'; // Ngăn chọn lại
+                    document.getElementById('correctSound').play();
+                } else {
+                    this.classList.add('incorrect');
+                    document.getElementById('wrongSound').play();
+                    this.style.anim
+                    ation = 'wrongGuess 0.5s';
+                }
+                // Sau 1s, xóa class
+                setTimeout(() => {
+                    this.classList.remove('correct', 'incorrect');
+                }, 1000);
+
+                // Hiệu ứng visual
+                this.style.transform = isCorrect ? 'scale(1.2)' : 'scale(0.9)';
+                this.style.backgroundColor = isCorrect ? '#4CAF50' : '#ff4444';
+                setTimeout(() => {
+                    this.style.transform = '';
+                    this.style.backgroundColor = '';
+                }, 500);
+
+                updateScore();
+                clearTimeout(currentGame.timer);
+                if (currentGame.isPlaying) nextRound();
+            });
         });
     </script>
 </body>
