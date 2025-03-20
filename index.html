@@ -1093,6 +1093,82 @@
         #recentScore {
             display: none;
         }
+
+        .info-section {
+            margin: 30px auto;
+            /* Căn giữa */
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            /* Căn giữa nội dung */
+        }
+
+        .info-item {
+            position: relative;
+            margin: 10px 0;
+            padding: 8px;
+            cursor: pointer;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .info-title {
+            color: #2c3e50;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .info-title:hover {
+            color: #2196F3;
+        }
+
+        .info-tooltip {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            z-index: 1000;
+            font-size: 14px;
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        .info-tooltip.active {
+            display: block;
+        }
+
+        .info-tooltip::before {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 8px;
+            border-style: solid;
+            border-color: white transparent transparent transparent;
+        }
+
+        @media (max-width: 768px) {
+            .info-tooltip {
+                width: 300px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .info-item {
+                display: block;
+                /* Hiển thị full width trên mobile */
+                text-align: center;
+            }
+        }
     </style>
 </head>
 
@@ -1112,7 +1188,7 @@
     <!-- Thêm phần chuyển đổi chế độ -->
     <div class="mode-switcher">
         <button class="active-mode" onclick="showPeriodicTable()">Bảng Tuần Hoàn</button>
-        <button onclick="showGameMode()">Chơi Game</button>
+        <button onclick="showGameMode()">Game tìm nguyên tố</button>
     </div>
 
     <div id="highScore" style="position: fixed; top: 60px; right: 20px;">
@@ -1295,6 +1371,54 @@
             <button style="background: #90EE90 ;" class="control-btn p-block">Khối các nguyên tố p</button>
             <button style="background: #87CEEB ;" class="control-btn d-block">Khối các nguyên tố d</button>
             <button style="background: #D8BFD8;" class="control-btn f-block">Khối các nguyên tố f</button>
+        </div>
+    </div>
+    <!-- Thêm vào sau phần controls -->
+    <div class="info-section">
+        <div class="info-item">
+            <span class="info-title">Nguyên tắc sắp xếp nguyên tố trong bảng tuần hoàn</span>
+            <div class="info-tooltip">
+                Các nguyên tố được xếp theo<span style="font-weight:bold;">chiều tăng dần</span>  của điện tích hạt nhân nguyên tử.<br>
+                Các nguyên tố có <span style="font-weight:bold;">cùng số lớp electron trong nguyên tử</span> được xếp cùng một chu kỳ.<br>
+                Các nguyên tố mà nguyên tử có <span style="font-weight:bold;">cấu hình electron tương tự nhau</span> được xếp cùng một nhóm.<br>                
+            </div>
+        </div>
+
+        <div class="info-item">
+            <span class="info-title">Lịch sử phát minh bảng tuần hoàn các nguyên tố hóa học</span>
+            <div class="info-tooltip">
+                <span style="font-weight:bold;">Năm 1869,</span> nhà hóa học và giáo viên người Nga, D.I. Mendeleev (
+                Men-đê- lê- ép) đã công bố một Bảng tuần
+                hoàn các nguyên tố hóa học. Trong năm này, một nhà hóa học người Đức, L. Meyer (May-ơ) cũng đã công bố
+                một Bảng tuần hoàn tương tự. Tuy nhiên, Mendeleev là người công bố trước và giải thích tốt hơn về sự hữu
+                dụng của bảng tuần hoàn do ông đề nghị. <br>
+                Hai nhà khoa học đều sắp xếp các nguyên tố vào các hàng và các cột theo chiều tăng dần<span
+                    style="font-weight:bold;"> khối lượng nguyên
+                    tử,</span> bắt đầu ở hàng mới ( Bảng của Mendeleev) hoặc cột mới ( Bảng của Meyer) khi tính chất của
+                nguyên tố
+                lặp lại.<br>
+                Sau đó các nhà khoa học đã chứng minh rằng<span style="font-weight:bold;">điện tích hạt nhân nguyên
+                    tử</span> mới là cơ sở để xây dựng bảng
+                tuần hoàn các NTHH.Vì vậy, bảng tuần hoàn hiên đại ngày nay được xây dựng trên cơ sở mối liên hệ giữa số
+                hiệu nguyên tử và tính chất của nguyên tố, các nguyên tố, các nguyên tố được sắp xếp theo thứ tự tăng
+                dần số hiệu nguyên tử (Z).
+            </div>
+        </div>
+
+        <div class="info-item">
+            <span class="info-title">Ô nguyên tố</span>
+            <div class="info-tooltip">
+                Mỗi nguyên tố hóa học được xếp vào một ô trong bảng tuần hoàn các nguyên tố hóa học gọi là ô nguyên tố.
+                Số thứ tự của ô nguyên tố<span style="font-weight:bold;">bằng số hiệu nguyên tử</span>  của nguyên tố hóa học trong ô đó. (STT ô=Z) </div>
+        </div>
+
+        <div class="info-item">
+            <span class="info-title">Electron hóa trị</span>
+            <div class="info-tooltip">
+                Là những electron có <span style="font-weight:bold;">khả năng tham gia hình thành liên kết hóa học.</span>Chúng thường nằm ở lớp ngoài cùng
+                hoặc ở cả phân lớp sát <span style="font-weight:bold;">lớp ngoài cùng</span> nếu phân lớp đó chưa bão hòa.<br>
+                Với nhóm A, <span style="font-weight:bold;">số electron hóa trị</span> của nguyên tử <span style="font-weight:bold;">bằng số thứ tự nhóm của nguyên tố nhóm A.</span>
+            </div>
         </div>
     </div>
     </div>
@@ -4426,6 +4550,33 @@
                 clearTimeout(currentGame.timer);
                 if (currentGame.isPlaying) nextRound();
             });
+        });
+
+        // Thêm JavaScript xử lý click
+        document.querySelectorAll('.info-item').forEach(item => {
+            item.addEventListener('click', function (e) {
+                e.stopPropagation();
+
+                // Ẩn tất cả tooltip khác
+                document.querySelectorAll('.info-tooltip').forEach(tooltip => {
+                    if (tooltip !== this.querySelector('.info-tooltip')) {
+                        tooltip.classList.remove('active');
+                    }
+                });
+
+                // Toggle tooltip hiện tại
+                const tooltip = this.querySelector('.info-tooltip');
+                tooltip.classList.toggle('active');
+            });
+        });
+
+        // Đóng tooltip khi click ra ngoài
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.info-item')) {
+                document.querySelectorAll('.info-tooltip').forEach(tooltip => {
+                    tooltip.classList.remove('active');
+                });
+            }
         });
     </script>
 </body>
