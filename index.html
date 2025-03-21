@@ -1125,6 +1125,7 @@
         }
 
         .info-tooltip {
+            text-align: justify; /* Căn đều hai bên văn bản */
             display: none;
             position: absolute;
             bottom: calc(100% + 10px);
@@ -1139,6 +1140,21 @@
             font-size: 14px;
             line-height: 1.6;
             text-align: left;
+        }
+
+        .info-tooltip img {
+            max-width: 100%; /* Giới hạn chiều rộng tối đa bằng container */
+            height: auto; /* Giữ nguyên tỷ lệ ảnh */
+            display: block; /* Loại bỏ khoảng trống dưới ảnh */
+            margin: 10px auto; /* Căn giữa và tạo khoảng cách */
+            border-radius: 6px; /* Bo góc nhẹ */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Thêm đổ bóng nhẹ */
+        }
+
+        @media (max-width: 768px) {
+            .info-tooltip img {
+                max-width: 90%; /* Giảm kích thước ảnh trên mobile */
+            }
         }
 
         .info-tooltip.active {
@@ -1169,13 +1185,19 @@
                 text-align: center;
             }
         }
+
+        /* Thêm style cho đồng vị bền */
+        .stable-isotope {
+            background-color: #48C9B0 !important;
+        }
     </style>
 </head>
 
 <body>
     <audio id="correctSound" src="sounds/correct.mp3"></audio>
     <audio id="wrongSound" src="sounds/wrong.mp3"></audio>
-    <h2 style="text-align: center;">BẢNG TUẦN HOÀN CÁC NGUYÊN TỐ HÓA HỌC <br>Periodic Table of the Elements</h2>
+    <h2 style="text-align: center;padding: 0;">BẢNG TUẦN HOÀN CÁC NGUYÊN TỐ HÓA HỌC <br>Theo chương trình giáo dục phổ thông 2018</h2>
+    <h3 style="text-align: center;">Periodic Table of the Elements</h3>
     <!-- Đặt phần này ngay dưới thẻ h2 -->
     <div id="gameResult" class="game-result" style="display: none;">
         <h3>Kết quả trò chơi</h3>
@@ -1357,6 +1379,7 @@
     </div>
     <div class="controls">
         <div class="control-section">
+            <button class="control-btn stable-isotope">Đồng vị bền</button>
             <button class="control-btn alkali-metal">Kim loại kiềm</button>
             <button class="control-btn alkaline-earth">Kiềm thổ</button>
             <button class="control-btn transition-metal">Kim loại chuyển tiếp</button>
@@ -1378,9 +1401,12 @@
         <div class="info-item">
             <span class="info-title">Nguyên tắc sắp xếp nguyên tố trong bảng tuần hoàn</span>
             <div class="info-tooltip">
-                Các nguyên tố được xếp theo<span style="font-weight:bold;">chiều tăng dần</span>  của điện tích hạt nhân nguyên tử.<br>
-                Các nguyên tố có <span style="font-weight:bold;">cùng số lớp electron trong nguyên tử</span> được xếp cùng một chu kỳ.<br>
-                Các nguyên tố mà nguyên tử có <span style="font-weight:bold;">cấu hình electron tương tự nhau</span> được xếp cùng một nhóm.<br>                
+                Các nguyên tố được xếp theo<span style="font-weight:bold;">chiều tăng dần</span> của điện tích hạt nhân
+                nguyên tử.<br>
+                Các nguyên tố có <span style="font-weight:bold;">cùng số lớp electron trong nguyên tử</span> được xếp
+                cùng một chu kỳ (hàng).<br>
+                Các nguyên tố mà nguyên tử có <span style="font-weight:bold;">cấu hình electron tương tự nhau</span>
+                được xếp cùng một nhóm.<br>
             </div>
         </div>
 
@@ -1409,15 +1435,20 @@
             <span class="info-title">Ô nguyên tố</span>
             <div class="info-tooltip">
                 Mỗi nguyên tố hóa học được xếp vào một ô trong bảng tuần hoàn các nguyên tố hóa học gọi là ô nguyên tố.
-                Số thứ tự của ô nguyên tố<span style="font-weight:bold;">bằng số hiệu nguyên tử</span>  của nguyên tố hóa học trong ô đó. (STT ô=Z) </div>
+                Số thứ tự của ô nguyên tố<span style="font-weight:bold;"> bằng số hiệu nguyên tử</span> của nguyên tố hóa
+                học trong ô đó. (STT ô=Z) </div>
         </div>
 
         <div class="info-item">
             <span class="info-title">Electron hóa trị</span>
             <div class="info-tooltip">
-                Là những electron có <span style="font-weight:bold;">khả năng tham gia hình thành liên kết hóa học.</span>Chúng thường nằm ở lớp ngoài cùng
-                hoặc ở cả phân lớp sát <span style="font-weight:bold;">lớp ngoài cùng</span> nếu phân lớp đó chưa bão hòa.<br>
-                Với nhóm A, <span style="font-weight:bold;">số electron hóa trị</span> của nguyên tử <span style="font-weight:bold;">bằng số thứ tự nhóm của nguyên tố nhóm A.</span>
+                Là những electron có <span style="font-weight:bold;">khả năng tham gia hình thành liên kết hóa
+                    học.</span> Chúng thường nằm ở lớp ngoài cùng
+                hoặc ở cả phân lớp sát <span style="font-weight:bold;">lớp ngoài cùng</span> nếu phân lớp đó chưa bão
+                hòa.<br>
+                Với nhóm A, <span style="font-weight:bold;">số electron hóa trị</span> của nguyên tử <span
+                    style="font-weight:bold;">bằng số thứ tự nhóm của nguyên tố nhóm A.</span>
+                <br> <img src="images/electronHoaTri.jpg" alt="">
             </div>
         </div>
     </div>
@@ -1449,7 +1480,8 @@
                 video: 'videos/hydrogen.mp4',
                 image: 'images/hydrogen.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+1', '-1']
             },
             {
                 symbol: 'He',
@@ -1469,7 +1501,8 @@
                 video: 'videos/helium.mp4',
                 image: 'images/helium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['0']
             },
             {
                 symbol: 'Li',
@@ -3790,8 +3823,7 @@
                 name: 'Khối các nguyên tố s',
                 info: [
                     'Electron cuối cùng điền vào phân lớp s.',
-                    'Bao gồm nhóm IA và IIA và He (nhóm VIIIA).',
-                    'Dễ mất electron, tính kim loại cao.',
+                    'Bao gồm nhóm IA và IIA và He (nhóm VIIIA).'
                 ]
             },
             'p-block': {
@@ -3799,7 +3831,6 @@
                 info: [
                     'Electron cuối cùng điền vào phân lớp p.',
                     'Bao gồm nhóm IIIA đến VIIIA (trừ He).',
-                    'Có tính phi kim và oxy hóa mạnh.'
                 ]
             },
             'd-block': {
@@ -3807,7 +3838,6 @@
                 info: [
                     'Electron cuối cùng điền vào phân lớp d.',
                     'Bao gồm nguyên tố nhóm B.',
-                    'Dẫn điện tốt, tính kim loại rõ rệt.'
                 ]
             },
             'f-block': {
@@ -3815,7 +3845,6 @@
                 info: [
                     'Electron cuối cùng điền vào phân lớp f.',
                     'Nguyên tố hai hàng cuối bảng tuần hoàn, gồm 14 nguyên tố Lanthanide (Ce-Lu) và 14 Actinide (Th-Lr).',
-                    'Có tính phóng xạ mạnh.'
                 ]
             }
         };
@@ -3957,6 +3986,7 @@
                 Khối lượng: <span>${element.mass}</span><br>
                 Độ âm điện: <span>${element.electronegativity || 'N/A'}</span><br>
                 Cấu hình e: <span>${element.electronConfig || 'N/A'}</span><br>
+                Số oxi hóa: <span>${element.oxidationStates ? element.oxidationStates.join(', ') : 'N/A'}</span><br>
             </div>
         `;
 
@@ -3998,7 +4028,8 @@
             document.getElementById('elementSymbol').textContent = element.symbol;
             document.getElementById('elementAtomicNumber').textContent = element.atomicNumber;
             document.getElementById('elementMass').textContent = element.mass;
-            document.getElementById('elementElectronegativity').textContent = element.electronegativity || 'N/A';
+            document.getElementById('elementElectronegativity').textContent =
+                element.period === 7 ? '' : (element.electronegativity || 'N/A');
             document.getElementById('elementElectronConfig').textContent = element.electronConfig || 'N/A';
             document.getElementById('elementPronunciation').textContent = element.pronunciation || 'N/A';
 
@@ -4116,6 +4147,14 @@
                     'Trong tự nhiên, kim loại kiềm thổ chỉ tồn tại dạng hợp chất '
                 ]
             },
+            'stable-isotope': {
+                name: 'ĐỒNG VỊ BỀN',
+                info: [
+                    'Các nguyên tố từ 104 đến 118',
+                    'Là các đồng vị tổng hợp có thời gian sống lâu hơn',
+                    'Ứng dụng trong nghiên cứu khoa học'
+                ]
+            },
             'transition-metal': {
                 name: 'KIM LOẠI CHUYỂN TIẾP',
                 info: [
@@ -4197,7 +4236,12 @@
 
                 // Xử lý highlight
                 document.querySelectorAll('.element').forEach(el => {
-                    el.style.opacity = el.classList.contains(category) ? 1 : 0.1;
+                    const atomicNum = parseInt(el.dataset.atomicNumber);
+                    if (category === 'stable-isotope') {
+                        el.style.opacity = (atomicNum >= 104 && atomicNum <= 118) ? 1 : 0.1;
+                    } else {
+                        el.style.opacity = el.classList.contains(category) ? 1 : 0.1;
+                    }
                 });
 
                 // Hiển thị thông tin nhóm
@@ -4362,7 +4406,7 @@
             // Xác định phạm vi chu kỳ
             let maxPeriod;
             switch (currentGame.difficulty) {
-                case 'easy': maxPeriod = 3; break;
+                case 'easy': maxPeriod = 4; break;
                 case 'medium': maxPeriod = 4; break;
                 case 'hard': maxPeriod = 6; break;
             }
