@@ -35,6 +35,7 @@
         }
 
 
+
         .element {
             border: 1px solid #ccc;
             padding: 4px;
@@ -289,12 +290,14 @@
         /* Thêm vào cuối phần style */
         /* Modal cải tiến */
         .modal-content {
-            background: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
             width: 90%;
-            max-width: 550px;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
         }
 
         .modal-header {
@@ -521,6 +524,7 @@
             z-index: 10;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             padding: 10px;
+
         }
 
         .element-large.active {
@@ -537,7 +541,7 @@
             /* Thêm in đậm */
             font-size: 0.9em;
             text-align: center;
-            line-height: 1.6;
+            line-height: 1.4;
         }
 
         .details-large span {
@@ -588,23 +592,6 @@
 
             .category-content {
                 columns: 1;
-            }
-
-            .periodic-table {
-                grid-template-columns: repeat(18, minmax(40px, 1fr));
-            }
-
-            .element {
-                min-height: 40px;
-                font-size: 10px;
-            }
-
-            .symbol {
-                font-size: 14px;
-            }
-
-            .info-tooltip {
-                width: 300px;
             }
         }
 
@@ -817,31 +804,10 @@
             font-weight: bold;
         }
 
-        .game-controls {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            transform: translateX(-50%);
-            width: 100%;
-            z-index: 1000;
-            display: none;
-            /* Ẩn mặc định */
-            background: rgba(255, 255, 255, 0.9);
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .game-mode .game-controls {
-            display: contents;
-            /* Hiện khi vào game */
-        }
-
         #endGameBtn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1001;
+            background: #ff5c5c !important;
+            color: white !important;
+            font-weight: bold;
         }
 
         #gameInfo {
@@ -873,10 +839,15 @@
             height: 5px;
             background: #4CAF50;
             width: 100%;
+            background: linear-gradient(90deg, #4CAF50, #66bb6a);
             /* Thêm vào */
             transition: width linear;
             border-radius: 2px;
             /* Thêm vào */
+        }
+
+        .button-container {
+            color: #333;
         }
 
         .game-result {
@@ -933,7 +904,8 @@
         }
 
         #endGameBtn:hover {
-            background: #cc0000;
+            background: #e60000 !important;
+            /* Màu sáng hơn khi hover */
             transform: scale(1.05);
         }
 
@@ -943,9 +915,8 @@
             border: 2px solid #4CAF50;
             background: white;
             cursor: pointer;
-            margin: 5px;
-            transition: all 0.3s;
-            text-align: center;
+            font-size: 14px;
+            min-width: 150px;
         }
 
         #startGameBtn {
@@ -954,6 +925,23 @@
             font-weight: bold;
             animation: pulse 1.5s infinite;
             min-width: 100px;
+        }
+
+        #startGameBtn:hover {
+            background: #1b9c1f !important;
+            /* Sửa màu hover cho đồng bộ */
+            transform: scale(1.05);
+        }
+
+        #startGameBtn,
+        #endGameBtn {
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            min-width: 80px;
+            /* Đảm bảo kích thước đồng bộ */
+            text-align: center;
         }
 
         @keyframes pulse {
@@ -1075,9 +1063,14 @@
 
         .progress-container {
             width: 100%;
-            height: 5px;
-            background: #ddd;
-            margin: 10px 0;
+            max-width: 400px;
+            /* Giới hạn chiều rộng thanh tiến trình */
+            height: 6px;
+            background: #e0e0e0;
+            margin: 0 auto 15px;
+            /* Căn giữa và thêm khoảng cách dưới */
+            border-radius: 3px;
+            overflow: hidden;
         }
 
         .progress-bar {
@@ -1103,11 +1096,6 @@
             .mode-switcher {
                 position: static;
             }
-        }
-
-        #highScore,
-        #recentScore {
-            display: none;
         }
 
         .info-section {
@@ -1218,6 +1206,112 @@
         .stable-isotope {
             background-color: #48C9B0 !important;
         }
+
+        /* Cải thiện bố cục gamePanel */
+        #gamePanel {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            /* Giảm chiều rộng để gọn gàng hơn */
+            margin: 20px auto;
+            /* Thêm margin trên dưới */
+            border: 1px solid #ddd;
+        }
+
+        .game-options {
+            display: flex;
+            flex-direction: column;
+            /* Chuyển thành cột để nút nằm dưới select */
+            justify-content: center;
+            /* Căn giữa theo chiều dọc */
+            align-items: center;
+            /* Căn giữa theo chiều ngang */
+            gap: 15px;
+            /* Khoảng cách giữa select và nút */
+            margin-bottom: 20px;
+        }
+
+        /* Tăng độ tương phản cho gameInfo */
+        #gameInfo p {
+            font-size: 18px;
+            /* Tăng kích thước chữ */
+            color: #333;
+            /* Màu tối hơn */
+            margin: 10px 0;
+        }
+
+        #gameInfo p:first-child {
+            font-weight: 600;
+            color: #2c3e50;
+            /* Màu đậm hơn cho điểm */
+        }
+
+        #targetElement {
+            color: #e67e22;
+            /* Màu cam nổi bật */
+            font-weight: bold;
+        }
+
+        .score-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        body:not(.game-mode) .score-container {
+            display: none;
+        }
+
+        .score-box {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 10px 15px;
+            /* Tăng padding để thoáng hơn */
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            max-width: 250px;
+            /* Giảm max-width để gọn hơn */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            /* Thêm hiệu ứng */
+        }
+
+        .score-label {
+            font-weight: bold;
+            color: #2c3e50;
+            /* Màu xanh đậm */
+        }
+
+        .score-value {
+            font-size: 18px;
+            color: #e67e22;
+            /* Màu cam nổi bật */
+            font-weight: bold;
+        }
+
+        .score-detail {
+            font-size: 14px;
+            color: #555;
+            /* Màu xám nhẹ */
+        }
+
+        #difficulty:hover {
+            border-color: #45a049;
+            /* Hiệu ứng hover cho select */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 
@@ -1242,11 +1336,15 @@
         <button onclick="showGameMode()">Game tìm nguyên tố</button>
     </div>
 
-    <div id="highScore" style="position: fixed; top: 60px; right: 20px;">
-        Điểm cao nhất: <span>${highScore}</span>
-    </div>
-    <div id="recentScore" style="position: fixed; top: 90px; right: 20px;">
-        Lượt gần nhất: <span id="recentScoreValue">0</span> (Mức: <span id="recentDifficulty">-</span>)
+    <div class="score-container">
+        <div id="highScore" class="score-box">
+            <span class="score-label">Điểm cao nhất:</span> <span class="score-value">${highScore}</span>
+        </div>
+        <div id="recentScore" class="score-box">
+            <span class="score-label">Lượt gần nhất:</span>
+            <span class="score-value" id="recentScoreValue">0</span>
+            <span class="score-detail">(Mức: <span id="recentDifficulty">-</span>)</span>
+        </div>
     </div>
 
     <div id="gameResult" class="game-result">
@@ -1258,19 +1356,28 @@
 
     <!-- Thêm vào phần HTML -->
     <div id="gamePanel" style="display: none;">
-        <div class="game-controls">
-            <div class="game-instruction">
-                🎮 Chọn mức độ và nhấn "Bắt đầu" để bắt đầu chơi!
-            </div>
+        <div class="game-instruction">🎮 Chọn mức độ và nhấn "Bắt đầu" để bắt đầu chơi!</div>
+        <div class="game-options">
             <select id="difficulty">
-                <option value="easy">Dễ (Chu kỳ 1-3)</option>
-                <option value="medium">Trung Bình (Chu kỳ 1-4)</option>
-                <option value="hard">Khó (Chu kỳ 1-6)</option>
+                <option value="easy-full">Dễ (Toàn bộ bảng tuần hoàn)</option>
+                <option value="easy-1-3">Dễ (Chu kỳ 1-3)</option>
+                <option value="easy-1-4">Dễ (Chu kỳ 1-4)</option>
+                <option value="easy-1-5">Dễ (Chu kỳ 1-5)</option>
+                <option value="medium-full">Trung bình (Hết bảng tuần hoàn)</option>
+                <option value="medium-1-3">Trung bình (Chu kỳ 1-3)</option>
+                <option value="medium-1-4">Trung bình (Chu kỳ 1-4)</option>
+                <option value="medium-1-5">Trung bình (Chu kỳ 1-5)</option>
+                <option value="hard-full">Khó (Hết bảng tuần hoàn)</option>
+                <option value="hard-1-3">Khó (Chu kỳ 1-3)</option>
+                <option value="hard-1-4">Khó (Chu kỳ 1-4)</option>
+                <option value="hard-1-5">Khó (Chu kỳ 1-5)</option>
             </select>
-            <button id="startGameBtn" onclick="startGame()">Bắt đầu</button>
-            <button onclick="endGame()" id="endGameBtn" style="display: none;">Kết thúc</button>
+            <div class="button-container">
+                <button id="startGameBtn" onclick="startGame()">Bắt đầu</button>
+                <button id="endGameBtn" onclick="endGame()" style="display: none;">Kết thúc</button>
+            </div>
         </div>
-        <div id="gameInfo">
+        <div id="gameInfo" style="display: none;">
             <div class="progress-container">
                 <div class="progress-bar" id="timerBar"></div>
             </div>
@@ -1434,7 +1541,7 @@
                     <li>Các nguyên tố được xếp theo <strong>chiều tăng dần</strong> của điện tích hạt nhân nguyên tử.
                     </li>
                     <li>Các nguyên tố có <strong>cùng số lớp electron trong nguyên tử</strong> được xếp cùng một chu kỳ
-                        (hàng).</li>
+                        (hàng ngang).</li>
                     <li>Các nguyên tố mà nguyên tử có <strong>cấu hình electron tương tự nhau</strong> được xếp cùng một
                         nhóm.</li>
                 </ul>
@@ -1450,12 +1557,15 @@
                 <ul>
                     <li>Hai nhà khoa học sắp xếp các nguyên tố theo <strong>khối lượng nguyên tử tăng dần</strong>, bắt
                         đầu hàng/cột mới khi tính chất lặp lại.</li>
-                    <li>Sau này, các nhà khoa học chứng minh <strong>điện tích hạt nhân</strong> là cơ sở chính xác hơn
-                        để xây dựng bảng tuần hoàn.</li>
-                    <li>Bảng tuần hoàn hiện đại dựa trên <strong>số hiệu nguyên tử (Z)</strong>, sắp xếp theo thứ tự
-                        tăng dần.</li>
+                    <li>Bảng tuần hoàn hiện nay được xây dựng trên cơ sở tính chất của các nguyên tố và đơn chất, cũng
+                        như thành
+                        phần và tính chất của các hợp chất tạo nên nguyên tố đó biến đổi tuần hoàn khi chúng được sắp
+                        xếp theo
+                        chiều tăng của số hiệu nguyên tử của nguyên tố</li>
                 </ul>
+
                 <img src="images/mendeleev.jpg" alt="D.I. Mendeleev">
+                <p style="text-align: center; font-weight: 600;">Dmitri Ivanovich Mendeleev (1834 - 1907) </p>
             </div>
         </div>
 
@@ -1464,6 +1574,8 @@
             <div class="info-tooltip">
                 <p>Mỗi nguyên tố hóa học được xếp vào một ô trong bảng tuần hoàn, gọi là ô nguyên tố. Số thứ tự của ô
                     nguyên tố <strong>bằng số hiệu nguyên tử</strong> của nguyên tố trong ô đó (STT ô = Z).</p>
+                <img src="images/thongTinNguyenTo.jpg" alt="" srcset="">
+                <p style="text-align: center; font-weight: 600;">Những thông tin trong 1 ô nguyên tố</p>
             </div>
         </div>
 
@@ -1613,7 +1725,7 @@
                 image: 'images/carbon.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+4', '+2', '-4']
+                oxidationStates: ['-4', '-3', '-2', '-1', '0', '+1', '+2', '+3', '+4']
             },
             {
                 symbol: 'N',
@@ -1634,7 +1746,7 @@
                 image: 'images/nitrogen.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+5', '+4', '+3', '+2', '-3']
+                oxidationStates: ['-3', '+1', '+2', '+3', '+4', '+5']
             },
             {
                 symbol: 'O',
@@ -1655,7 +1767,7 @@
                 image: 'images/oxygen.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['-2', '-1']
+                oxidationStates: ['-2', '-1', '+2', '-1/2', '-1/3', '+1']
             },
             {
                 symbol: 'F',
@@ -1744,16 +1856,16 @@
             {
                 symbol: 'Al',
                 name: 'Aluminum',
-                pronunciation: 'ə-LOO-mə-nəm',
+                pronunciation: 'ə-LOO-mi-nəm',
                 atomicNumber: 13,
                 mass: 26.982,
-                category: 'group-a-metal metal',
+                category: 'metal post-transition',
                 group: 13,
                 period: 3,
                 block: 'p-block',
                 electronegativity: 1.61,
                 meltingPoint: 660.32,
-                boilingPoint: 2519,
+                boilingPoint: 2470,
                 electronConfig: '[Ne] 3s² 3p¹',
                 state: 'Solid',
                 video: 'videos/aluminum.mp4',
@@ -1765,14 +1877,14 @@
             {
                 symbol: 'Si',
                 name: 'Silicon',
-                pronunciation: 'SIL-ə-kon',
+                pronunciation: 'SIL-i-kən',
                 atomicNumber: 14,
                 mass: 28.085,
                 category: 'metalloid',
                 group: 14,
                 period: 3,
                 block: 'p-block',
-                electronegativity: 1.9,
+                electronegativity: 1.90,
                 meltingPoint: 1414,
                 boilingPoint: 3265,
                 electronConfig: '[Ne] 3s² 3p²',
@@ -1781,12 +1893,12 @@
                 image: 'images/silicon.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+4', '-4']
+                oxidationStates: ['-4', '+2', '+4']
             },
             {
                 symbol: 'P',
                 name: 'Phosphorus',
-                pronunciation: 'FOS-fə-rəs',
+                pronunciation: 'FOS-fər-əs',
                 atomicNumber: 15,
                 mass: 30.974,
                 category: 'nonmetal',
@@ -1802,7 +1914,7 @@
                 image: 'images/phosphorus.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+5', '+3', '-3']
+                oxidationStates: ['-3', '+3', '+5', '+1', '+4']
             },
             {
                 symbol: 'S',
@@ -1816,14 +1928,14 @@
                 block: 'p-block',
                 electronegativity: 2.58,
                 meltingPoint: 115.21,
-                boilingPoint: 444.72,
+                boilingPoint: 444.6,
                 electronConfig: '[Ne] 3s² 3p⁴',
                 state: 'Solid',
                 video: 'videos/sulfur.mp4',
                 image: 'images/sulfur.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+6', '+4', '-2']
+                oxidationStates: ['-2', '-1', '+4', '+6', '+1', '+2']
             },
             {
                 symbol: 'Cl',
@@ -1844,7 +1956,7 @@
                 image: 'images/chlorine.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+7', '+5', '+3', '+1', '-1']
+                oxidationStates: ['-1', '+1', '+3', '+5', '+7', '+4']
             },
             {
                 symbol: 'Ar',
@@ -1878,7 +1990,7 @@
                 period: 4,
                 block: 's-block',
                 electronegativity: 0.82,
-                meltingPoint: 63.38,
+                meltingPoint: 63.5,
                 boilingPoint: 759,
                 electronConfig: '[Ar] 4s¹',
                 state: 'Solid',
@@ -1898,7 +2010,7 @@
                 group: 2,
                 period: 4,
                 block: 's-block',
-                electronegativity: 1.0,
+                electronegativity: 1.00,
                 meltingPoint: 842,
                 boilingPoint: 1484,
                 electronConfig: '[Ar] 4s²',
@@ -1933,7 +2045,7 @@
             {
                 symbol: 'Ti',
                 name: 'Titanium',
-                pronunciation: 'tie-TAY-nee-əm',
+                pronunciation: 'ty-TAY-nee-əm',
                 atomicNumber: 22,
                 mass: 47.867,
                 category: 'transition-metal metal',
@@ -1949,7 +2061,7 @@
                 image: 'images/titanium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+4', '+3', '+2']
+                oxidationStates: ['+2', '+3', '+4']
             },
             {
                 symbol: 'V',
@@ -1970,14 +2082,14 @@
                 image: 'images/vanadium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+5', '+4', '+3', '+2']
+                oxidationStates: ['+2', '+4', '+5', '+3']
             },
             {
                 symbol: 'Cr',
                 name: 'Chromium',
                 pronunciation: 'KROH-mee-əm',
                 atomicNumber: 24,
-                mass: 52.0,
+                mass: 51.996,
                 category: 'transition-metal metal',
                 group: 6,
                 period: 4,
@@ -1991,12 +2103,12 @@
                 image: 'images/chromium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+6', '+3', '+2']
+                oxidationStates: ['+2', '+3', '+4', '+6']
             },
             {
                 symbol: 'Mn',
                 name: 'Manganese',
-                pronunciation: 'MANG-gə-neez',
+                pronunciation: 'MAN-gə-neez',
                 atomicNumber: 25,
                 mass: 54.938,
                 category: 'transition-metal metal',
@@ -2012,7 +2124,7 @@
                 image: 'images/manganese.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+7', '+6', '+4', '+3', '+2']
+                oxidationStates: ['+2', '+3', '+4', '+6', '+7', '+5']
             },
             {
                 symbol: 'Fe',
@@ -2026,14 +2138,14 @@
                 block: 'd-block',
                 electronegativity: 1.83,
                 meltingPoint: 1538,
-                boilingPoint: 2862,
+                boilingPoint: 2861,
                 electronConfig: '[Ar] 3d⁶ 4s²',
                 state: 'Solid',
                 video: 'videos/iron.mp4',
                 image: 'images/iron.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+3', '+2']
+                oxidationStates: ['+2', '+3', '+4', '+5', '+6']
             },
             {
                 symbol: 'Co',
@@ -2054,8 +2166,10 @@
                 image: 'images/cobalt.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+3', '+2']
+                oxidationStates: ['+2', '+3', '+4']
             },
+            { symbol: 'La-Lu', name: 'Lanthanides', atomicNumber: '57-71', mass: ' ', category: 'color-custom lanthanoid metal', group: '3', period: '6', block: '', oxidationStates: [] },
+            { symbol: 'Ac-Lr', name: 'Actinides - Lawrencium', atomicNumber: '89-103', mass: ' ', category: 'color-custom actinoid metal', group: '3', period: '7', block: '', oxidationStates: [] },
             {
                 symbol: 'Ni',
                 name: 'Nickel',
@@ -2068,14 +2182,14 @@
                 block: 'd-block',
                 electronegativity: 1.91,
                 meltingPoint: 1455,
-                boilingPoint: 2913,
+                boilingPoint: 2730,
                 electronConfig: '[Ar] 3d⁸ 4s²',
                 state: 'Solid',
                 video: 'videos/nickel.mp4',
                 image: 'images/nickel.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+2', '+3']
+                oxidationStates: ['+2', '+3', '+4']
             },
             {
                 symbol: 'Cu',
@@ -2096,12 +2210,12 @@
                 image: 'images/copper.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+2', '+1']
+                oxidationStates: ['+1', '+2']
             },
             {
                 symbol: 'Zn',
                 name: 'Zinc',
-                pronunciation: 'ZINGK',
+                pronunciation: 'ZINK',
                 atomicNumber: 30,
                 mass: 65.38,
                 category: 'transition-metal metal',
@@ -2125,7 +2239,7 @@
                 pronunciation: 'GAL-ee-əm',
                 atomicNumber: 31,
                 mass: 69.723,
-                category: 'group-a-metal metal',
+                category: 'metal post-transition',
                 group: 13,
                 period: 4,
                 block: 'p-block',
@@ -2138,14 +2252,14 @@
                 image: 'images/gallium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+3', '+1']
+                oxidationStates: ['+3']
             },
             {
                 symbol: 'Ge',
                 name: 'Germanium',
                 pronunciation: 'jər-MAY-nee-əm',
                 atomicNumber: 32,
-                mass: 72.63,
+                mass: 72.630,
                 category: 'metalloid',
                 group: 14,
                 period: 4,
@@ -2159,7 +2273,7 @@
                 image: 'images/germanium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+4', '+2']
+                oxidationStates: ['+2', '+4']
             },
             {
                 symbol: 'As',
@@ -2173,14 +2287,14 @@
                 block: 'p-block',
                 electronegativity: 2.18,
                 meltingPoint: 817,
-                boilingPoint: 614,
+                boilingPoint: 603,
                 electronConfig: '[Ar] 3d¹⁰ 4s² 4p³',
                 state: 'Solid',
                 video: 'videos/arsenic.mp4',
                 image: 'images/arsenic.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+5', '+3', '-3']
+                oxidationStates: ['-3', '+3', '+5']
             },
             {
                 symbol: 'Se',
@@ -2201,7 +2315,7 @@
                 image: 'images/selenium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+6', '+4', '-2']
+                oxidationStates: ['-2', '+4', '+6']
             },
             {
                 symbol: 'Br',
@@ -2222,7 +2336,7 @@
                 image: 'images/bromine.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+7', '+5', '+3', '+1', '-1']
+                oxidationStates: ['-1', '+1', '+3', '+5', '+7', '+4']
             },
             {
                 symbol: 'Kr',
@@ -2234,8 +2348,8 @@
                 group: 18,
                 period: 4,
                 block: 'p-block',
-                electronegativity: 3.00,
-                meltingPoint: -157.36,
+                electronegativity: null,
+                meltingPoint: -157.37,
                 boilingPoint: -153.22,
                 electronConfig: '[Ar] 3d¹⁰ 4s² 4p⁶',
                 state: 'Gas',
@@ -2243,7 +2357,7 @@
                 image: 'images/krypton.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+2', '0']
+                oxidationStates: ['0']
             },
             {
                 symbol: 'Rb',
@@ -2299,7 +2413,7 @@
                 block: 'd-block',
                 electronegativity: 1.22,
                 meltingPoint: 1526,
-                boilingPoint: 3336,
+                boilingPoint: 3345,
                 electronConfig: '[Kr] 4d¹ 5s²',
                 state: 'Solid',
                 video: 'videos/yttrium.mp4',
@@ -2311,7 +2425,7 @@
             {
                 symbol: 'Zr',
                 name: 'Zirconium',
-                pronunciation: 'zur-KOH-nee-əm',
+                pronunciation: 'zər-KOH-nee-əm',
                 atomicNumber: 40,
                 mass: 91.224,
                 category: 'transition-metal metal',
@@ -2327,12 +2441,12 @@
                 image: 'images/zirconium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+4']
+                oxidationStates: ['+4', '+2', '+3']
             },
             {
                 symbol: 'Nb',
                 name: 'Niobium',
-                pronunciation: 'nye-OH-bee-əm',
+                pronunciation: 'ny-OH-bee-əm',
                 atomicNumber: 41,
                 mass: 92.906,
                 category: 'transition-metal metal',
@@ -2348,7 +2462,7 @@
                 image: 'images/niobium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+5', '+3']
+                oxidationStates: ['+5', '+3', '+2']
             },
             {
                 symbol: 'Mo',
@@ -2369,7 +2483,7 @@
                 image: 'images/molybdenum.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+6', '+5', '+4', '+3', '+2']
+                oxidationStates: ['+2', '+3', '+4', '+5', '+6']
             },
             {
                 symbol: 'Tc',
@@ -2390,7 +2504,7 @@
                 image: 'images/technetium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+7', '+6', '+4']
+                oxidationStates: ['+4', '+6', '+7', '+2', '+5']
             },
             {
                 symbol: 'Ru',
@@ -2411,14 +2525,14 @@
                 image: 'images/ruthenium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+8', '+6', '+4', '+3', '+2']
+                oxidationStates: ['+2', '+3', '+4', '+6', '+8']
             },
             {
                 symbol: 'Rh',
                 name: 'Rhodium',
                 pronunciation: 'ROH-dee-əm',
                 atomicNumber: 45,
-                mass: 102.91,
+                mass: 102.906,
                 category: 'transition-metal metal',
                 group: 9,
                 period: 5,
@@ -2432,7 +2546,7 @@
                 image: 'images/rhodium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+4', '+3', '+2']
+                oxidationStates: ['+2', '+3', '+4', '+6']
             },
             {
                 symbol: 'Pd',
@@ -2453,7 +2567,7 @@
                 image: 'images/palladium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+4', '+2']
+                oxidationStates: ['+2', '+4']
             },
             {
                 symbol: 'Ag',
@@ -2481,7 +2595,7 @@
                 name: 'Cadmium',
                 pronunciation: 'KAD-mee-əm',
                 atomicNumber: 48,
-                mass: 112.411,
+                mass: 112.414,
                 category: 'transition-metal metal',
                 group: 12,
                 period: 5,
@@ -2503,7 +2617,7 @@
                 pronunciation: 'IN-dee-əm',
                 atomicNumber: 49,
                 mass: 114.818,
-                category: 'group-a-metal metal',
+                category: 'metal post-transition',
                 group: 13,
                 period: 5,
                 block: 'p-block',
@@ -2524,7 +2638,7 @@
                 pronunciation: 'TIN',
                 atomicNumber: 50,
                 mass: 118.710,
-                category: 'group-a-metal metal',
+                category: 'metal post-transition',
                 group: 14,
                 period: 5,
                 block: 'p-block',
@@ -2537,7 +2651,7 @@
                 image: 'images/tin.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+4', '+2']
+                oxidationStates: ['+2', '+4']
             },
             {
                 symbol: 'Sb',
@@ -2558,12 +2672,12 @@
                 image: 'images/antimony.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+5', '+3', '-3']
+                oxidationStates: ['-3', '+3', '+5']
             },
             {
                 symbol: 'Te',
                 name: 'Tellurium',
-                pronunciation: 'te-LOOR-ee-əm',
+                pronunciation: 'tə-LOOR-ee-əm',
                 atomicNumber: 52,
                 mass: 127.60,
                 category: 'metalloid',
@@ -2579,7 +2693,7 @@
                 image: 'images/tellurium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+6', '+4', '-2']
+                oxidationStates: ['-2', '+4', '+6', '+2']
             },
             {
                 symbol: 'I',
@@ -2600,7 +2714,7 @@
                 image: 'images/iodine.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+7', '+5', '+3', '+1', '-1']
+                oxidationStates: ['-1', '+1', '+3', '+5', '+7']
             },
             {
                 symbol: 'Xe',
@@ -2612,16 +2726,16 @@
                 group: 18,
                 period: 5,
                 block: 'p-block',
-                electronegativity: 2.6,
-                meltingPoint: -111.75,
-                boilingPoint: -108.12,
+                electronegativity: null,
+                meltingPoint: -111.8,
+                boilingPoint: -108.1,
                 electronConfig: '[Kr] 4d¹⁰ 5s² 5p⁶',
                 state: 'Gas',
                 video: 'videos/xenon.mp4',
                 image: 'images/xenon.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+8', '+6', '+4', '+2', '0']
+                oxidationStates: ['0']
             },
             {
                 symbol: 'Cs',
@@ -2656,7 +2770,7 @@
                 block: 's-block',
                 electronegativity: 0.89,
                 meltingPoint: 727,
-                boilingPoint: 1897,
+                boilingPoint: 1845,
                 electronConfig: '[Xe] 6s²',
                 state: 'Solid',
                 video: 'videos/barium.mp4',
@@ -2664,680 +2778,6 @@
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2']
-            },
-            { symbol: 'La-Lu', name: 'Lanthanides', atomicNumber: '57-71', mass: ' ', category: 'color-custom lanthanoid metal', group: '3', period: '6', block: '', oxidationStates: [] },
-            {
-                symbol: 'Hf',
-                name: 'Hafnium',
-                pronunciation: 'HAF-nee-əm',
-                atomicNumber: 72,
-                mass: 178.49,
-                category: 'transition-metal metal',
-                group: 4,
-                period: 6,
-                block: 'd-block',
-                electronegativity: 1.3,
-                meltingPoint: 2233,
-                boilingPoint: 4603,
-                electronConfig: '[Xe] 4f¹⁴ 5d² 6s²',
-                state: 'Solid',
-                video: 'videos/hafnium.mp4',
-                image: 'images/hafnium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+4']
-            },
-            {
-                symbol: 'Ta',
-                name: 'Tantalum',
-                pronunciation: 'TAN-tə-ləm',
-                atomicNumber: 73,
-                mass: 180.9479,
-                category: 'transition-metal metal',
-                group: 5,
-                period: 6,
-                block: 'd-block',
-                electronegativity: 1.5,
-                meltingPoint: 3017,
-                boilingPoint: 5458,
-                electronConfig: '[Xe] 4f¹⁴ 5d³ 6s²',
-                state: 'Solid',
-                video: 'videos/tantalum.mp4',
-                image: 'images/tantalum.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+5']
-            },
-            {
-                symbol: 'W',
-                name: 'Tungsten',
-                pronunciation: 'TUNG-stən',
-                atomicNumber: 74,
-                mass: 183.84,
-                category: 'transition-metal metal',
-                group: 6,
-                period: 6,
-                block: 'd-block',
-                electronegativity: 2.36,
-                meltingPoint: 3422,
-                boilingPoint: 5555,
-                electronConfig: '[Xe] 4f¹⁴ 5d⁴ 6s²',
-                state: 'Solid',
-                video: 'videos/tungsten.mp4',
-                image: 'images/tungsten.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+6', '+5', '+4', '+3', '+2']
-            },
-            {
-                symbol: 'Re',
-                name: 'Rhenium',
-                pronunciation: 'REE-nee-əm',
-                atomicNumber: 75,
-                mass: 186.207,
-                category: 'transition-metal metal',
-                group: 7,
-                period: 6,
-                block: 'd-block',
-                electronegativity: 1.9,
-                meltingPoint: 3186,
-                boilingPoint: 5596,
-                electronConfig: '[Xe] 4f¹⁴ 5d⁵ 6s²',
-                state: 'Solid',
-                video: 'videos/rhenium.mp4',
-                image: 'images/rhenium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+7', '+6', '+4', '+3']
-            },
-            {
-                symbol: 'Os',
-                name: 'Osmium',
-                pronunciation: 'OZ-mee-əm',
-                atomicNumber: 76,
-                mass: 190.23,
-                category: 'transition-metal metal',
-                group: 8,
-                period: 6,
-                block: 'd-block',
-                electronegativity: 2.2,
-                meltingPoint: 3033,
-                boilingPoint: 5012,
-                electronConfig: '[Xe] 4f¹⁴ 5d⁶ 6s²',
-                state: 'Solid',
-                video: 'videos/osmium.mp4',
-                image: 'images/osmium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+8', '+6', '+4', '+3', '+2']
-            },
-            {
-                symbol: 'Ir',
-                name: 'Iridium',
-                pronunciation: 'i-RID-ee-əm',
-                atomicNumber: 77,
-                mass: 192.217,
-                category: 'transition-metal metal',
-                group: 9,
-                period: 6,
-                block: 'd-block',
-                electronegativity: 2.2,
-                meltingPoint: 2446,
-                boilingPoint: 4428,
-                electronConfig: '[Xe] 4f¹⁴ 5d⁷ 6s²',
-                state: 'Solid',
-                video: 'videos/iridium.mp4',
-                image: 'images/iridium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+4', '+3', '+2', '+1']
-            },
-            {
-                symbol: 'Pt',
-                name: 'Platinum',
-                pronunciation: 'PLAT-ə-nəm',
-                atomicNumber: 78,
-                mass: 195.084,
-                category: 'transition-metal metal',
-                group: 10,
-                period: 6,
-                block: 'd-block',
-                electronegativity: 2.28,
-                meltingPoint: 1768.3,
-                boilingPoint: 3825,
-                electronConfig: '[Xe] 4f¹⁴ 5d⁹ 6s¹',
-                state: 'Solid',
-                video: 'videos/platinum.mp4',
-                image: 'images/platinum.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+4', '+2']
-            },
-            {
-                symbol: 'Au',
-                name: 'Gold',
-                pronunciation: 'GOHLD',
-                atomicNumber: 79,
-                mass: 196.967,
-                category: 'transition-metal metal',
-                group: 11,
-                period: 6,
-                block: 'd-block',
-                electronegativity: 2.54,
-                meltingPoint: 1064.18,
-                boilingPoint: 2856,
-                electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s¹',
-                state: 'Solid',
-                video: 'videos/gold.mp4',
-                image: 'images/gold.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+3', '+1']
-            },
-            {
-                symbol: 'Hg',
-                name: 'Mercury',
-                pronunciation: 'MUR-kyə-ree',
-                atomicNumber: 80,
-                mass: 200.592,
-                category: 'transition-metal metal',
-                group: 12,
-                period: 6,
-                block: 'd-block',
-                electronegativity: 2.0,
-                meltingPoint: -38.83,
-                boilingPoint: 356.73,
-                electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s²',
-                state: 'Liquid',
-                video: 'videos/mercury.mp4',
-                image: 'images/mercury.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+2', '+1']
-            },
-            {
-                symbol: 'Tl',
-                name: 'Thallium',
-                pronunciation: 'THAL-ee-əm',
-                atomicNumber: 81,
-                mass: 204.38,
-                category: 'group-a-metal metal',
-                group: 13,
-                period: 6,
-                block: 'p-block',
-                electronegativity: 1.62,
-                meltingPoint: 304,
-                boilingPoint: 1473,
-                electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p¹',
-                state: 'Solid',
-                video: 'videos/thallium.mp4',
-                image: 'images/thallium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+3', '+1']
-            },
-            {
-                symbol: 'Pb',
-                name: 'Lead',
-                pronunciation: 'LED',
-                atomicNumber: 82,
-                mass: 207.2,
-                category: 'group-a-metal metal',
-                group: 14,
-                period: 6,
-                block: 'p-block',
-                electronegativity: 2.33,
-                meltingPoint: 327.46,
-                boilingPoint: 1749,
-                electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p²',
-                state: 'Solid',
-                video: 'videos/lead.mp4',
-                image: 'images/lead.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+4', '+2']
-            },
-            {
-                symbol: 'Bi',
-                name: 'Bismuth',
-                pronunciation: 'BIZ-məth',
-                atomicNumber: 83,
-                mass: 208.980,
-                category: 'group-a-metal metal',
-                group: 15,
-                period: 6,
-                block: 'p-block',
-                electronegativity: 2.02,
-                meltingPoint: 271.3,
-                boilingPoint: 1564,
-                electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p³',
-                state: 'Solid',
-                video: 'videos/bismuth.mp4',
-                image: 'images/bismuth.png',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+5', '+3']
-            },
-            {
-                symbol: 'Po',
-                name: 'Polonium',
-                pronunciation: 'pə-LOH-nee-əm',
-                atomicNumber: 84,
-                mass: 209.982,
-                category: 'metalloid',
-                group: 16,
-                period: 6,
-                block: 'p-block',
-                electronegativity: 2.0,
-                meltingPoint: 254,
-                boilingPoint: 962,
-                electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁴',
-                state: 'Solid',
-                video: 'videos/polonium.mp4',
-                image: 'images/polonium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+4', '+2']
-            },
-            {
-                symbol: 'At',
-                name: 'Astatine',
-                pronunciation: 'AS-tə-teen',
-                atomicNumber: 85,
-                mass: 210,
-                category: 'halogen nonmetal',
-                group: 17,
-                period: 6,
-                block: 'p-block',
-                electronegativity: 2.2,
-                meltingPoint: 302,
-                boilingPoint: 337,
-                electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁵',
-                state: 'Solid',
-                video: 'videos/astatine.mp4',
-                image: 'images/astatine.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+7', '+5', '+3', '+1', '-1']
-            },
-            {
-                symbol: 'Rn',
-                name: 'Radon',
-                pronunciation: 'RAY-don',
-                atomicNumber: 86,
-                mass: 222,
-                category: 'noble-gas',
-                group: 18,
-                period: 6,
-                block: 'p-block',
-                electronegativity: 2.2,
-                meltingPoint: -71,
-                boilingPoint: -61.7,
-                electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁶',
-                state: 'Gas',
-                video: 'videos/radon.mp4',
-                image: 'images/radon.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+2', '0']
-            },
-            {
-                symbol: 'Fr',
-                name: 'Francium',
-                pronunciation: 'FRAN-see-əm',
-                atomicNumber: 87,
-                mass: 223,
-                category: 'alkali-metal metal',
-                group: 1,
-                period: 7,
-                block: 's-block',
-                electronegativity: 0.7,
-                meltingPoint: 27,
-                boilingPoint: 677,
-                electronConfig: '[Rn] 7s¹',
-                state: 'Solid',
-                video: 'videos/francium.mp4',
-                image: 'images/francium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+1']
-            },
-            {
-                symbol: 'Ra',
-                name: 'Radium',
-                pronunciation: 'RAY-dee-əm',
-                atomicNumber: 88,
-                mass: 226,
-                category: 'metal alkaline-earth',
-                group: 2,
-                period: 7,
-                block: 's-block',
-                electronegativity: 0.9,
-                meltingPoint: 700,
-                boilingPoint: 1737,
-                electronConfig: '[Rn] 7s²',
-                state: 'Solid',
-                video: 'videos/radium.mp4',
-                image: 'images/radium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+2']
-            },
-            { symbol: 'Ac-Lr', name: 'Actinides - Lawrencium', atomicNumber: '89-103', mass: ' ', category: 'color-custom actinoid metal', group: '3', period: '7', block: '', oxidationStates: [] },
-            {
-                symbol: 'Rf',
-                name: 'Rutherfordium',
-                pronunciation: 'ruh-thər-FOR-dee-əm',
-                atomicNumber: 104,
-                mass: 267,
-                category: 'transition-metal metal',
-                group: 4,
-                period: 7,
-                block: 'd-block',
-                electronegativity: null,
-                meltingPoint: 2100,
-                boilingPoint: 5500,
-                electronConfig: '[Rn] 5f¹⁴ 6d² 7s²',
-                state: 'Solid',
-                video: 'videos/rutherfordium.mp4',
-                image: 'images/rutherfordium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+4']
-            },
-            {
-                symbol: 'Db',
-                name: 'Dubnium',
-                pronunciation: 'DOOB-nee-əm',
-                atomicNumber: 105,
-                mass: 270,
-                category: 'transition-metal metal',
-                group: 5,
-                period: 7,
-                block: 'd-block',
-                electronegativity: null,
-                meltingPoint: null,
-                boilingPoint: null,
-                electronConfig: '[Rn] 5f¹⁴ 6d³ 7s²',
-                state: 'Solid',
-                video: 'videos/dubnium.mp4',
-                image: 'images/dubnium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+5']
-            },
-            {
-                symbol: 'Sg',
-                name: 'Seaborgium',
-                pronunciation: 'see-BORG-ee-əm',
-                atomicNumber: 106,
-                mass: 271,
-                category: 'transition-metal metal',
-                group: 6,
-                period: 7,
-                block: 'd-block',
-                electronegativity: null,
-                meltingPoint: null,
-                boilingPoint: null,
-                electronConfig: '[Rn] 5f¹⁴ 6d⁴ 7s²',
-                state: 'Solid',
-                video: 'videos/seaborgium.mp4',
-                image: 'images/seaborgium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+6']
-            },
-            {
-                symbol: 'Bh',
-                name: 'Bohrium',
-                pronunciation: 'BOHR-ee-əm',
-                atomicNumber: 107,
-                mass: 270,
-                category: 'transition-metal metal',
-                group: 7,
-                period: 7,
-                block: 'd-block',
-                electronegativity: null,
-                meltingPoint: null,
-                boilingPoint: null,
-                electronConfig: '[Rn] 5f¹⁴ 6d⁵ 7s²',
-                state: 'Solid',
-                video: 'videos/bohrium.mp4',
-                image: 'images/bohrium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+7']
-            },
-            {
-                symbol: 'Hs',
-                name: 'Hassium',
-                pronunciation: 'HAS-ee-əm',
-                atomicNumber: 108,
-                mass: 277,
-                category: 'transition-metal metal',
-                group: 8,
-                period: 7,
-                block: 'd-block',
-                electronegativity: null,
-                meltingPoint: null,
-                boilingPoint: null,
-                electronConfig: '[Rn] 5f¹⁴ 6d⁶ 7s²',
-                state: 'Solid',
-                video: 'videos/hassium.mp4',
-                image: 'images/hassium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+8']
-            },
-            {
-                symbol: 'Mt',
-                name: 'Meitnerium',
-                pronunciation: 'myt-NEER-ee-əm',
-                atomicNumber: 109,
-                mass: 278,
-                category: 'transition-metal metal',
-                group: 9,
-                period: 7,
-                block: 'd-block',
-                electronegativity: null,
-                meltingPoint: null,
-                boilingPoint: null,
-                electronConfig: '[Rn] 5f¹⁴ 6d⁷ 7s²',
-                state: 'Solid',
-                video: 'videos/meitnerium.mp4',
-                image: 'images/meitnerium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+3'] // Dự đoán, ít dữ liệu thực nghiệm
-            },
-            {
-                symbol: 'Ds',
-                name: 'Darmstadtium',
-                pronunciation: 'darm-STAD-tee-əm',
-                atomicNumber: 110,
-                mass: 281,
-                category: 'transition-metal metal',
-                group: 10,
-                period: 7,
-                block: 'd-block',
-                electronegativity: null,
-                meltingPoint: null,
-                boilingPoint: null,
-                electronConfig: '[Rn] 5f¹⁴ 6d⁸ 7s²',
-                state: 'Solid',
-                video: 'videos/darmstadtium.mp4',
-                image: 'images/darmstadtium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+4'] // Dự đoán, ít dữ liệu thực nghiệm
-            },
-            {
-                symbol: 'Rg',
-                name: 'Roentgenium',
-                pronunciation: 'rent-GEN-ee-əm',
-                atomicNumber: 111,
-                mass: 280,
-                category: 'transition-metal metal',
-                group: 11,
-                period: 7,
-                block: 'd-block',
-                electronegativity: null,
-                meltingPoint: null,
-                boilingPoint: null,
-                electronConfig: '[Rn] 5f¹⁴ 6d⁹ 7s²',
-                state: 'Solid',
-                video: 'videos/roentgenium.mp4',
-                image: 'images/roentgenium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+3', '+1'] // Dự đoán, ít dữ liệu thực nghiệm
-            },
-            {
-                symbol: 'Cn',
-                name: 'Copernicium',
-                pronunciation: 'koh-PER-nis-ee-əm',
-                atomicNumber: 112,
-                mass: 285,
-                category: 'transition-metal metal',
-                group: 12,
-                period: 7,
-                block: 'd-block',
-                electronegativity: null,
-                meltingPoint: null,
-                boilingPoint: null,
-                electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s²',
-                state: 'Solid',
-                video: 'videos/copernicium.mp4',
-                image: 'images/copernicium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+2'] // Dự đoán, ít dữ liệu thực nghiệm
-            },
-            {
-                symbol: 'Nh',
-                name: 'Nihonium',
-                pronunciation: 'nee-HOH-nee-əm',
-                atomicNumber: 113,
-                mass: 284,
-                category: 'group-a-metal metal',
-                group: 13,
-                period: 7,
-                block: 'p-block',
-                electronegativity: null,
-                meltingPoint: null,
-                boilingPoint: null,
-                electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p¹',
-                state: 'Solid',
-                video: 'videos/nihonium.mp4',
-                image: 'images/nihonium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+3', '+1'] // Dự đoán, ít dữ liệu thực nghiệm
-            },
-            {
-                symbol: 'Fl',
-                name: 'Flerovium',
-                pronunciation: 'flə-ROH-vee-əm',
-                atomicNumber: 114,
-                mass: 289,
-                category: 'group-a-metal metal',
-                group: 14,
-                period: 7,
-                block: 'p-block',
-                electronegativity: null,
-                meltingPoint: null,
-                boilingPoint: null,
-                electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p²',
-                state: 'Solid',
-                video: 'videos/flerovium.mp4',
-                image: 'images/flerovium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+4', '+2'] // Dự đoán, ít dữ liệu thực nghiệm
-            },
-            {
-                symbol: 'Mc',
-                name: 'Moscovium',
-                pronunciation: 'MOS-koh-vee-əm',
-                atomicNumber: 115,
-                mass: 288,
-                category: 'group-a-metal metal',
-                group: 15,
-                period: 7,
-                block: 'p-block',
-                electronegativity: null,
-                meltingPoint: null,
-                boilingPoint: null,
-                electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p³',
-                state: 'Solid',
-                video: 'videos/moscovium.mp4',
-                image: 'images/moscovium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+3', '+1'] // Dự đoán, ít dữ liệu thực nghiệm
-            },
-            {
-                symbol: 'Lv',
-                name: 'Livermorium',
-                pronunciation: 'liv-ər-MOR-ee-əm',
-                atomicNumber: 116,
-                mass: 293,
-                category: 'group-a-metal metal',
-                group: 16,
-                period: 7,
-                block: 'p-block',
-                electronegativity: null,
-                meltingPoint: null,
-                boilingPoint: null,
-                electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁴',
-                state: 'Solid',
-                video: 'videos/livermorium.mp4',
-                image: 'images/livermorium.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+4', '+2'] // Dự đoán, ít dữ liệu thực nghiệm
-            },
-            {
-                symbol: 'Ts',
-                name: 'Tennessine',
-                pronunciation: 'TEN-ə-seen',
-                atomicNumber: 117,
-                mass: 294,
-                category: 'halogen nonmetal',
-                group: 17,
-                period: 7,
-                block: 'p-block',
-                electronegativity: null,
-                meltingPoint: null,
-                boilingPoint: null,
-                electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁵',
-                state: 'Solid',
-                video: 'videos/tennessine.mp4',
-                image: 'images/tennessine.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+5', '+3', '+1', '-1'] // Dự đoán, ít dữ liệu thực nghiệm
-            },
-            {
-                symbol: 'Og',
-                name: 'Oganesson',
-                pronunciation: 'oh-gə-NES-ən',
-                atomicNumber: 118,
-                mass: 294,
-                category: 'noble-gas',
-                group: 18,
-                period: 7,
-                block: 'p-block',
-                electronegativity: null,
-                meltingPoint: null,
-                boilingPoint: null,
-                electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁶',
-                state: 'Gas',
-                video: 'videos/oganesson.mp4',
-                image: 'images/oganesson.jpg',
-                guessed: false,
-                revealed: false,
-                oxidationStates: ['+6', '+4', '+2', '0'] // Dự đoán, ít dữ liệu thực nghiệm
             },
             {
                 symbol: 'La',
@@ -3348,7 +2788,7 @@
                 category: 'lanthanoid metal',
                 group: 'N/A',
                 period: 6,
-                block: 'd-block',
+                block: 'f-block',
                 electronegativity: 1.1,
                 meltingPoint: 920,
                 boilingPoint: 3464,
@@ -3379,33 +2819,33 @@
                 image: 'images/cerium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+4', '+3']
+                oxidationStates: ['+3', '+4']
             },
             {
                 symbol: 'Pr',
                 name: 'Praseodymium',
-                pronunciation: 'PRAY-zee-oh-DIM-ee-əm',
+                pronunciation: 'pray-zee-oh-DIM-ee-əm',
                 atomicNumber: 59,
-                mass: 140.907,
+                mass: 140.908,
                 category: 'lanthanoid metal',
                 group: 'N/A',
                 period: 6,
                 block: 'f-block',
                 electronegativity: 1.13,
                 meltingPoint: 935,
-                boilingPoint: 3520,
+                boilingPoint: 3130,
                 electronConfig: '[Xe] 4f³ 6s²',
                 state: 'Solid',
                 video: 'videos/praseodymium.mp4',
                 image: 'images/praseodymium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+4', '+3']
+                oxidationStates: ['+3', '+4']
             },
             {
                 symbol: 'Nd',
                 name: 'Neodymium',
-                pronunciation: 'NEE-oh-DIM-ee-əm',
+                pronunciation: 'nee-oh-DIM-ee-əm',
                 atomicNumber: 60,
                 mass: 144.242,
                 category: 'lanthanoid metal',
@@ -3426,7 +2866,7 @@
             {
                 symbol: 'Pm',
                 name: 'Promethium',
-                pronunciation: 'proh-MEE-thee-əm',
+                pronunciation: 'prə-MEE-thee-əm',
                 atomicNumber: 61,
                 mass: 145,
                 category: 'lanthanoid metal',
@@ -3456,14 +2896,14 @@
                 block: 'f-block',
                 electronegativity: 1.17,
                 meltingPoint: 1072,
-                boilingPoint: 1900,
+                boilingPoint: 1794,
                 electronConfig: '[Xe] 4f⁶ 6s²',
                 state: 'Solid',
                 video: 'videos/samarium.mp4',
                 image: 'images/samarium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+3', '+2']
+                oxidationStates: ['+2', '+3']
             },
             {
                 symbol: 'Eu',
@@ -3476,20 +2916,20 @@
                 period: 6,
                 block: 'f-block',
                 electronegativity: 1.2,
-                meltingPoint: 822,
-                boilingPoint: 1597,
+                meltingPoint: 826,
+                boilingPoint: 1529,
                 electronConfig: '[Xe] 4f⁷ 6s²',
                 state: 'Solid',
                 video: 'videos/europium.mp4',
                 image: 'images/europium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+3', '+2']
+                oxidationStates: ['+2', '+3']
             },
             {
                 symbol: 'Gd',
                 name: 'Gadolinium',
-                pronunciation: 'GAD-ə-LIN-ee-əm',
+                pronunciation: 'gad-ə-LIN-ee-əm',
                 atomicNumber: 64,
                 mass: 157.25,
                 category: 'lanthanoid metal',
@@ -3497,7 +2937,7 @@
                 period: 6,
                 block: 'f-block',
                 electronegativity: 1.2,
-                meltingPoint: 1312,
+                meltingPoint: 1313,
                 boilingPoint: 3273,
                 electronConfig: '[Xe] 4f⁷ 5d¹ 6s²',
                 state: 'Solid',
@@ -3526,20 +2966,20 @@
                 image: 'images/terbium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+4', '+3']
+                oxidationStates: ['+3', '+4']
             },
             {
                 symbol: 'Dy',
                 name: 'Dysprosium',
                 pronunciation: 'dis-PROH-zee-əm',
                 atomicNumber: 66,
-                mass: 162.5,
+                mass: 162.500,
                 category: 'lanthanoid metal',
                 group: 'N/A',
                 period: 6,
                 block: 'f-block',
                 electronegativity: 1.22,
-                meltingPoint: 1407,
+                meltingPoint: 1412,
                 boilingPoint: 2567,
                 electronConfig: '[Xe] 4f¹⁰ 6s²',
                 state: 'Solid',
@@ -3560,8 +3000,8 @@
                 period: 6,
                 block: 'f-block',
                 electronegativity: 1.23,
-                meltingPoint: 1461,
-                boilingPoint: 2720,
+                meltingPoint: 1474,
+                boilingPoint: 2700,
                 electronConfig: '[Xe] 4f¹¹ 6s²',
                 state: 'Solid',
                 video: 'videos/holmium.mp4',
@@ -3617,7 +3057,7 @@
                 name: 'Ytterbium',
                 pronunciation: 'i-TUR-bee-əm',
                 atomicNumber: 70,
-                mass: 173.04,
+                mass: 173.045,
                 category: 'lanthanoid metal',
                 group: 'N/A',
                 period: 6,
@@ -3631,18 +3071,18 @@
                 image: 'images/ytterbium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+3', '+2']
+                oxidationStates: ['+2', '+3']
             },
             {
                 symbol: 'Lu',
                 name: 'Lutetium',
                 pronunciation: 'loo-TEE-shee-əm',
                 atomicNumber: 71,
-                mass: 174.966,
+                mass: 174.967,
                 category: 'lanthanoid metal',
-                group: 'N/A',
+                group: 3,
                 period: 6,
-                block: 'f-block',
+                block: 'd-block',
                 electronegativity: 1.27,
                 meltingPoint: 1652,
                 boilingPoint: 3402,
@@ -3655,6 +3095,363 @@
                 oxidationStates: ['+3']
             },
             {
+                symbol: 'Hf',
+                name: 'Hafnium',
+                pronunciation: 'HAF-nee-əm',
+                atomicNumber: 72,
+                mass: 178.49,
+                category: 'transition-metal metal',
+                group: 4,
+                period: 6,
+                block: 'd-block',
+                electronegativity: 1.3,
+                meltingPoint: 2233,
+                boilingPoint: 4603,
+                electronConfig: '[Xe] 4f¹⁴ 5d² 6s²',
+                state: 'Solid',
+                video: 'videos/hafnium.mp4',
+                image: 'images/hafnium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+4']
+            },
+            {
+                symbol: 'Ta',
+                name: 'Tantalum',
+                pronunciation: 'TAN-tə-ləm',
+                atomicNumber: 73,
+                mass: 180.948,
+                category: 'transition-metal metal',
+                group: 5,
+                period: 6,
+                block: 'd-block',
+                electronegativity: 1.5,
+                meltingPoint: 3017,
+                boilingPoint: 5458,
+                electronConfig: '[Xe] 4f¹⁴ 5d³ 6s²',
+                state: 'Solid',
+                video: 'videos/tantalum.mp4',
+                image: 'images/tantalum.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+5']
+            },
+            {
+                symbol: 'W',
+                name: 'Tungsten',
+                pronunciation: 'TUNG-stən',
+                atomicNumber: 74,
+                mass: 183.84,
+                category: 'transition-metal metal',
+                group: 6,
+                period: 6,
+                block: 'd-block',
+                electronegativity: 2.36,
+                meltingPoint: 3422,
+                boilingPoint: 5555,
+                electronConfig: '[Xe] 4f¹⁴ 5d⁴ 6s²',
+                state: 'Solid',
+                video: 'videos/tungsten.mp4',
+                image: 'images/tungsten.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+2', '+3', '+4', '+5', '+6']
+            },
+            {
+                symbol: 'Re',
+                name: 'Rhenium',
+                pronunciation: 'REE-nee-əm',
+                atomicNumber: 75,
+                mass: 186.207,
+                category: 'transition-metal metal',
+                group: 7,
+                period: 6,
+                block: 'd-block',
+                electronegativity: 1.9,
+                meltingPoint: 3186,
+                boilingPoint: 5596,
+                electronConfig: '[Xe] 4f¹⁴ 5d⁵ 6s²',
+                state: 'Solid',
+                video: 'videos/rhenium.mp4',
+                image: 'images/rhenium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+2', '+4', '+6', '+7', '+3', '+5']
+            },
+            {
+                symbol: 'Os',
+                name: 'Osmium',
+                pronunciation: 'OZ-mee-əm',
+                atomicNumber: 76,
+                mass: 190.23,
+                category: 'transition-metal metal',
+                group: 8,
+                period: 6,
+                block: 'd-block',
+                electronegativity: 2.2,
+                meltingPoint: 3033,
+                boilingPoint: 5012,
+                electronConfig: '[Xe] 4f¹⁴ 5d⁶ 6s²',
+                state: 'Solid',
+                video: 'videos/osmium.mp4',
+                image: 'images/osmium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+2', '+3', '+4', '+6', '+8']
+            },
+            {
+                symbol: 'Ir',
+                name: 'Iridium',
+                pronunciation: 'i-RID-ee-əm',
+                atomicNumber: 77,
+                mass: 192.217,
+                category: 'transition-metal metal',
+                group: 9,
+                period: 6,
+                block: 'd-block',
+                electronegativity: 2.20,
+                meltingPoint: 2446,
+                boilingPoint: 4428,
+                electronConfig: '[Xe] 4f¹⁴ 5d⁷ 6s²',
+                state: 'Solid',
+                video: 'videos/iridium.mp4',
+                image: 'images/iridium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+2', '+3', '+4', '+6']
+            },
+            {
+                symbol: 'Pt',
+                name: 'Platinum',
+                pronunciation: 'PLAT-n-əm',
+                atomicNumber: 78,
+                mass: 195.084,
+                category: 'transition-metal metal',
+                group: 10,
+                period: 6,
+                block: 'd-block',
+                electronegativity: 2.28,
+                meltingPoint: 1768.3,
+                boilingPoint: 3825,
+                electronConfig: '[Xe] 4f¹⁴ 5d⁹ 6s¹',
+                state: 'Solid',
+                video: 'videos/platinum.mp4',
+                image: 'images/platinum.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+2', '+4', '+6']
+            },
+            {
+                symbol: 'Au',
+                name: 'Gold',
+                pronunciation: 'GOHLD',
+                atomicNumber: 79,
+                mass: 196.967,
+                category: 'transition-metal metal',
+                group: 11,
+                period: 6,
+                block: 'd-block',
+                electronegativity: 2.54,
+                meltingPoint: 1064.18,
+                boilingPoint: 2856,
+                electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s¹',
+                state: 'Solid',
+                video: 'videos/gold.mp4',
+                image: 'images/gold.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+1', '+3', '+5']
+            },
+            {
+                symbol: 'Hg',
+                name: 'Mercury',
+                pronunciation: 'MUR-kyə-ree',
+                atomicNumber: 80,
+                mass: 200.592,
+                category: 'transition-metal metal',
+                group: 12,
+                period: 6,
+                block: 'd-block',
+                electronegativity: 2.00,
+                meltingPoint: -38.83,
+                boilingPoint: 356.73,
+                electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s²',
+                state: 'Liquid',
+                video: 'videos/mercury.mp4',
+                image: 'images/mercury.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+1', '+2']
+            },
+            {
+                symbol: 'Tl',
+                name: 'Thallium',
+                pronunciation: 'THAL-ee-əm',
+                atomicNumber: 81,
+                mass: 204.38,
+                category: 'metal post-transition',
+                group: 13,
+                period: 6,
+                block: 'p-block',
+                electronegativity: 1.62,
+                meltingPoint: 304,
+                boilingPoint: 1473,
+                electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p¹',
+                state: 'Solid',
+                video: 'videos/thallium.mp4',
+                image: 'images/thallium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+1', '+3']
+            },
+            {
+                symbol: 'Pb',
+                name: 'Lead',
+                pronunciation: 'LED',
+                atomicNumber: 82,
+                mass: 207.2,
+                category: 'metal post-transition',
+                group: 14,
+                period: 6,
+                block: 'p-block',
+                electronegativity: 2.33,
+                meltingPoint: 327.46,
+                boilingPoint: 1749,
+                electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p²',
+                state: 'Solid',
+                video: 'videos/lead.mp4',
+                image: 'images/lead.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+2', '+4']
+            },
+            {
+                symbol: 'Bi',
+                name: 'Bismuth',
+                pronunciation: 'BIZ-məth',
+                atomicNumber: 83,
+                mass: 208.980,
+                category: 'metal post-transition',
+                group: 15,
+                period: 6,
+                block: 'p-block',
+                electronegativity: 2.02,
+                meltingPoint: 271.4,
+                boilingPoint: 1564,
+                electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p³',
+                state: 'Solid',
+                video: 'videos/bismuth.mp4',
+                image: 'images/bismuth.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+3', '+5']
+            },
+            {
+                symbol: 'Po',
+                name: 'Polonium',
+                pronunciation: 'pə-LOH-nee-əm',
+                atomicNumber: 84,
+                mass: 209,
+                category: 'metalloid',
+                group: 16,
+                period: 6,
+                block: 'p-block',
+                electronegativity: 2.0,
+                meltingPoint: 254,
+                boilingPoint: 962,
+                electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁴',
+                state: 'Solid',
+                video: 'videos/polonium.mp4',
+                image: 'images/polonium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+2', '+4']
+            },
+            {
+                symbol: 'At',
+                name: 'Astatine',
+                pronunciation: 'AS-tə-teen',
+                atomicNumber: 85,
+                mass: 210,
+                category: 'halogen nonmetal',
+                group: 17,
+                period: 6,
+                block: 'p-block',
+                electronegativity: 2.2,
+                meltingPoint: 302,
+                boilingPoint: 337,
+                electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁵',
+                state: 'Solid',
+                video: 'videos/astatine.mp4',
+                image: 'images/astatine.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['-1', '+1', '+3', '+5', '+7']
+            },
+            {
+                symbol: 'Rn',
+                name: 'Radon',
+                pronunciation: 'RAY-don',
+                atomicNumber: 86,
+                mass: 222,
+                category: 'noble-gas',
+                group: 18,
+                period: 6,
+                block: 'p-block',
+                electronegativity: null,
+                meltingPoint: -71,
+                boilingPoint: -61.7,
+                electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁶',
+                state: 'Gas',
+                video: 'videos/radon.mp4',
+                image: 'images/radon.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['0']
+            },
+            {
+                symbol: 'Fr',
+                name: 'Francium',
+                pronunciation: 'FRAN-see-əm',
+                atomicNumber: 87,
+                mass: 223,
+                category: 'alkali-metal metal',
+                group: 1,
+                period: 7,
+                block: 's-block',
+                electronegativity: 0.7,
+                meltingPoint: 27,
+                boilingPoint: 677,
+                electronConfig: '[Rn] 7s¹',
+                state: 'Solid',
+                video: 'videos/francium.mp4',
+                image: 'images/francium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+1']
+            },
+            {
+                symbol: 'Ra',
+                name: 'Radium',
+                pronunciation: 'RAY-dee-əm',
+                atomicNumber: 88,
+                mass: 226,
+                category: 'metal alkaline-earth',
+                group: 2,
+                period: 7,
+                block: 's-block',
+                electronegativity: 0.9,
+                meltingPoint: 700,
+                boilingPoint: 1737,
+                electronConfig: '[Rn] 7s²',
+                state: 'Solid',
+                video: 'videos/radium.mp4',
+                image: 'images/radium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+2']
+            },
+            {
                 symbol: 'Ac',
                 name: 'Actinium',
                 pronunciation: 'ak-TIN-ee-əm',
@@ -3663,7 +3460,7 @@
                 category: 'actinoid metal',
                 group: 'N/A',
                 period: 7,
-                block: 'd-block',
+                block: 'f-block',
                 electronegativity: 1.1,
                 meltingPoint: 1050,
                 boilingPoint: 3200,
@@ -3701,7 +3498,7 @@
                 name: 'Protactinium',
                 pronunciation: 'proh-tak-TIN-ee-əm',
                 atomicNumber: 91,
-                mass: 231.03588,
+                mass: 231.036,
                 category: 'actinoid metal',
                 group: 'N/A',
                 period: 7,
@@ -3715,20 +3512,20 @@
                 image: 'images/protactinium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+5', '+4']
+                oxidationStates: ['+4', '+5']
             },
             {
                 symbol: 'U',
                 name: 'Uranium',
                 pronunciation: 'yoo-RAY-nee-əm',
                 atomicNumber: 92,
-                mass: 238.0289,
+                mass: 238.029,
                 category: 'actinoid metal',
                 group: 'N/A',
                 period: 7,
                 block: 'f-block',
                 electronegativity: 1.38,
-                meltingPoint: 1135,
+                meltingPoint: 1132.2,
                 boilingPoint: 4131,
                 electronConfig: '[Rn] 5f³ 6d¹ 7s²',
                 state: 'Solid',
@@ -3736,7 +3533,7 @@
                 image: 'images/uranium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+6', '+5', '+4', '+3']
+                oxidationStates: ['+4', '+6', '+3', '+5']
             },
             {
                 symbol: 'Np',
@@ -3750,14 +3547,14 @@
                 block: 'f-block',
                 electronegativity: 1.36,
                 meltingPoint: 644,
-                boilingPoint: 3902,
+                boilingPoint: 4000,
                 electronConfig: '[Rn] 5f⁴ 6d¹ 7s²',
                 state: 'Solid',
                 video: 'videos/neptunium.mp4',
                 image: 'images/neptunium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+6', '+5', '+4', '+3']
+                oxidationStates: ['+3', '+4', '+5', '+6']
             },
             {
                 symbol: 'Pu',
@@ -3770,7 +3567,7 @@
                 period: 7,
                 block: 'f-block',
                 electronegativity: 1.28,
-                meltingPoint: 640,
+                meltingPoint: 639.4,
                 boilingPoint: 3228,
                 electronConfig: '[Rn] 5f⁶ 7s²',
                 state: 'Solid',
@@ -3778,7 +3575,7 @@
                 image: 'images/plutonium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+6', '+5', '+4', '+3']
+                oxidationStates: ['+3', '+4', '+5', '+6']
             },
             {
                 symbol: 'Am',
@@ -3790,7 +3587,7 @@
                 group: 'N/A',
                 period: 7,
                 block: 'f-block',
-                electronegativity: 1.13,
+                electronegativity: 1.3,
                 meltingPoint: 1176,
                 boilingPoint: 2607,
                 electronConfig: '[Rn] 5f⁷ 7s²',
@@ -3799,7 +3596,7 @@
                 image: 'images/americium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+6', '+5', '+4', '+3']
+                oxidationStates: ['+3', '+4', '+5', '+6']
             },
             {
                 symbol: 'Cm',
@@ -3811,8 +3608,8 @@
                 group: 'N/A',
                 period: 7,
                 block: 'f-block',
-                electronegativity: 1.28,
-                meltingPoint: 1340,
+                electronegativity: 1.3,
+                meltingPoint: 1345,
                 boilingPoint: 3110,
                 electronConfig: '[Rn] 5f⁷ 6d¹ 7s²',
                 state: 'Solid',
@@ -3820,12 +3617,12 @@
                 image: 'images/curium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+4', '+3']
+                oxidationStates: ['+3', '+4']
             },
             {
                 symbol: 'Bk',
                 name: 'Berkelium',
-                pronunciation: 'BUR-klee-əm',
+                pronunciation: 'BURK-lee-əm',
                 atomicNumber: 97,
                 mass: 247,
                 category: 'actinoid metal',
@@ -3833,15 +3630,15 @@
                 period: 7,
                 block: 'f-block',
                 electronegativity: 1.3,
-                meltingPoint: 986,
-                boilingPoint: 2627,
+                meltingPoint: 1050,
+                boilingPoint: null,
                 electronConfig: '[Rn] 5f⁹ 7s²',
                 state: 'Solid',
                 video: 'videos/berkelium.mp4',
                 image: 'images/berkelium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+4', '+3']
+                oxidationStates: ['+3', '+4']
             },
             {
                 symbol: 'Cf',
@@ -3855,19 +3652,19 @@
                 block: 'f-block',
                 electronegativity: 1.3,
                 meltingPoint: 900,
-                boilingPoint: 1470,
+                boilingPoint: null,
                 electronConfig: '[Rn] 5f¹⁰ 7s²',
                 state: 'Solid',
                 video: 'videos/californium.mp4',
                 image: 'images/californium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+4', '+3']
+                oxidationStates: ['+3']
             },
             {
                 symbol: 'Es',
                 name: 'Einsteinium',
-                pronunciation: 'eyn-STY-nee-əm',
+                pronunciation: 'ine-STINE-ee-əm',
                 atomicNumber: 99,
                 mass: 252,
                 category: 'actinoid metal',
@@ -3876,14 +3673,14 @@
                 block: 'f-block',
                 electronegativity: 1.3,
                 meltingPoint: 860,
-                boilingPoint: 996,
+                boilingPoint: null,
                 electronConfig: '[Rn] 5f¹¹ 7s²',
                 state: 'Solid',
                 video: 'videos/einsteinium.mp4',
                 image: 'images/einsteinium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+3', '+2']
+                oxidationStates: ['+3']
             },
             {
                 symbol: 'Fm',
@@ -3904,7 +3701,7 @@
                 image: 'images/fermium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+3', '+2']
+                oxidationStates: ['+3']
             },
             {
                 symbol: 'Md',
@@ -3946,7 +3743,7 @@
                 image: 'images/nobelium.jpg',
                 guessed: false,
                 revealed: false,
-                oxidationStates: ['+3', '+2']
+                oxidationStates: ['+2', '+3']
             },
             {
                 symbol: 'Lr',
@@ -3955,7 +3752,7 @@
                 atomicNumber: 103,
                 mass: 262,
                 category: 'actinoid metal',
-                group: 'N/A',
+                group: 3,
                 period: 7,
                 block: 'd-block',
                 electronegativity: 1.3,
@@ -3968,6 +3765,321 @@
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
+            },
+            {
+                symbol: 'Rf',
+                name: 'Rutherfordium',
+                pronunciation: 'ruth-ər-FOR-dee-əm',
+                atomicNumber: 104,
+                mass: 267,
+                category: 'transition-metal metal',
+                group: 4,
+                period: 7,
+                block: 'd-block',
+                electronegativity: null,
+                meltingPoint: null,
+                boilingPoint: null,
+                electronConfig: '[Rn] 5f¹⁴ 6d² 7s²',
+                state: 'Solid',
+                video: 'videos/rutherfordium.mp4',
+                image: 'images/rutherfordium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+4'] // File Word không liệt kê, sử dụng giá trị phổ biến
+            },
+            {
+                symbol: 'Db',
+                name: 'Dubnium',
+                pronunciation: 'DOOB-nee-əm',
+                atomicNumber: 105,
+                mass: 268,
+                category: 'transition-metal metal',
+                group: 5,
+                period: 7,
+                block: 'd-block',
+                electronegativity: null,
+                meltingPoint: null,
+                boilingPoint: null,
+                electronConfig: '[Rn] 5f¹⁴ 6d³ 7s²',
+                state: 'Solid',
+                video: 'videos/dubnium.mp4',
+                image: 'images/dubnium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+5'] // File Word không liệt kê, sử dụng giá trị phổ biến
+            },
+            {
+                symbol: 'Sg',
+                name: 'Seaborgium',
+                pronunciation: 'SEE-bor-gee-əm',
+                atomicNumber: 106,
+                mass: 269,
+                category: 'transition-metal metal',
+                group: 6,
+                period: 7,
+                block: 'd-block',
+                electronegativity: null,
+                meltingPoint: null,
+                boilingPoint: null,
+                electronConfig: '[Rn] 5f¹⁴ 6d⁴ 7s²',
+                state: 'Solid',
+                video: 'videos/seaborgium.mp4',
+                image: 'images/seaborgium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+6'] // File Word không liệt kê, sử dụng giá trị phổ biến
+            },
+            {
+                symbol: 'Bh',
+                name: 'Bohrium',
+                pronunciation: 'BOR-ee-əm',
+                atomicNumber: 107,
+                mass: 270,
+                category: 'transition-metal metal',
+                group: 7,
+                period: 7,
+                block: 'd-block',
+                electronegativity: null,
+                meltingPoint: null,
+                boilingPoint: null,
+                electronConfig: '[Rn] 5f¹⁴ 6d⁵ 7s²',
+                state: 'Solid',
+                video: 'videos/bohrium.mp4',
+                image: 'images/bohrium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+7'] // File Word không liệt kê, sử dụng giá trị phổ biến
+            },
+            {
+                symbol: 'Hs',
+                name: 'Hassium',
+                pronunciation: 'HAS-ee-əm',
+                atomicNumber: 108,
+                mass: 269,
+                category: 'transition-metal metal',
+                group: 8,
+                period: 7,
+                block: 'd-block',
+                electronegativity: null,
+                meltingPoint: null,
+                boilingPoint: null,
+                electronConfig: '[Rn] 5f¹⁴ 6d⁶ 7s²',
+                state: 'Solid',
+                video: 'videos/hassium.mp4',
+                image: 'images/hassium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+8'] // File Word không liệt kê, sử dụng giá trị phổ biến
+            },
+            {
+                symbol: 'Mt',
+                name: 'Meitnerium',
+                pronunciation: 'MYT-nə-ree-əm',
+                atomicNumber: 109,
+                mass: 278,
+                category: 'transition-metal metal',
+                group: 9,
+                period: 7,
+                block: 'd-block',
+                electronegativity: null,
+                meltingPoint: null,
+                boilingPoint: null,
+                electronConfig: '[Rn] 5f¹⁴ 6d⁷ 7s²',
+                state: 'Solid',
+                video: 'videos/meitnerium.mp4',
+                image: 'images/meitnerium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: [] // File Word không liệt kê, chưa có dữ liệu xác nhận
+            },
+            {
+                symbol: 'Ds',
+                name: 'Darmstadtium',
+                pronunciation: 'darm-SHTAT-ee-əm',
+                atomicNumber: 110,
+                mass: 281,
+                category: 'transition-metal metal',
+                group: 10,
+                period: 7,
+                block: 'd-block',
+                electronegativity: null,
+                meltingPoint: null,
+                boilingPoint: null,
+                electronConfig: '[Rn] 5f¹⁴ 6d⁸ 7s²',
+                state: 'Solid',
+                video: 'videos/darmstadtium.mp4',
+                image: 'images/darmstadtium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: [] // File Word không liệt kê, chưa có dữ liệu xác nhận
+            },
+            {
+                symbol: 'Rg',
+                name: 'Roentgenium',
+                pronunciation: 'RENT-gən-ee-əm',
+                atomicNumber: 111,
+                mass: 282,
+                category: 'transition-metal metal',
+                group: 11,
+                period: 7,
+                block: 'd-block',
+                electronegativity: null,
+                meltingPoint: null,
+                boilingPoint: null,
+                electronConfig: '[Rn] 5f¹⁴ 6d⁹ 7s²',
+                state: 'Solid',
+                video: 'videos/roentgenium.mp4',
+                image: 'images/roentgenium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: [] // File Word không liệt kê, chưa có dữ liệu xác nhận
+            },
+            {
+                symbol: 'Cn',
+                name: 'Copernicium',
+                pronunciation: 'koh-pər-NIS-ee-əm',
+                atomicNumber: 112,
+                mass: 285,
+                category: 'transition-metal metal',
+                group: 12,
+                period: 7,
+                block: 'd-block',
+                electronegativity: null,
+                meltingPoint: null,
+                boilingPoint: null,
+                electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s²',
+                state: 'Solid',
+                video: 'videos/copernicium.mp4',
+                image: 'images/copernicium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: [] // File Word không liệt kê, chưa có dữ liệu xác nhận
+            },
+            {
+                symbol: 'Nh',
+                name: 'Nihonium',
+                pronunciation: 'nee-HOH-nee-əm',
+                atomicNumber: 113,
+                mass: 286,
+                category: 'metal post-transition',
+                group: 13,
+                period: 7,
+                block: 'p-block',
+                electronegativity: null,
+                meltingPoint: null,
+                boilingPoint: null,
+                electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p¹',
+                state: 'Solid',
+                video: 'videos/nihonium.mp4',
+                image: 'images/nihonium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: [] // File Word không liệt kê, chưa có dữ liệu xác nhận
+            },
+            {
+                symbol: 'Fl',
+                name: 'Flerovium',
+                pronunciation: 'fleh-ROH-vee-əm',
+                atomicNumber: 114,
+                mass: 289,
+                category: 'metal post-transition',
+                group: 14,
+                period: 7,
+                block: 'p-block',
+                electronegativity: null,
+                meltingPoint: null,
+                boilingPoint: null,
+                electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p²',
+                state: 'Solid',
+                video: 'videos/flerovium.mp4',
+                image: 'images/flerovium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: [] // File Word không liệt kê, chưa có dữ liệu xác nhận
+            },
+            {
+                symbol: 'Mc',
+                name: 'Moscovium',
+                pronunciation: 'mos-KOH-vee-əm',
+                atomicNumber: 115,
+                mass: 290,
+                category: 'metal post-transition',
+                group: 15,
+                period: 7,
+                block: 'p-block',
+                electronegativity: null,
+                meltingPoint: null,
+                boilingPoint: null,
+                electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p³',
+                state: 'Solid',
+                video: 'videos/moscovium.mp4',
+                image: 'images/moscovium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: [] // File Word không liệt kê, chưa có dữ liệu xác nhận
+            },
+            {
+                symbol: 'Lv',
+                name: 'Livermorium',
+                pronunciation: 'liv-ər-MOR-ee-əm',
+                atomicNumber: 116,
+                mass: 293,
+                category: 'metal post-transition',
+                group: 16,
+                period: 7,
+                block: 'p-block',
+                electronegativity: null,
+                meltingPoint: null,
+                boilingPoint: null,
+                electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁴',
+                state: 'Solid',
+                video: 'videos/livermorium.mp4',
+                image: 'images/livermorium.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: [] // File Word không liệt kê, chưa có dữ liệu xác nhận
+            },
+            {
+                symbol: 'Ts',
+                name: 'Tennessine',
+                pronunciation: 'TEN-ə-seen',
+                atomicNumber: 117,
+                mass: 294,
+                category: 'halogen nonmetal',
+                group: 17,
+                period: 7,
+                block: 'p-block',
+                electronegativity: null,
+                meltingPoint: null,
+                boilingPoint: null,
+                electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁵',
+                state: 'Solid',
+                video: 'videos/tennessine.mp4',
+                image: 'images/tennessine.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: [] // File Word không liệt kê, chưa có dữ liệu xác nhận
+            },
+            {
+                symbol: 'Og',
+                name: 'Oganesson',
+                pronunciation: 'oh-gə-NES-ən',
+                atomicNumber: 118,
+                mass: 294,
+                category: 'noble-gas',
+                group: 18,
+                period: 7,
+                block: 'p-block',
+                electronegativity: null,
+                meltingPoint: null,
+                boilingPoint: null,
+                electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁶',
+                state: 'Gas',
+                video: 'videos/oganesson.mp4',
+                image: 'images/oganesson.jpg',
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['0'] // File Word không liệt kê, giả định là khí hiếm
             }
         ];
         // Thêm thông tin cho các nhóm electron
@@ -3997,7 +4109,7 @@
                 name: 'Khối các nguyên tố f ',
                 info: [
                     'Electron cuối cùng điền vào phân lớp f.',
-                    'Nguyên tố hai hàng cuối bảng tuần hoàn, gồm 14 nguyên tố Lanthanide (Ce-Lu) và 14 Actinide (Th-Lr).',
+                    'Nguyên tố hai hàng cuối bảng tuần hoàn, gồm 14 nguyên tố Lanthanide (Ce-Lu) và 14 nguyên tố Actinide (Th-Lr).',
                 ]
             }
         };
@@ -4130,18 +4242,23 @@
 
                 largeBox.className = `element-large ${element.category} active`;
 
+                // Kiểm tra số hiệu nguyên tử để quyết định có hiển thị độ âm điện và số oxi hóa hay không
+                const isSpecialElement = [10, 18, 86].includes(atomicNumber) || (atomicNumber >= 104 && atomicNumber <= 118);
+                const electronegativityText = isSpecialElement ? '' : `Độ âm điện: <span>${element.electronegativity || 'N/A'}</span><br>`;
+                const oxidationStatesText = isSpecialElement ? '' : `Số oxi hóa: <span>${element.oxidationStates ? element.oxidationStates.join(', ') : 'N/A'}</span><br>`;
+
                 // Điền thông tin vào phần tử lớn
                 largeBox.innerHTML = `
-            <div class="symbol-large">${element.symbol}</div>
-            <div class="details-large">
-                ${element.name}<br>
-                Số hiệu nguyên tử: <span>${element.atomicNumber}</span><br>
-                Khối lượng: <span>${element.mass}</span><br>
-                Độ âm điện: <span>${element.electronegativity || 'N/A'}</span><br>
-                Cấu hình e: <span>${element.electronConfig || 'N/A'}</span><br>
-                Số oxi hóa: <span>${element.oxidationStates ? element.oxidationStates.join(', ') : 'N/A'}</span><br>
-            </div>
-        `;
+    <div class="symbol-large">${element.symbol}</div>
+    <div class="details-large">
+        ${element.name}<br>
+        Số hiệu nguyên tử: <span>${element.atomicNumber}</span><br>
+        Nguyên tử khối TB: <span>${element.mass}</span><br>
+        ${electronegativityText}
+        Cấu hình e: <span>${element.electronConfig || 'N/A'}</span><br>
+        ${oxidationStatesText}
+    </div>
+`;
 
                 // Hiển thị phần tử lớn
                 largeBox.classList.add('active');
@@ -4199,6 +4316,9 @@
         }
 
         function closeModal() {
+            const videoElement = document.getElementById('elementVideo');
+            videoElement.pause(); // Dừng video
+            videoElement.currentTime = 0; // Tùy chọn: Đặt lại thời gian phát về đầu
             document.getElementById('elementModal').style.display = 'none';
         }
 
@@ -4300,14 +4420,7 @@
                     'Trong tự nhiên, kim loại kiềm thổ chỉ tồn tại dạng hợp chất '
                 ]
             },
-            'stable-isotope': {
-                name: 'ĐỒNG VỊ BỀN',
-                info: [
-                    'Các nguyên tố từ 104 đến 118',
-                    'Là các đồng vị tổng hợp có thời gian sống lâu hơn',
-                    'Ứng dụng trong nghiên cứu khoa học'
-                ]
-            },
+
             'transition-metal': {
                 name: 'KIM LOẠI CHUYỂN TIẾP',
                 info: [
@@ -4327,7 +4440,7 @@
                 info: [
                     'Nguyên tử có 5, 6, 7 electron ngoài cùng là phi kim.',
                     'Nguyên tử có 4 electron có thể là kim loại hoặc phi kim.',
-                    'Tính phi kim là khả năng nhận electron.',
+                    'Tính phi kim là tính chất của 1 nguyên tố mà nguyên tử dễ nhận electron.',
                     'Trong chu kì, tính phi kim tăng; trong nhóm, tính phi kim giảm.'
                 ]
             },
@@ -4341,7 +4454,7 @@
             'noble-gas': {
                 name: 'KHÍ HIẾM',
                 info: [
-                    'Nguyên tử có 8 electron ở lớp ngoài cùng là khí hiếm (trừ HHelium có 2 electron lớp ngoài cùng).',
+                    'Nguyên tử có 8 electron ở lớp ngoài cùng là khí hiếm (trừ Helium có 2 electron lớp ngoài cùng).',
                 ]
             },
             'lanthanoid': {
@@ -4358,7 +4471,7 @@
                 info: [
                     'Nguyên tử có 1, 2, 3 electron ngoài cùng là kim loại (trừ H, He, B).',
                     'Nguyên tử có 4 electron có thể là kim loại hoặc phi kim.',
-                    'Tính kim loại là khả năng nhường electron.',
+                    'Tính kim loại là tính chất của 1 nguyên tố mà nguyên tử dễ nhường electron.',
                     'Trong chu kì, tính kim loại giảm; trong nhóm, tính kim loại tăng.'
                 ]
             },
@@ -4439,7 +4552,7 @@
                 name: 'NHÓM',
                 info: [
                     'Nguyên tố có cấu hình electron và tính chất hóa học tương tự được xếp vào các nhóm.',
-                    'Bảng tuần hoàn có 18 cột, gồm 8 nhóm A và 8 nhóm B, nhóm VIIIB có 3 cột.',
+                    'Bảng tuần hoàn có 18 cột, gồm 8 nhóm A và 8 nhóm B, mỗi nhóm là một cột riêng. Nhóm VIIIB có 3 cột.',
                     'Số thứ tự nhóm A bằng số electron lớp ngoài cùng.',
                 ]
             }
@@ -4494,36 +4607,25 @@
         function showPeriodicTable() {
             document.body.classList.remove('game-mode');
             document.getElementById('gamePanel').style.display = 'none';
-            // Hiện lại controls
             document.querySelector('.vertical-controls').style.display = 'flex';
             document.querySelector('.controls').style.display = 'block';
-            // Cập nhật active mode
+            document.querySelector('.info-section').style.display = 'block';
             document.querySelectorAll('.mode-switcher button').forEach(btn => btn.classList.remove('active-mode'));
             document.querySelector('.mode-switcher button:first-child').classList.add('active-mode');
-            document.getElementById('highScore').style.display = 'none';
-            document.getElementById('recentScore').style.display = 'none';
         }
 
         function showGameMode() {
             document.body.classList.add('game-mode');
             document.getElementById('gamePanel').style.display = 'block';
-
-            // Ẩn tất cả controls
             document.querySelector('.vertical-controls').style.display = 'none';
             document.querySelector('.controls').style.display = 'none';
-
-            // Hiển thị điểm cao nhất và lượt gần nhất
-            document.getElementById("highScore").style.display = "block";
-            document.getElementById("recentScore").style.display = "block";
-
-            // Cập nhật active mode
+            document.querySelector('.info-section').style.display = 'none';
             document.querySelectorAll('.mode-switcher button').forEach(btn => btn.classList.remove('active-mode'));
             document.querySelector('.mode-switcher button:last-child').classList.add('active-mode');
-
         }
 
         let highScore = localStorage.getItem('highScore') || 0;
-        document.querySelector('#highScore span').textContent = highScore;
+        document.querySelector('#highScore .score-value').textContent = highScore; // Sửa selector
         // Hàm khởi tạo game
         // Cập nhật hàm startGame
         function startGame() {
@@ -4531,42 +4633,62 @@
             document.getElementById('gameResult').style.display = 'none';
             document.body.className = `game-mode ${currentGame.difficulty}-mode`;
 
-            document.getElementById('startGameBtn').style.display = 'none'; // Ẩn nút bắt đầu
-            document.getElementById('endGameBtn').style.display = 'inline-block'; // Hiện nút kết thúc
+            document.getElementById('startGameBtn').style.display = 'none';
+            document.getElementById('endGameBtn').style.display = 'block';
+            document.getElementById('gameInfo').style.display = 'block';
 
-
-            currentGame.timeLimit = {
-                easy: 10000,
-                medium: 7000,
-                hard: 3000
-            }[currentGame.difficulty]; // Thêm đoạn này vào hàm startGame()
+            // Xác định thời gian giới hạn dựa trên mức độ khó
+            const timeLimits = {
+                'easy-full': 15000,
+                'easy-1-3': 10000,
+                'easy-1-4': 12000,
+                'easy-1-5': 13000,
+                'medium-full': 12000,
+                'medium-1-3': 7000,
+                'medium-1-4': 9000,
+                'medium-1-5': 10000,
+                'hard-full': 10000,
+                'hard-1-3': 5000,
+                'hard-1-4': 7000,
+                'hard-1-5': 8000
+            };
+            currentGame.timeLimit = timeLimits[currentGame.difficulty];
 
             // Reset game state
             currentGame.score = 0;
             currentGame.totalCorrect = 0;
-            updateScore();
-            document.getElementById('endGameBtn').style.display = 'inline';
             currentGame.isPlaying = true;
-
-            // Tính tổng số nguyên tố theo độ khó
-            const totalElements = {
-                easy: elements.filter(el => el.period <= 3 && typeof el.atomicNumber === 'number').length,
-                medium: elements.filter(el => el.period <= 4 && typeof el.atomicNumber === 'number').length,
-                hard: elements.filter(el => el.period <= 6 && typeof el.atomicNumber === 'number').length
-            }[currentGame.difficulty];
-            document.getElementById('totalElements').textContent = totalElements;
+            clearTimeout(currentGame.timer); // Đảm bảo xóa timer cũ
+            updateScore();
 
             // Xác định phạm vi chu kỳ
-            let maxPeriod;
-            switch (currentGame.difficulty) {
-                case 'easy': maxPeriod = 4; break;
-                case 'medium': maxPeriod = 4; break;
-                case 'hard': maxPeriod = 6; break;
-            }
+            const maxPeriods = {
+                'easy-full': 7,
+                'easy-1-3': 3,
+                'easy-1-4': 4,
+                'easy-1-5': 5,
+                'medium-full': 7,
+                'medium-1-3': 3,
+                'medium-1-4': 4,
+                'medium-1-5': 5,
+                'hard-full': 7,
+                'hard-1-3': 3,
+                'hard-1-4': 4,
+                'hard-1-5': 5
+            };
+            const maxPeriod = maxPeriods[currentGame.difficulty];
+
+            // Tính tổng số nguyên tố và khởi tạo danh sách
+            currentGame.remainingElements = elements.filter(el =>
+                el.period <= maxPeriod &&
+                typeof el.atomicNumber === 'number' &&
+                !['La-Lu', 'Ac-Lr'].includes(el.symbol)
+            );
+            document.getElementById('totalElements').textContent = currentGame.remainingElements.length;
 
             // Làm mờ các chu kỳ không liên quan
             document.querySelectorAll('.element').forEach(el => {
-                const period = parseInt(el.dataset.period); // Thêm data-period cho các element
+                const period = elements.find(e => e.atomicNumber == el.dataset.atomicNumber)?.period || 0;
                 if (period > maxPeriod) {
                     el.classList.add('blur-period');
                     el.style.pointerEvents = 'none';
@@ -4576,18 +4698,11 @@
                 }
             });
 
-            // Khởi tạo danh sách nguyên tố
-            currentGame.remainingElements = elements.filter(el =>
-                el.period <= maxPeriod &&
-                typeof el.atomicNumber === 'number' &&
-                !['La-Lu', 'Ac-Lr'].includes(el.symbol)
-            );
-
-            nextRound();
+            nextRound(); // Chỉ gọi một lần khi bắt đầu
         }
-
         // Thêm hàm xử lý timer
         function startTimer() {
+            clearTimeout(currentGame.timer); // Xóa timer cũ trước khi tạo mới
             const timerBar = document.getElementById('timerBar');
             timerBar.style.transition = 'none';
             timerBar.style.width = '100%';
@@ -4598,10 +4713,16 @@
         }
 
         function handleTimeout() {
-            let penalty = { easy: 5, medium: 10, hard: 20 }[currentGame.difficulty];
+            let penalty = {
+                'easy-full': 5, 'easy-1-3': 5, 'easy-1-4': 5, 'easy-1-5': 5,
+                'medium-full': 10, 'medium-1-3': 10, 'medium-1-4': 10, 'medium-1-5': 10,
+                'hard-full': 20, 'hard-1-3': 20, 'hard-1-4': 20, 'hard-1-5': 20
+            }[currentGame.difficulty];
             currentGame.score = Math.max(0, currentGame.score - penalty);
             updateScore();
-            nextRound();
+            if (currentGame.isPlaying) {
+                nextRound();
+            }
         }
 
         function updateProgress() {
@@ -4612,7 +4733,7 @@
 
         // Cập nhật hàm nextRound
         function nextRound() {
-            if (!currentGame.remainingElements.length) {
+            if (!currentGame.isPlaying || !currentGame.remainingElements.length) {
                 endGame();
                 return;
             }
@@ -4622,14 +4743,7 @@
             currentGame.targetElement = currentGame.remainingElements[randomIndex];
             document.getElementById('targetElement').textContent = currentGame.targetElement.name;
 
-            // Cài đặt thời gian
-            currentGame.timeLimit = {
-                easy: 10000,
-                medium: 7000,
-                hard: 3000
-            }[currentGame.difficulty];
-
-            startTimer();
+            startTimer(); // Khởi động timer cho nguyên tố mới
         }
 
 
@@ -4642,25 +4756,21 @@
         function endGame() {
             currentGame.isPlaying = false;
             clearTimeout(currentGame.timer);
+            document.getElementById('gameInfo').style.display = 'none';
+            document.getElementById('startGameBtn').style.display = 'block';
+            document.getElementById('endGameBtn').style.display = 'none';
 
             // Cập nhật điểm gần nhất
             document.getElementById('recentScoreValue').textContent = currentGame.score;
-            document.getElementById('recentDifficulty').textContent =
-                currentGame.difficulty === 'easy' ? 'Dễ' :
-                    currentGame.difficulty === 'medium' ? 'Trung Bình' : 'Khó';
+            document.getElementById('recentDifficulty').textContent = currentGame.difficulty;
 
             const resultEl = document.getElementById('gameResult');
-            const totalElements = parseInt(document.getElementById('totalElements').textContent);
-
-
-            // Cập nhật kết quả
             document.getElementById('foundElements').textContent = currentGame.totalCorrect;
             document.getElementById('finalScore').textContent = currentGame.score;
 
-            document.getElementById('startGameBtn').style.display = 'inline-block'; // Ẩn nút bắt đầu
-            document.getElementById('endGameBtn').style.display = 'none'; // Hiện nút kết thúc
             // Đánh giá kết quả
             let message = '';
+            const totalElements = parseInt(document.getElementById('totalElements').textContent);
             if (currentGame.totalCorrect === totalElements) {
                 message = "Xuất sắc! Bạn đã tìm thấy tất cả!";
                 resultEl.className = 'game-result high';
@@ -4679,7 +4789,7 @@
             if (currentGame.score > highScore) {
                 highScore = currentGame.score;
                 localStorage.setItem('highScore', highScore);
-                document.querySelector('#highScore span').textContent = highScore;
+                document.querySelector('#highScore .score-value').textContent = highScore;
             }
         }
 

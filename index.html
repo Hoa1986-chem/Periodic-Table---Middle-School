@@ -1359,9 +1359,18 @@
         <div class="game-instruction">🎮 Chọn mức độ và nhấn "Bắt đầu" để bắt đầu chơi!</div>
         <div class="game-options">
             <select id="difficulty">
-                <option value="easy">Dễ (Chu kỳ 1-4)</option>
-                <option value="medium">Trung Bình (Chu kỳ 1-5)</option>
-                <option value="hard">Khó (Chu kỳ 1-6)</option>
+                <option value="easy-full">Dễ (Toàn bộ bảng tuần hoàn)</option>
+                <option value="easy-1-3">Dễ (Chu kỳ 1-3)</option>
+                <option value="easy-1-4">Dễ (Chu kỳ 1-4)</option>
+                <option value="easy-1-5">Dễ (Chu kỳ 1-5)</option>
+                <option value="medium-full">Trung bình (Hết bảng tuần hoàn)</option>
+                <option value="medium-1-3">Trung bình (Chu kỳ 1-3)</option>
+                <option value="medium-1-4">Trung bình (Chu kỳ 1-4)</option>
+                <option value="medium-1-5">Trung bình (Chu kỳ 1-5)</option>
+                <option value="hard-full">Khó (Hết bảng tuần hoàn)</option>
+                <option value="hard-1-3">Khó (Chu kỳ 1-3)</option>
+                <option value="hard-1-4">Khó (Chu kỳ 1-4)</option>
+                <option value="hard-1-5">Khó (Chu kỳ 1-5)</option>
             </select>
             <div class="button-container">
                 <button id="startGameBtn" onclick="startGame()">Bắt đầu</button>
@@ -1565,6 +1574,8 @@
             <div class="info-tooltip">
                 <p>Mỗi nguyên tố hóa học được xếp vào một ô trong bảng tuần hoàn, gọi là ô nguyên tố. Số thứ tự của ô
                     nguyên tố <strong>bằng số hiệu nguyên tử</strong> của nguyên tố trong ô đó (STT ô = Z).</p>
+                <img src="images/thongTinNguyenTo.jpg" alt="" srcset="">
+                <p style="text-align: center; font-weight: 600;">Những thông tin trong 1 ô nguyên tố</p>
             </div>
         </div>
 
@@ -4231,23 +4242,23 @@
 
                 largeBox.className = `element-large ${element.category} active`;
 
-                // Kiểm tra số hiệu nguyên tử để quyết định có hiển thị số oxi hóa hay không
-                const oxidationStatesText = (atomicNumber >= 104)
-                    ? ''
-                    : `Số oxi hóa: <span>${element.oxidationStates ? element.oxidationStates.join(', ') : 'N/A'}</span><br>`;
+                // Kiểm tra số hiệu nguyên tử để quyết định có hiển thị độ âm điện và số oxi hóa hay không
+                const isSpecialElement = [10, 18, 86].includes(atomicNumber) || (atomicNumber >= 104 && atomicNumber <= 118);
+                const electronegativityText = isSpecialElement ? '' : `Độ âm điện: <span>${element.electronegativity || 'N/A'}</span><br>`;
+                const oxidationStatesText = isSpecialElement ? '' : `Số oxi hóa: <span>${element.oxidationStates ? element.oxidationStates.join(', ') : 'N/A'}</span><br>`;
 
                 // Điền thông tin vào phần tử lớn
                 largeBox.innerHTML = `
-        <div class="symbol-large">${element.symbol}</div>
-        <div class="details-large">
-            ${element.name}<br>
-            Số hiệu nguyên tử: <span>${element.atomicNumber}</span><br>
-            Nguyên tử khối TB: <span>${element.mass}</span><br>
-            Độ âm điện: <span>${element.electronegativity || 'N/A'}</span><br>
-            Cấu hình e: <span>${element.electronConfig || 'N/A'}</span><br>
-            ${oxidationStatesText}
-        </div>
-    `;
+    <div class="symbol-large">${element.symbol}</div>
+    <div class="details-large">
+        ${element.name}<br>
+        Số hiệu nguyên tử: <span>${element.atomicNumber}</span><br>
+        Nguyên tử khối TB: <span>${element.mass}</span><br>
+        ${electronegativityText}
+        Cấu hình e: <span>${element.electronConfig || 'N/A'}</span><br>
+        ${oxidationStatesText}
+    </div>
+`;
 
                 // Hiển thị phần tử lớn
                 largeBox.classList.add('active');
@@ -4622,42 +4633,62 @@
             document.getElementById('gameResult').style.display = 'none';
             document.body.className = `game-mode ${currentGame.difficulty}-mode`;
 
-            document.getElementById('startGameBtn').style.display = 'none'; // Ẩn nút bắt đầu
-            document.getElementById('endGameBtn').style.display = 'block'; // Hiện nút kết thúc
-            document.getElementById('gameInfo').style.display = 'block'; // Hiện gameInfo khi bắt đầu
+            document.getElementById('startGameBtn').style.display = 'none';
+            document.getElementById('endGameBtn').style.display = 'block';
+            document.getElementById('gameInfo').style.display = 'block';
 
-            currentGame.timeLimit = {
-                easy: 10000,
-                medium: 7000,
-                hard: 3000
-            }[currentGame.difficulty]; // Thêm đoạn này vào hàm startGame()
+            // Xác định thời gian giới hạn dựa trên mức độ khó
+            const timeLimits = {
+                'easy-full': 15000,
+                'easy-1-3': 10000,
+                'easy-1-4': 12000,
+                'easy-1-5': 13000,
+                'medium-full': 12000,
+                'medium-1-3': 7000,
+                'medium-1-4': 9000,
+                'medium-1-5': 10000,
+                'hard-full': 10000,
+                'hard-1-3': 5000,
+                'hard-1-4': 7000,
+                'hard-1-5': 8000
+            };
+            currentGame.timeLimit = timeLimits[currentGame.difficulty];
 
             // Reset game state
             currentGame.score = 0;
             currentGame.totalCorrect = 0;
-            updateScore();
-            document.getElementById('endGameBtn').style.display = 'inline';
             currentGame.isPlaying = true;
-
-            // Tính tổng số nguyên tố theo độ khó
-            const totalElements = {
-                easy: elements.filter(el => el.period <= 3 && typeof el.atomicNumber === 'number').length,
-                medium: elements.filter(el => el.period <= 4 && typeof el.atomicNumber === 'number').length,
-                hard: elements.filter(el => el.period <= 6 && typeof el.atomicNumber === 'number').length
-            }[currentGame.difficulty];
-            document.getElementById('totalElements').textContent = totalElements;
+            clearTimeout(currentGame.timer); // Đảm bảo xóa timer cũ
+            updateScore();
 
             // Xác định phạm vi chu kỳ
-            let maxPeriod;
-            switch (currentGame.difficulty) {
-                case 'easy': maxPeriod = 4; break;
-                case 'medium': maxPeriod = 5; break;
-                case 'hard': maxPeriod = 6; break;
-            }
+            const maxPeriods = {
+                'easy-full': 7,
+                'easy-1-3': 3,
+                'easy-1-4': 4,
+                'easy-1-5': 5,
+                'medium-full': 7,
+                'medium-1-3': 3,
+                'medium-1-4': 4,
+                'medium-1-5': 5,
+                'hard-full': 7,
+                'hard-1-3': 3,
+                'hard-1-4': 4,
+                'hard-1-5': 5
+            };
+            const maxPeriod = maxPeriods[currentGame.difficulty];
+
+            // Tính tổng số nguyên tố và khởi tạo danh sách
+            currentGame.remainingElements = elements.filter(el =>
+                el.period <= maxPeriod &&
+                typeof el.atomicNumber === 'number' &&
+                !['La-Lu', 'Ac-Lr'].includes(el.symbol)
+            );
+            document.getElementById('totalElements').textContent = currentGame.remainingElements.length;
 
             // Làm mờ các chu kỳ không liên quan
             document.querySelectorAll('.element').forEach(el => {
-                const period = parseInt(el.dataset.period); // Thêm data-period cho các element
+                const period = elements.find(e => e.atomicNumber == el.dataset.atomicNumber)?.period || 0;
                 if (period > maxPeriod) {
                     el.classList.add('blur-period');
                     el.style.pointerEvents = 'none';
@@ -4667,18 +4698,11 @@
                 }
             });
 
-            // Khởi tạo danh sách nguyên tố
-            currentGame.remainingElements = elements.filter(el =>
-                el.period <= maxPeriod &&
-                typeof el.atomicNumber === 'number' &&
-                !['La-Lu', 'Ac-Lr'].includes(el.symbol)
-            );
-
-            nextRound();
+            nextRound(); // Chỉ gọi một lần khi bắt đầu
         }
-
         // Thêm hàm xử lý timer
         function startTimer() {
+            clearTimeout(currentGame.timer); // Xóa timer cũ trước khi tạo mới
             const timerBar = document.getElementById('timerBar');
             timerBar.style.transition = 'none';
             timerBar.style.width = '100%';
@@ -4689,10 +4713,16 @@
         }
 
         function handleTimeout() {
-            let penalty = { easy: 5, medium: 10, hard: 20 }[currentGame.difficulty];
+            let penalty = {
+                'easy-full': 5, 'easy-1-3': 5, 'easy-1-4': 5, 'easy-1-5': 5,
+                'medium-full': 10, 'medium-1-3': 10, 'medium-1-4': 10, 'medium-1-5': 10,
+                'hard-full': 20, 'hard-1-3': 20, 'hard-1-4': 20, 'hard-1-5': 20
+            }[currentGame.difficulty];
             currentGame.score = Math.max(0, currentGame.score - penalty);
             updateScore();
-            nextRound();
+            if (currentGame.isPlaying) {
+                nextRound();
+            }
         }
 
         function updateProgress() {
@@ -4703,7 +4733,7 @@
 
         // Cập nhật hàm nextRound
         function nextRound() {
-            if (!currentGame.remainingElements.length) {
+            if (!currentGame.isPlaying || !currentGame.remainingElements.length) {
                 endGame();
                 return;
             }
@@ -4713,14 +4743,7 @@
             currentGame.targetElement = currentGame.remainingElements[randomIndex];
             document.getElementById('targetElement').textContent = currentGame.targetElement.name;
 
-            // Cài đặt thời gian
-            currentGame.timeLimit = {
-                easy: 10000,
-                medium: 7000,
-                hard: 3000
-            }[currentGame.difficulty];
-
-            startTimer();
+            startTimer(); // Khởi động timer cho nguyên tố mới
         }
 
 
@@ -4733,28 +4756,21 @@
         function endGame() {
             currentGame.isPlaying = false;
             clearTimeout(currentGame.timer);
-            document.getElementById('gameInfo').style.display = 'none'; // Ẩn gameInfo khi kết thúc
+            document.getElementById('gameInfo').style.display = 'none';
             document.getElementById('startGameBtn').style.display = 'block';
             document.getElementById('endGameBtn').style.display = 'none';
 
             // Cập nhật điểm gần nhất
             document.getElementById('recentScoreValue').textContent = currentGame.score;
-            document.getElementById('recentDifficulty').textContent =
-                currentGame.difficulty === 'easy' ? 'Dễ' :
-                    currentGame.difficulty === 'medium' ? 'Trung Bình' : 'Khó';
+            document.getElementById('recentDifficulty').textContent = currentGame.difficulty;
 
             const resultEl = document.getElementById('gameResult');
-            const totalElements = parseInt(document.getElementById('totalElements').textContent);
-
-
-            // Cập nhật kết quả
             document.getElementById('foundElements').textContent = currentGame.totalCorrect;
             document.getElementById('finalScore').textContent = currentGame.score;
 
-            document.getElementById('startGameBtn').style.display = 'inline-block'; // Ẩn nút bắt đầu
-            document.getElementById('endGameBtn').style.display = 'none'; // Hiện nút kết thúc
             // Đánh giá kết quả
             let message = '';
+            const totalElements = parseInt(document.getElementById('totalElements').textContent);
             if (currentGame.totalCorrect === totalElements) {
                 message = "Xuất sắc! Bạn đã tìm thấy tất cả!";
                 resultEl.className = 'game-result high';
@@ -4773,7 +4789,7 @@
             if (currentGame.score > highScore) {
                 highScore = currentGame.score;
                 localStorage.setItem('highScore', highScore);
-                document.querySelector('#highScore span').textContent = highScore;
+                document.querySelector('#highScore .score-value').textContent = highScore;
             }
         }
 
