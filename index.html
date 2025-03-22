@@ -1359,8 +1359,8 @@
         <div class="game-instruction">🎮 Chọn mức độ và nhấn "Bắt đầu" để bắt đầu chơi!</div>
         <div class="game-options">
             <select id="difficulty">
-                <option value="easy">Dễ (Chu kỳ 1-3)</option>
-                <option value="medium">Trung Bình (Chu kỳ 1-4)</option>
+                <option value="easy">Dễ (Chu kỳ 1-4)</option>
+                <option value="medium">Trung Bình (Chu kỳ 1-5)</option>
                 <option value="hard">Khó (Chu kỳ 1-6)</option>
             </select>
             <div class="button-container">
@@ -4648,7 +4648,7 @@
             let maxPeriod;
             switch (currentGame.difficulty) {
                 case 'easy': maxPeriod = 4; break;
-                case 'medium': maxPeriod = 4; break;
+                case 'medium': maxPeriod = 5; break;
                 case 'hard': maxPeriod = 6; break;
             }
 
