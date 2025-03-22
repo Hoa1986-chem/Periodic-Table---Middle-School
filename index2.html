@@ -48,7 +48,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            transition: all 0.3s ease, background-color 0.3s ease !important;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .modal {
@@ -112,6 +112,7 @@
 
         .element:hover {
             transform: scale(1.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             z-index: 1;
         }
 
@@ -288,14 +289,12 @@
         /* Thêm vào cuối phần style */
         /* Modal cải tiến */
         .modal-content {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
             width: 90%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
+            max-width: 550px;
         }
 
         .modal-header {
@@ -590,6 +589,23 @@
             .category-content {
                 columns: 1;
             }
+
+            .periodic-table {
+                grid-template-columns: repeat(18, minmax(40px, 1fr));
+            }
+
+            .element {
+                min-height: 40px;
+                font-size: 10px;
+            }
+
+            .symbol {
+                font-size: 14px;
+            }
+
+            .info-tooltip {
+                width: 300px;
+            }
         }
 
         .category-info.active {
@@ -773,7 +789,7 @@
         }
 
         .mode-switcher {
-            position: fixed;
+            position: static;
             left: 20px;
             top: 20px;
             display: flex;
@@ -1075,6 +1091,7 @@
             transform: scale(1.1);
             z-index: 1;
         }
+
         /* Responsive for Prediotric Table */
         @media (max-width: 1024px) {
             .mode-switcher {
@@ -1087,13 +1104,129 @@
                 position: static;
             }
         }
+
+        #highScore,
+        #recentScore {
+            display: none;
+        }
+
+        .info-section {
+            margin: 30px auto;
+            /* Căn giữa */
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 800px;
+            text-align: center;
+            /* Căn giữa nội dung */
+        }
+
+        .info-item {
+            position: relative;
+            margin: 10px 0;
+            padding: 8px;
+            cursor: pointer;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .info-title {
+            color: #2c3e50;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .info-title:hover {
+            color: #2196F3;
+        }
+
+        .info-tooltip {
+            text-align: justify;
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            width: 450px;
+            max-width: 90vw;
+            z-index: 1000;
+            font-size: 14px;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        .info-tooltip ul {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+
+        .info-tooltip img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 15px auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-tooltip strong {
+            color: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .info-tooltip img {
+                max-width: 90%;
+                /* Giảm kích thước ảnh trên mobile */
+            }
+        }
+
+        .info-tooltip.active {
+            display: block;
+        }
+
+        .info-tooltip::before {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 8px;
+            border-style: solid;
+            border-color: white transparent transparent transparent;
+        }
+
+        @media (max-width: 768px) {
+            .info-tooltip {
+                width: 300px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .info-item {
+                display: block;
+                /* Hiển thị full width trên mobile */
+                text-align: center;
+            }
+        }
+
+        /* Thêm style cho đồng vị bền */
+        .stable-isotope {
+            background-color: #48C9B0 !important;
+        }
     </style>
 </head>
 
 <body>
     <audio id="correctSound" src="sounds/correct.mp3"></audio>
     <audio id="wrongSound" src="sounds/wrong.mp3"></audio>
-    <h2 style="text-align: center;">BẢNG TUẦN HOÀN CÁC NGUYÊN TỐ HÓA HỌC <br>Periodic Table of the Elements</h2>
+    <h2 style="text-align: center;padding: 0;">BẢNG TUẦN HOÀN CÁC NGUYÊN TỐ HÓA HỌC <br>Theo chương trình giáo dục phổ
+        thông 2018</h2>
+    <h3 style="text-align: center;">Periodic Table of the Elements</h3>
     <!-- Đặt phần này ngay dưới thẻ h2 -->
     <div id="gameResult" class="game-result" style="display: none;">
         <h3>Kết quả trò chơi</h3>
@@ -1106,7 +1239,7 @@
     <!-- Thêm phần chuyển đổi chế độ -->
     <div class="mode-switcher">
         <button class="active-mode" onclick="showPeriodicTable()">Bảng Tuần Hoàn</button>
-        <button onclick="showGameMode()">Chơi Game</button>
+        <button onclick="showGameMode()">Game tìm nguyên tố</button>
     </div>
 
     <div id="highScore" style="position: fixed; top: 60px; right: 20px;">
@@ -1275,6 +1408,7 @@
     </div>
     <div class="controls">
         <div class="control-section">
+            <button class="control-btn stable-isotope">Đồng vị bền</button>
             <button class="control-btn alkali-metal">Kim loại kiềm</button>
             <button class="control-btn alkaline-earth">Kiềm thổ</button>
             <button class="control-btn transition-metal">Kim loại chuyển tiếp</button>
@@ -1289,6 +1423,60 @@
             <button style="background: #90EE90 ;" class="control-btn p-block">Khối các nguyên tố p</button>
             <button style="background: #87CEEB ;" class="control-btn d-block">Khối các nguyên tố d</button>
             <button style="background: #D8BFD8;" class="control-btn f-block">Khối các nguyên tố f</button>
+        </div>
+    </div>
+    <!-- Thêm vào sau phần controls -->
+    <div class="info-section">
+        <div class="info-item">
+            <span class="info-title">Nguyên tắc sắp xếp nguyên tố trong bảng tuần hoàn</span>
+            <div class="info-tooltip">
+                <ul>
+                    <li>Các nguyên tố được xếp theo <strong>chiều tăng dần</strong> của điện tích hạt nhân nguyên tử.
+                    </li>
+                    <li>Các nguyên tố có <strong>cùng số lớp electron trong nguyên tử</strong> được xếp cùng một chu kỳ
+                        (hàng).</li>
+                    <li>Các nguyên tố mà nguyên tử có <strong>cấu hình electron tương tự nhau</strong> được xếp cùng một
+                        nhóm.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <span class="info-title">Lịch sử phát minh bảng tuần hoàn các nguyên tố hóa học</span>
+            <div class="info-tooltip">
+                <p><strong>Năm 1869</strong>, nhà hóa học người Nga D.I. Mendeleev công bố bảng tuần hoàn đầu tiên. Cùng
+                    năm, nhà hóa học người Đức L. Meyer cũng đưa ra một bảng tương tự, nhưng Mendeleev được công nhận
+                    nhờ giải thích rõ ràng hơn về tính hữu dụng.</p>
+                <ul>
+                    <li>Hai nhà khoa học sắp xếp các nguyên tố theo <strong>khối lượng nguyên tử tăng dần</strong>, bắt
+                        đầu hàng/cột mới khi tính chất lặp lại.</li>
+                    <li>Sau này, các nhà khoa học chứng minh <strong>điện tích hạt nhân</strong> là cơ sở chính xác hơn
+                        để xây dựng bảng tuần hoàn.</li>
+                    <li>Bảng tuần hoàn hiện đại dựa trên <strong>số hiệu nguyên tử (Z)</strong>, sắp xếp theo thứ tự
+                        tăng dần.</li>
+                </ul>
+                <img src="images/mendeleev.jpg" alt="D.I. Mendeleev">
+            </div>
+        </div>
+
+        <div class="info-item">
+            <span class="info-title">Ô nguyên tố</span>
+            <div class="info-tooltip">
+                <p>Mỗi nguyên tố hóa học được xếp vào một ô trong bảng tuần hoàn, gọi là ô nguyên tố. Số thứ tự của ô
+                    nguyên tố <strong>bằng số hiệu nguyên tử</strong> của nguyên tố trong ô đó (STT ô = Z).</p>
+            </div>
+        </div>
+
+        <div class="info-item">
+            <span class="info-title">Electron hóa trị</span>
+            <div class="info-tooltip">
+                <p>Là những electron có <strong>khả năng tham gia hình thành liên kết hóa học</strong>, thường nằm ở lớp
+                    ngoài cùng hoặc phân lớp sát lớp ngoài cùng nếu chưa bão hòa.</p>
+                <ul>
+                    <li>Với nhóm A, <strong>số electron hóa trị</strong> bằng số thứ tự nhóm.</li>
+                </ul>
+                <img src="images/electronHoaTri.jpg" alt="Electron hóa trị">
+            </div>
         </div>
     </div>
     </div>
@@ -1319,7 +1507,8 @@
                 video: 'videos/hydrogen.mp4',
                 image: 'images/hydrogen.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+1', '-1']
             },
             {
                 symbol: 'He',
@@ -1339,7 +1528,8 @@
                 video: 'videos/helium.mp4',
                 image: 'images/helium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['0']
             },
             {
                 symbol: 'Li',
@@ -1359,7 +1549,8 @@
                 video: 'videos/lithium.mp4',
                 image: 'images/lithium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+1']
             },
             {
                 symbol: 'Be',
@@ -1379,7 +1570,8 @@
                 video: 'videos/beryllium.mp4',
                 image: 'images/beryllium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+2']
             },
             {
                 symbol: 'B',
@@ -1399,7 +1591,8 @@
                 video: 'videos/boron.mp4',
                 image: 'images/boron.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3']
             },
             {
                 symbol: 'C',
@@ -1419,7 +1612,8 @@
                 video: 'videos/carbon.mp4',
                 image: 'images/carbon.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4', '+2', '-4']
             },
             {
                 symbol: 'N',
@@ -1439,7 +1633,8 @@
                 video: 'videos/nitrogen.mp4',
                 image: 'images/nitrogen.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+5', '+4', '+3', '+2', '-3']
             },
             {
                 symbol: 'O',
@@ -1459,7 +1654,8 @@
                 video: 'videos/oxygen.mp4',
                 image: 'images/oxygen.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['-2', '-1']
             },
             {
                 symbol: 'F',
@@ -1479,7 +1675,8 @@
                 video: 'videos/fluorine.mp4',
                 image: 'images/fluorine.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['-1']
             },
             {
                 symbol: 'Ne',
@@ -1499,7 +1696,8 @@
                 video: 'videos/neon.mp4',
                 image: 'images/neon.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['0']
             },
             {
                 symbol: 'Na',
@@ -1510,6 +1708,7 @@
                 category: 'alkali-metal metal',
                 group: 1,
                 period: 3,
+                block: 's-block',
                 electronegativity: 0.93,
                 meltingPoint: 97.72,
                 boilingPoint: 883,
@@ -1517,9 +1716,9 @@
                 state: 'Solid',
                 video: 'videos/sodium.mp4',
                 image: 'images/sodium.jpg',
-                guessed: false,     // Đã đoán đúng chưa
-                revealed: false,   // Đã mở ra chưa
-                block: 's-block'
+                guessed: false,
+                revealed: false,
+                oxidationStates: ['+1']
             },
             {
                 symbol: 'Mg',
@@ -1539,7 +1738,8 @@
                 video: 'videos/magnesium.mp4',
                 image: 'images/magnesium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+2']
             },
             {
                 symbol: 'Al',
@@ -1559,7 +1759,8 @@
                 video: 'videos/aluminum.mp4',
                 image: 'images/aluminum.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3']
             },
             {
                 symbol: 'Si',
@@ -1579,7 +1780,8 @@
                 video: 'videos/silicon.mp4',
                 image: 'images/silicon.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4', '-4']
             },
             {
                 symbol: 'P',
@@ -1599,7 +1801,8 @@
                 video: 'videos/phosphorus.mp4',
                 image: 'images/phosphorus.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+5', '+3', '-3']
             },
             {
                 symbol: 'S',
@@ -1619,7 +1822,8 @@
                 video: 'videos/sulfur.mp4',
                 image: 'images/sulfur.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+6', '+4', '-2']
             },
             {
                 symbol: 'Cl',
@@ -1639,7 +1843,8 @@
                 video: 'videos/chlorine.mp4',
                 image: 'images/chlorine.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+7', '+5', '+3', '+1', '-1']
             },
             {
                 symbol: 'Ar',
@@ -1659,7 +1864,8 @@
                 video: 'videos/argon.mp4',
                 image: 'images/argon.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['0']
             },
             {
                 symbol: 'K',
@@ -1679,7 +1885,8 @@
                 video: 'videos/potassium.mp4',
                 image: 'images/potassium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+1']
             },
             {
                 symbol: 'Ca',
@@ -1699,7 +1906,8 @@
                 video: 'videos/calcium.mp4',
                 image: 'images/calcium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+2']
             },
             {
                 symbol: 'Sc',
@@ -1719,7 +1927,8 @@
                 video: 'videos/scandium.mp4',
                 image: 'images/scandium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3']
             },
             {
                 symbol: 'Ti',
@@ -1739,8 +1948,10 @@
                 video: 'videos/titanium.mp4',
                 image: 'images/titanium.jpg',
                 guessed: false,
-                revealed: false
-            }, {
+                revealed: false,
+                oxidationStates: ['+4', '+3', '+2']
+            },
+            {
                 symbol: 'V',
                 name: 'Vanadium',
                 pronunciation: 'və-NAY-dee-əm',
@@ -1758,8 +1969,10 @@
                 video: 'videos/vanadium.mp4',
                 image: 'images/vanadium.jpg',
                 guessed: false,
-                revealed: false
-            }, {
+                revealed: false,
+                oxidationStates: ['+5', '+4', '+3', '+2']
+            },
+            {
                 symbol: 'Cr',
                 name: 'Chromium',
                 pronunciation: 'KROH-mee-əm',
@@ -1777,8 +1990,10 @@
                 video: 'videos/chromium.mp4',
                 image: 'images/chromium.jpg',
                 guessed: false,
-                revealed: false
-            }, {
+                revealed: false,
+                oxidationStates: ['+6', '+3', '+2']
+            },
+            {
                 symbol: 'Mn',
                 name: 'Manganese',
                 pronunciation: 'MANG-gə-neez',
@@ -1796,8 +2011,10 @@
                 video: 'videos/manganese.mp4',
                 image: 'images/manganese.jpg',
                 guessed: false,
-                revealed: false
-            }, {
+                revealed: false,
+                oxidationStates: ['+7', '+6', '+4', '+3', '+2']
+            },
+            {
                 symbol: 'Fe',
                 name: 'Iron',
                 pronunciation: 'EYE-ərn',
@@ -1815,7 +2032,8 @@
                 video: 'videos/iron.mp4',
                 image: 'images/iron.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3', '+2']
             },
             {
                 symbol: 'Co',
@@ -1835,8 +2053,10 @@
                 video: 'videos/cobalt.mp4',
                 image: 'images/cobalt.jpg',
                 guessed: false,
-                revealed: false
-            }, {
+                revealed: false,
+                oxidationStates: ['+3', '+2']
+            },
+            {
                 symbol: 'Ni',
                 name: 'Nickel',
                 pronunciation: 'NIK-əl',
@@ -1854,8 +2074,10 @@
                 video: 'videos/nickel.mp4',
                 image: 'images/nickel.jpg',
                 guessed: false,
-                revealed: false
-            }, {
+                revealed: false,
+                oxidationStates: ['+2', '+3']
+            },
+            {
                 symbol: 'Cu',
                 name: 'Copper',
                 pronunciation: 'KOP-ər',
@@ -1873,8 +2095,10 @@
                 video: 'videos/copper.mp4',
                 image: 'images/copper.jpg',
                 guessed: false,
-                revealed: false
-            }, {
+                revealed: false,
+                oxidationStates: ['+2', '+1']
+            },
+            {
                 symbol: 'Zn',
                 name: 'Zinc',
                 pronunciation: 'ZINGK',
@@ -1892,8 +2116,10 @@
                 video: 'videos/zinc.mp4',
                 image: 'images/zinc.jpg',
                 guessed: false,
-                revealed: false
-            }, {
+                revealed: false,
+                oxidationStates: ['+2']
+            },
+            {
                 symbol: 'Ga',
                 name: 'Gallium',
                 pronunciation: 'GAL-ee-əm',
@@ -1911,8 +2137,10 @@
                 video: 'videos/gallium.mp4',
                 image: 'images/gallium.jpg',
                 guessed: false,
-                revealed: false
-            }, {
+                revealed: false,
+                oxidationStates: ['+3', '+1']
+            },
+            {
                 symbol: 'Ge',
                 name: 'Germanium',
                 pronunciation: 'jər-MAY-nee-əm',
@@ -1930,8 +2158,10 @@
                 video: 'videos/germanium.mp4',
                 image: 'images/germanium.jpg',
                 guessed: false,
-                revealed: false
-            }, {
+                revealed: false,
+                oxidationStates: ['+4', '+2']
+            },
+            {
                 symbol: 'As',
                 name: 'Arsenic',
                 pronunciation: 'AR-sə-nik',
@@ -1949,7 +2179,8 @@
                 video: 'videos/arsenic.mp4',
                 image: 'images/arsenic.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+5', '+3', '-3']
             },
             {
                 symbol: 'Se',
@@ -1969,7 +2200,8 @@
                 video: 'videos/selenium.mp4',
                 image: 'images/selenium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+6', '+4', '-2']
             },
             {
                 symbol: 'Br',
@@ -1985,11 +2217,12 @@
                 meltingPoint: -7.2,
                 boilingPoint: 58.8,
                 electronConfig: '[Ar] 3d¹⁰ 4s² 4p⁵',
-                state: 'Liquid', // Bromine là chất lỏng
+                state: 'Liquid',
                 video: 'videos/bromine.mp4',
                 image: 'images/bromine.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+7', '+5', '+3', '+1', '-1']
             },
             {
                 symbol: 'Kr',
@@ -2009,7 +2242,8 @@
                 video: 'videos/krypton.mp4',
                 image: 'images/krypton.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+2', '0']
             },
             {
                 symbol: 'Rb',
@@ -2029,9 +2263,9 @@
                 video: 'videos/rubidium.mp4',
                 image: 'images/rubidium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+1']
             },
-
             {
                 symbol: 'Sr',
                 name: 'Strontium',
@@ -2050,7 +2284,8 @@
                 video: 'videos/strontium.mp4',
                 image: 'images/strontium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+2']
             },
             {
                 symbol: 'Y',
@@ -2070,7 +2305,8 @@
                 video: 'videos/yttrium.mp4',
                 image: 'images/yttrium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3']
             },
             {
                 symbol: 'Zr',
@@ -2090,7 +2326,8 @@
                 video: 'videos/zirconium.mp4',
                 image: 'images/zirconium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4']
             },
             {
                 symbol: 'Nb',
@@ -2110,7 +2347,8 @@
                 video: 'videos/niobium.mp4',
                 image: 'images/niobium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+5', '+3']
             },
             {
                 symbol: 'Mo',
@@ -2130,7 +2368,8 @@
                 video: 'videos/molybdenum.mp4',
                 image: 'images/molybdenum.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+6', '+5', '+4', '+3', '+2']
             },
             {
                 symbol: 'Tc',
@@ -2150,7 +2389,8 @@
                 video: 'videos/technetium.mp4',
                 image: 'images/technetium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+7', '+6', '+4']
             },
             {
                 symbol: 'Ru',
@@ -2170,7 +2410,8 @@
                 video: 'videos/ruthenium.mp4',
                 image: 'images/ruthenium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+8', '+6', '+4', '+3', '+2']
             },
             {
                 symbol: 'Rh',
@@ -2190,7 +2431,8 @@
                 video: 'videos/rhodium.mp4',
                 image: 'images/rhodium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4', '+3', '+2']
             },
             {
                 symbol: 'Pd',
@@ -2210,7 +2452,8 @@
                 video: 'videos/palladium.mp4',
                 image: 'images/palladium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4', '+2']
             },
             {
                 symbol: 'Ag',
@@ -2230,7 +2473,8 @@
                 video: 'videos/silver.mp4',
                 image: 'images/silver.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+1', '+2']
             },
             {
                 symbol: 'Cd',
@@ -2250,7 +2494,8 @@
                 video: 'videos/cadmium.mp4',
                 image: 'images/cadmium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+2']
             },
             {
                 symbol: 'In',
@@ -2270,7 +2515,8 @@
                 video: 'videos/indium.mp4',
                 image: 'images/indium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3', '+1']
             },
             {
                 symbol: 'Sn',
@@ -2290,7 +2536,8 @@
                 video: 'videos/tin.mp4',
                 image: 'images/tin.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4', '+2']
             },
             {
                 symbol: 'Sb',
@@ -2310,7 +2557,8 @@
                 video: 'videos/antimony.mp4',
                 image: 'images/antimony.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+5', '+3', '-3']
             },
             {
                 symbol: 'Te',
@@ -2330,7 +2578,8 @@
                 video: 'videos/tellurium.mp4',
                 image: 'images/tellurium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+6', '+4', '-2']
             },
             {
                 symbol: 'I',
@@ -2350,7 +2599,8 @@
                 video: 'videos/iodine.mp4',
                 image: 'images/iodine.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+7', '+5', '+3', '+1', '-1']
             },
             {
                 symbol: 'Xe',
@@ -2370,7 +2620,8 @@
                 video: 'videos/xenon.mp4',
                 image: 'images/xenon.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+8', '+6', '+4', '+2', '0']
             },
             {
                 symbol: 'Cs',
@@ -2390,7 +2641,8 @@
                 video: 'videos/cesium.mp4',
                 image: 'images/cesium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+1']
             },
             {
                 symbol: 'Ba',
@@ -2410,9 +2662,10 @@
                 video: 'videos/barium.mp4',
                 image: 'images/barium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+2']
             },
-            { symbol: 'La-Lu', name: 'Lanthanides', atomicNumber: '57-71', mass: ' ', category: 'color-custom lanthanoid metal', group: '3', period: '6', block: '' },
+            { symbol: 'La-Lu', name: 'Lanthanides', atomicNumber: '57-71', mass: ' ', category: 'color-custom lanthanoid metal', group: '3', period: '6', block: '', oxidationStates: [] },
             {
                 symbol: 'Hf',
                 name: 'Hafnium',
@@ -2431,7 +2684,8 @@
                 video: 'videos/hafnium.mp4',
                 image: 'images/hafnium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4']
             },
             {
                 symbol: 'Ta',
@@ -2451,7 +2705,8 @@
                 video: 'videos/tantalum.mp4',
                 image: 'images/tantalum.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+5']
             },
             {
                 symbol: 'W',
@@ -2471,7 +2726,8 @@
                 video: 'videos/tungsten.mp4',
                 image: 'images/tungsten.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+6', '+5', '+4', '+3', '+2']
             },
             {
                 symbol: 'Re',
@@ -2491,7 +2747,8 @@
                 video: 'videos/rhenium.mp4',
                 image: 'images/rhenium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+7', '+6', '+4', '+3']
             },
             {
                 symbol: 'Os',
@@ -2511,7 +2768,8 @@
                 video: 'videos/osmium.mp4',
                 image: 'images/osmium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+8', '+6', '+4', '+3', '+2']
             },
             {
                 symbol: 'Ir',
@@ -2531,7 +2789,8 @@
                 video: 'videos/iridium.mp4',
                 image: 'images/iridium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4', '+3', '+2', '+1']
             },
             {
                 symbol: 'Pt',
@@ -2551,7 +2810,8 @@
                 video: 'videos/platinum.mp4',
                 image: 'images/platinum.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4', '+2']
             },
             {
                 symbol: 'Au',
@@ -2571,7 +2831,8 @@
                 video: 'videos/gold.mp4',
                 image: 'images/gold.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3', '+1']
             },
             {
                 symbol: 'Hg',
@@ -2591,7 +2852,8 @@
                 video: 'videos/mercury.mp4',
                 image: 'images/mercury.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+2', '+1']
             },
             {
                 symbol: 'Tl',
@@ -2611,7 +2873,8 @@
                 video: 'videos/thallium.mp4',
                 image: 'images/thallium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3', '+1']
             },
             {
                 symbol: 'Pb',
@@ -2631,7 +2894,8 @@
                 video: 'videos/lead.mp4',
                 image: 'images/lead.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4', '+2']
             },
             {
                 symbol: 'Bi',
@@ -2651,7 +2915,8 @@
                 video: 'videos/bismuth.mp4',
                 image: 'images/bismuth.png',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+5', '+3']
             },
             {
                 symbol: 'Po',
@@ -2671,7 +2936,8 @@
                 video: 'videos/polonium.mp4',
                 image: 'images/polonium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4', '+2']
             },
             {
                 symbol: 'At',
@@ -2691,7 +2957,8 @@
                 video: 'videos/astatine.mp4',
                 image: 'images/astatine.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+7', '+5', '+3', '+1', '-1']
             },
             {
                 symbol: 'Rn',
@@ -2711,7 +2978,8 @@
                 video: 'videos/radon.mp4',
                 image: 'images/radon.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+2', '0']
             },
             {
                 symbol: 'Fr',
@@ -2731,7 +2999,8 @@
                 video: 'videos/francium.mp4',
                 image: 'images/francium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+1']
             },
             {
                 symbol: 'Ra',
@@ -2751,9 +3020,10 @@
                 video: 'videos/radium.mp4',
                 image: 'images/radium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+2']
             },
-            { symbol: 'Ac-Lr', name: 'Actinides - Lawrencium', atomicNumber: '89-103', mass: ' ', category: 'color-custom actinoid metal', group: '3', period: '7', block: '' },
+            { symbol: 'Ac-Lr', name: 'Actinides - Lawrencium', atomicNumber: '89-103', mass: ' ', category: 'color-custom actinoid metal', group: '3', period: '7', block: '', oxidationStates: [] },
             {
                 symbol: 'Rf',
                 name: 'Rutherfordium',
@@ -2772,7 +3042,8 @@
                 video: 'videos/rutherfordium.mp4',
                 image: 'images/rutherfordium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4']
             },
             {
                 symbol: 'Db',
@@ -2792,7 +3063,8 @@
                 video: 'videos/dubnium.mp4',
                 image: 'images/dubnium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+5']
             },
             {
                 symbol: 'Sg',
@@ -2812,7 +3084,8 @@
                 video: 'videos/seaborgium.mp4',
                 image: 'images/seaborgium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+6']
             },
             {
                 symbol: 'Bh',
@@ -2832,7 +3105,8 @@
                 video: 'videos/bohrium.mp4',
                 image: 'images/bohrium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+7']
             },
             {
                 symbol: 'Hs',
@@ -2852,7 +3126,8 @@
                 video: 'videos/hassium.mp4',
                 image: 'images/hassium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+8']
             },
             {
                 symbol: 'Mt',
@@ -2872,7 +3147,8 @@
                 video: 'videos/meitnerium.mp4',
                 image: 'images/meitnerium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3'] // Dự đoán, ít dữ liệu thực nghiệm
             },
             {
                 symbol: 'Ds',
@@ -2892,7 +3168,8 @@
                 video: 'videos/darmstadtium.mp4',
                 image: 'images/darmstadtium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4'] // Dự đoán, ít dữ liệu thực nghiệm
             },
             {
                 symbol: 'Rg',
@@ -2912,7 +3189,8 @@
                 video: 'videos/roentgenium.mp4',
                 image: 'images/roentgenium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3', '+1'] // Dự đoán, ít dữ liệu thực nghiệm
             },
             {
                 symbol: 'Cn',
@@ -2932,7 +3210,8 @@
                 video: 'videos/copernicium.mp4',
                 image: 'images/copernicium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+2'] // Dự đoán, ít dữ liệu thực nghiệm
             },
             {
                 symbol: 'Nh',
@@ -2952,7 +3231,8 @@
                 video: 'videos/nihonium.mp4',
                 image: 'images/nihonium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3', '+1'] // Dự đoán, ít dữ liệu thực nghiệm
             },
             {
                 symbol: 'Fl',
@@ -2972,7 +3252,8 @@
                 video: 'videos/flerovium.mp4',
                 image: 'images/flerovium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4', '+2'] // Dự đoán, ít dữ liệu thực nghiệm
             },
             {
                 symbol: 'Mc',
@@ -2992,7 +3273,8 @@
                 video: 'videos/moscovium.mp4',
                 image: 'images/moscovium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3', '+1'] // Dự đoán, ít dữ liệu thực nghiệm
             },
             {
                 symbol: 'Lv',
@@ -3012,7 +3294,8 @@
                 video: 'videos/livermorium.mp4',
                 image: 'images/livermorium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4', '+2'] // Dự đoán, ít dữ liệu thực nghiệm
             },
             {
                 symbol: 'Ts',
@@ -3032,7 +3315,8 @@
                 video: 'videos/tennessine.mp4',
                 image: 'images/tennessine.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+5', '+3', '+1', '-1'] // Dự đoán, ít dữ liệu thực nghiệm
             },
             {
                 symbol: 'Og',
@@ -3052,7 +3336,8 @@
                 video: 'videos/oganesson.mp4',
                 image: 'images/oganesson.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+6', '+4', '+2', '0'] // Dự đoán, ít dữ liệu thực nghiệm
             },
             {
                 symbol: 'La',
@@ -3072,7 +3357,8 @@
                 video: 'videos/lanthanum.mp4',
                 image: 'images/lanthanum.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3']
             },
             {
                 symbol: 'Ce',
@@ -3092,7 +3378,8 @@
                 video: 'videos/cerium.mp4',
                 image: 'images/cerium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4', '+3']
             },
             {
                 symbol: 'Pr',
@@ -3112,7 +3399,8 @@
                 video: 'videos/praseodymium.mp4',
                 image: 'images/praseodymium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4', '+3']
             },
             {
                 symbol: 'Nd',
@@ -3132,7 +3420,8 @@
                 video: 'videos/neodymium.mp4',
                 image: 'images/neodymium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3']
             },
             {
                 symbol: 'Pm',
@@ -3152,7 +3441,8 @@
                 video: 'videos/promethium.mp4',
                 image: 'images/promethium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3']
             },
             {
                 symbol: 'Sm',
@@ -3172,7 +3462,8 @@
                 video: 'videos/samarium.mp4',
                 image: 'images/samarium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3', '+2']
             },
             {
                 symbol: 'Eu',
@@ -3192,7 +3483,8 @@
                 video: 'videos/europium.mp4',
                 image: 'images/europium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3', '+2']
             },
             {
                 symbol: 'Gd',
@@ -3212,7 +3504,8 @@
                 video: 'videos/gadolinium.mp4',
                 image: 'images/gadolinium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3']
             },
             {
                 symbol: 'Tb',
@@ -3232,7 +3525,8 @@
                 video: 'videos/terbium.mp4',
                 image: 'images/terbium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4', '+3']
             },
             {
                 symbol: 'Dy',
@@ -3252,7 +3546,8 @@
                 video: 'videos/dysprosium.mp4',
                 image: 'images/dysprosium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3']
             },
             {
                 symbol: 'Ho',
@@ -3272,7 +3567,8 @@
                 video: 'videos/holmium.mp4',
                 image: 'images/holmium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3']
             },
             {
                 symbol: 'Er',
@@ -3292,7 +3588,8 @@
                 video: 'videos/erbium.mp4',
                 image: 'images/erbium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3']
             },
             {
                 symbol: 'Tm',
@@ -3312,7 +3609,8 @@
                 video: 'videos/thulium.mp4',
                 image: 'images/thulium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3', '+2']
             },
             {
                 symbol: 'Yb',
@@ -3332,7 +3630,8 @@
                 video: 'videos/ytterbium.mp4',
                 image: 'images/ytterbium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3', '+2']
             },
             {
                 symbol: 'Lu',
@@ -3352,7 +3651,8 @@
                 video: 'videos/lutetium.mp4',
                 image: 'images/lutetium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3']
             },
             {
                 symbol: 'Ac',
@@ -3372,7 +3672,8 @@
                 video: 'videos/actinium.mp4',
                 image: 'images/actinium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3']
             },
             {
                 symbol: 'Th',
@@ -3392,7 +3693,8 @@
                 video: 'videos/thorium.mp4',
                 image: 'images/thorium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4']
             },
             {
                 symbol: 'Pa',
@@ -3412,8 +3714,10 @@
                 video: 'videos/protactinium.mp4',
                 image: 'images/protactinium.jpg',
                 guessed: false,
-                revealed: false
-            }, {
+                revealed: false,
+                oxidationStates: ['+5', '+4']
+            },
+            {
                 symbol: 'U',
                 name: 'Uranium',
                 pronunciation: 'yoo-RAY-nee-əm',
@@ -3431,7 +3735,8 @@
                 video: 'videos/uranium.mp4',
                 image: 'images/uranium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+6', '+5', '+4', '+3']
             },
             {
                 symbol: 'Np',
@@ -3451,7 +3756,8 @@
                 video: 'videos/neptunium.mp4',
                 image: 'images/neptunium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+6', '+5', '+4', '+3']
             },
             {
                 symbol: 'Pu',
@@ -3471,7 +3777,8 @@
                 video: 'videos/plutonium.mp4',
                 image: 'images/plutonium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+6', '+5', '+4', '+3']
             },
             {
                 symbol: 'Am',
@@ -3491,7 +3798,8 @@
                 video: 'videos/americium.mp4',
                 image: 'images/americium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+6', '+5', '+4', '+3']
             },
             {
                 symbol: 'Cm',
@@ -3511,7 +3819,8 @@
                 video: 'videos/curium.mp4',
                 image: 'images/curium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4', '+3']
             },
             {
                 symbol: 'Bk',
@@ -3531,7 +3840,8 @@
                 video: 'videos/berkelium.mp4',
                 image: 'images/berkelium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4', '+3']
             },
             {
                 symbol: 'Cf',
@@ -3551,7 +3861,8 @@
                 video: 'videos/californium.mp4',
                 image: 'images/californium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+4', '+3']
             },
             {
                 symbol: 'Es',
@@ -3571,7 +3882,8 @@
                 video: 'videos/einsteinium.mp4',
                 image: 'images/einsteinium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3', '+2']
             },
             {
                 symbol: 'Fm',
@@ -3585,14 +3897,16 @@
                 block: 'f-block',
                 electronegativity: 1.3,
                 meltingPoint: 1527,
-                boilingPoint: 1950,
+                boilingPoint: null,
                 electronConfig: '[Rn] 5f¹² 7s²',
                 state: 'Solid',
                 video: 'videos/fermium.mp4',
                 image: 'images/fermium.jpg',
                 guessed: false,
-                revealed: false
-            }, {
+                revealed: false,
+                oxidationStates: ['+3', '+2']
+            },
+            {
                 symbol: 'Md',
                 name: 'Mendelevium',
                 pronunciation: 'men-də-LEE-vee-əm',
@@ -3604,18 +3918,19 @@
                 block: 'f-block',
                 electronegativity: 1.3,
                 meltingPoint: 827,
-                boilingPoint: 1527,
+                boilingPoint: null,
                 electronConfig: '[Rn] 5f¹³ 7s²',
                 state: 'Solid',
                 video: 'videos/mendelevium.mp4',
                 image: 'images/mendelevium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3', '+2']
             },
             {
                 symbol: 'No',
                 name: 'Nobelium',
-                pronunciation: 'noh-BEL-ee-əm',
+                pronunciation: 'noh-BEE-lee-əm',
                 atomicNumber: 102,
                 mass: 259,
                 category: 'actinoid metal',
@@ -3624,44 +3939,44 @@
                 block: 'f-block',
                 electronegativity: 1.3,
                 meltingPoint: 827,
-                boilingPoint: 1527,
+                boilingPoint: null,
                 electronConfig: '[Rn] 5f¹⁴ 7s²',
                 state: 'Solid',
                 video: 'videos/nobelium.mp4',
                 image: 'images/nobelium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3', '+2']
             },
             {
                 symbol: 'Lr',
                 name: 'Lawrencium',
-                pronunciation: 'law-REN-see-əm',
+                pronunciation: 'lə-REN-see-əm',
                 atomicNumber: 103,
                 mass: 262,
                 category: 'actinoid metal',
                 group: 'N/A',
                 period: 7,
-                block: 'f-block',
+                block: 'd-block',
                 electronegativity: 1.3,
                 meltingPoint: 1627,
-                boilingPoint: 1527,
+                boilingPoint: null,
                 electronConfig: '[Rn] 5f¹⁴ 6d¹ 7s²',
                 state: 'Solid',
                 video: 'videos/lawrencium.mp4',
                 image: 'images/lawrencium.jpg',
                 guessed: false,
-                revealed: false
+                revealed: false,
+                oxidationStates: ['+3']
             }
         ];
-
         // Thêm thông tin cho các nhóm electron
         const blockInfo = {
             's-block': {
                 name: 'Khối các nguyên tố s',
                 info: [
                     'Electron cuối cùng điền vào phân lớp s.',
-                    'Bao gồm nhóm IA và IIA và He (nhóm VIIIA).',
-                    'Dễ mất electron, tính kim loại cao.',
+                    'Bao gồm nhóm IA và IIA và He (nhóm VIIIA).'
                 ]
             },
             'p-block': {
@@ -3669,7 +3984,6 @@
                 info: [
                     'Electron cuối cùng điền vào phân lớp p.',
                     'Bao gồm nhóm IIIA đến VIIIA (trừ He).',
-                    'Có tính phi kim và oxy hóa mạnh.'
                 ]
             },
             'd-block': {
@@ -3677,7 +3991,6 @@
                 info: [
                     'Electron cuối cùng điền vào phân lớp d.',
                     'Bao gồm nguyên tố nhóm B.',
-                    'Dẫn điện tốt, tính kim loại rõ rệt.'
                 ]
             },
             'f-block': {
@@ -3685,7 +3998,6 @@
                 info: [
                     'Electron cuối cùng điền vào phân lớp f.',
                     'Nguyên tố hai hàng cuối bảng tuần hoàn, gồm 14 nguyên tố Lanthanide (Ce-Lu) và 14 Actinide (Th-Lr).',
-                    'Có tính phóng xạ mạnh.'
                 ]
             }
         };
@@ -3827,6 +4139,7 @@
                 Khối lượng: <span>${element.mass}</span><br>
                 Độ âm điện: <span>${element.electronegativity || 'N/A'}</span><br>
                 Cấu hình e: <span>${element.electronConfig || 'N/A'}</span><br>
+                Số oxi hóa: <span>${element.oxidationStates ? element.oxidationStates.join(', ') : 'N/A'}</span><br>
             </div>
         `;
 
@@ -3868,7 +4181,8 @@
             document.getElementById('elementSymbol').textContent = element.symbol;
             document.getElementById('elementAtomicNumber').textContent = element.atomicNumber;
             document.getElementById('elementMass').textContent = element.mass;
-            document.getElementById('elementElectronegativity').textContent = element.electronegativity || 'N/A';
+            document.getElementById('elementElectronegativity').textContent =
+                element.period === 7 ? '' : (element.electronegativity || 'N/A');
             document.getElementById('elementElectronConfig').textContent = element.electronConfig || 'N/A';
             document.getElementById('elementPronunciation').textContent = element.pronunciation || 'N/A';
 
@@ -3986,6 +4300,14 @@
                     'Trong tự nhiên, kim loại kiềm thổ chỉ tồn tại dạng hợp chất '
                 ]
             },
+            'stable-isotope': {
+                name: 'ĐỒNG VỊ BỀN',
+                info: [
+                    'Các nguyên tố từ 104 đến 118',
+                    'Là các đồng vị tổng hợp có thời gian sống lâu hơn',
+                    'Ứng dụng trong nghiên cứu khoa học'
+                ]
+            },
             'transition-metal': {
                 name: 'KIM LOẠI CHUYỂN TIẾP',
                 info: [
@@ -4067,7 +4389,12 @@
 
                 // Xử lý highlight
                 document.querySelectorAll('.element').forEach(el => {
-                    el.style.opacity = el.classList.contains(category) ? 1 : 0.1;
+                    const atomicNum = parseInt(el.dataset.atomicNumber);
+                    if (category === 'stable-isotope') {
+                        el.style.opacity = (atomicNum >= 104 && atomicNum <= 118) ? 1 : 0.1;
+                    } else {
+                        el.style.opacity = el.classList.contains(category) ? 1 : 0.1;
+                    }
                 });
 
                 // Hiển thị thông tin nhóm
@@ -4185,6 +4512,10 @@
             document.querySelector('.vertical-controls').style.display = 'none';
             document.querySelector('.controls').style.display = 'none';
 
+            // Hiển thị điểm cao nhất và lượt gần nhất
+            document.getElementById("highScore").style.display = "block";
+            document.getElementById("recentScore").style.display = "block";
+
             // Cập nhật active mode
             document.querySelectorAll('.mode-switcher button').forEach(btn => btn.classList.remove('active-mode'));
             document.querySelector('.mode-switcher button:last-child').classList.add('active-mode');
@@ -4228,7 +4559,7 @@
             // Xác định phạm vi chu kỳ
             let maxPeriod;
             switch (currentGame.difficulty) {
-                case 'easy': maxPeriod = 3; break;
+                case 'easy': maxPeriod = 4; break;
                 case 'medium': maxPeriod = 4; break;
                 case 'hard': maxPeriod = 6; break;
             }
@@ -4416,6 +4747,33 @@
                 clearTimeout(currentGame.timer);
                 if (currentGame.isPlaying) nextRound();
             });
+        });
+
+        // Thêm JavaScript xử lý click
+        document.querySelectorAll('.info-item').forEach(item => {
+            item.addEventListener('click', function (e) {
+                e.stopPropagation();
+
+                // Ẩn tất cả tooltip khác
+                document.querySelectorAll('.info-tooltip').forEach(tooltip => {
+                    if (tooltip !== this.querySelector('.info-tooltip')) {
+                        tooltip.classList.remove('active');
+                    }
+                });
+
+                // Toggle tooltip hiện tại
+                const tooltip = this.querySelector('.info-tooltip');
+                tooltip.classList.toggle('active');
+            });
+        });
+
+        // Đóng tooltip khi click ra ngoài
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.info-item')) {
+                document.querySelectorAll('.info-tooltip').forEach(tooltip => {
+                    tooltip.classList.remove('active');
+                });
+            }
         });
     </script>
 </body>
