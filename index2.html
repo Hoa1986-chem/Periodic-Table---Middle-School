@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Bảng Tuần Hoàn Hoá Học</title>
     <link rel="icon" href="images/faviconpng.png" type="image/x-icon"> <!-- Đường dẫn tới favicon của bạn -->
+    <script async src="https://tally.so/widgets/embed.js"></script>
     <style>
         body {
             display: flex;
@@ -108,6 +109,14 @@
 
             .symbol {
                 font-size: 12px;
+            }
+            .quiz-container {
+                padding: 5px; /* Giảm padding trên màn hình nhỏ */
+                max-width: 100%; /* Chiếm toàn bộ chiều rộng trên mobile */
+            }
+        
+            .quiz-container iframe {
+                height: 500px; /* Giảm chiều cao để phù hợp với màn hình nhỏ */
             }
         }
 
@@ -752,6 +761,18 @@
             .group-title {
                 left: 3%;
             }
+            .quiz-container {
+                padding: 0; /* Loại bỏ padding hoàn toàn trên điện thoại nhỏ */
+            }
+        
+            .quiz-container iframe {
+                height: 400px; /* Giảm thêm chiều cao cho màn hình rất nhỏ */
+            }
+        
+            /* Đảm bảo nội dung không bị cắt */
+            .quiz-mode body {
+                padding-bottom: 20px; /* Thêm padding dưới để tránh nội dung bị che bởi thanh điều hướng mobile */
+            }
         }
 
         /* Chế độ game */
@@ -1312,6 +1333,50 @@
             /* Hiệu ứng hover cho select */
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
+
+        /* Ẩn Quizizz mặc định */
+        .quiz-container {
+            display: none;
+            width: 100%;
+            max-width: 1200px;
+            /* Tăng chiều rộng tối đa, bạn có thể điều chỉnh giá trị này */
+            margin: 0 auto;
+            /* Căn giữa container */
+            padding: 20px;
+            /* Thêm padding để nội dung không sát lề */
+        }
+
+        /* Hiển thị Quizizz ở chế độ trắc nghiệm */
+        .quiz-mode .quiz-container {
+            display: block;
+        }
+
+        /* Ẩn các thành phần khác ở chế độ trắc nghiệm */
+        .quiz-mode .container,
+        .quiz-mode .vertical-controls,
+        .quiz-mode .controls,
+        .quiz-mode .info-section,
+        .quiz-mode #gamePanel,
+        .quiz-mode .score-container {
+            display: none !important;
+        }
+
+        /* Đảm bảo Quizizz hiển thị đầy đủ */
+        .quiz-container iframe {
+            width: 100%;
+            height: 635px; /* Chiều cao mặc định cho màn hình lớn */
+            border: none;
+            max-width: 100%; /* Đảm bảo không vượt quá container cha */
+            display: block; /* Loại bỏ khoảng trắng thừa */
+        }
+        .quiz-mode body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0; /* Loại bỏ padding mặc định của body */
+            margin: 0;
+            min-height: 100vh; /* Đảm bảo chiếm toàn bộ chiều cao màn hình */
+        }
     </style>
 </head>
 
@@ -1334,6 +1399,7 @@
     <div class="mode-switcher">
         <button class="active-mode" onclick="showPeriodicTable()">Bảng Tuần Hoàn</button>
         <button onclick="showGameMode()">Game tìm nguyên tố</button>
+        <button onclick="showQuizMode()">Trắc nghiệm</button>
     </div>
 
     <div class="score-container">
@@ -1391,6 +1457,14 @@
         <button class="control-btn metal">Kim loại</button>
         <button class="control-btn metalloid">Á kim</button>
         <button class="control-btn noble-gas">Khí hiếm</button>
+
+
+    </div>
+
+    <div class="quiz-container">
+        <iframe src="https://quizizz.com/embed/quiz/67e90a259d5c0198e6734a58" title="Quizizz Quiz" style="flex:1;"
+            frameBorder="0" allowfullscreen>
+        </iframe>
     </div>
 
     <div class="container">
@@ -4605,7 +4679,7 @@
 
         // Hàm chuyển đổi chế độ
         function showPeriodicTable() {
-            document.body.classList.remove('game-mode');
+            document.body.classList.remove('game-mode', 'quiz-mode');
             document.getElementById('gamePanel').style.display = 'none';
             document.querySelector('.vertical-controls').style.display = 'flex';
             document.querySelector('.controls').style.display = 'block';
@@ -4616,10 +4690,23 @@
 
         function showGameMode() {
             document.body.classList.add('game-mode');
+            document.body.classList.remove('quiz-mode');
             document.getElementById('gamePanel').style.display = 'block';
             document.querySelector('.vertical-controls').style.display = 'none';
             document.querySelector('.controls').style.display = 'none';
             document.querySelector('.info-section').style.display = 'none';
+            document.querySelectorAll('.mode-switcher button').forEach(btn => btn.classList.remove('active-mode'));
+            document.querySelector('.mode-switcher button:nth-child(2)').classList.add('active-mode');
+        }
+
+        function showQuizMode() {
+            document.body.classList.remove('game-mode');
+            document.body.classList.add('quiz-mode');
+
+            // Ẩn game panel
+            document.getElementById('gamePanel').style.display = 'none';
+
+            // Cập nhật nút active
             document.querySelectorAll('.mode-switcher button').forEach(btn => btn.classList.remove('active-mode'));
             document.querySelector('.mode-switcher button:last-child').classList.add('active-mode');
         }
