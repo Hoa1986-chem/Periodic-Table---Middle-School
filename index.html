@@ -146,25 +146,9 @@
             margin-top: 2px;
         }
 
-        /* Màu sắc các nhóm */
-        .alkali-metal {
-            background-color: #FF6666 !important;
-        }
-
+        
         .color-custom {
             background: linear-gradient(90deg, #FFD700, #FF8C00);
-        }
-
-        .alkaline-earth {
-            background-color: #FFDEAD !important;
-        }
-
-        .transition-metal {
-            background-color: #FFB6C1 !important;
-        }
-
-        .post-transition {
-            background-color: #D3D3D3 !important;
         }
 
         .metalloid {
@@ -172,23 +156,11 @@
         }
 
         .nonmetal {
-            background-color: #87CEEB !important;
-        }
-
-        .halogen {
-            background-color: #87CEEB !important;
+            background-color: #FFB6C1 !important;
         }
 
         .noble-gas {
-            background-color: #DDA0DD !important;
-        }
-
-        .lanthanoid {
-            background-color: #FFA07A !important;
-        }
-
-        .actinoid {
-            background-color: #FFD700 !important;
+            background-color: #FFD700	 !important;
         }
 
         /* Căn giữa các nút và phần tử */
@@ -664,7 +636,7 @@
 
         /* Thêm vào phần màu sắc */
         .metal {
-            background-color: #FFB6C1;
+            background-color: #afcfff	;
         }
 
         .group-a-metal {
@@ -1223,10 +1195,6 @@
             }
         }
 
-        /* Thêm style cho đồng vị bền */
-        .stable-isotope {
-            background-color: #48C9B0 !important;
-        }
 
         /* Cải thiện bố cục gamePanel */
         #gamePanel {
@@ -1455,7 +1423,6 @@
     <div class="vertical-controls">
         <button class="control-btn nonmetal">Phi kim</button>
         <button class="control-btn metal">Kim loại</button>
-        <button class="control-btn metalloid">Á kim</button>
         <button class="control-btn noble-gas">Khí hiếm</button>
 
 
@@ -1587,37 +1554,17 @@
             </div>
         </div>
     </div>
-    <div class="controls">
-        <div class="control-section">
-            <button class="control-btn stable-isotope">Đồng vị bền</button>
-            <button class="control-btn alkali-metal">Kim loại kiềm</button>
-            <button class="control-btn alkaline-earth">Kiềm thổ</button>
-            <button class="control-btn transition-metal">Kim loại chuyển tiếp</button>
-            <button class="control-btn halogen">Halogen</button>
-            <button class="control-btn lanthanoid">Họ Lantan</button>
-            <button class="control-btn actinoid">Họ Actini</button>
-        </div>
 
-        <div class="control-section">
-            <span class="section-label">Cấu hình electron:</span>
-            <button style="background: #FF6666 ;" class="control-btn s-block">Khối các nguyên tố s</button>
-            <button style="background: #90EE90 ;" class="control-btn p-block">Khối các nguyên tố p</button>
-            <button style="background: #87CEEB ;" class="control-btn d-block">Khối các nguyên tố d</button>
-            <button style="background: #D8BFD8;" class="control-btn f-block">Khối các nguyên tố f</button>
-        </div>
-    </div>
     <!-- Thêm vào sau phần controls -->
     <div class="info-section">
         <div class="info-item">
             <span class="info-title">Nguyên tắc sắp xếp nguyên tố trong bảng tuần hoàn</span>
             <div class="info-tooltip">
                 <ul>
-                    <li>Các nguyên tố được xếp theo <strong>chiều tăng dần</strong> của điện tích hạt nhân nguyên tử.
+                    <li>Các nguyên tố hoá học được xếp theo <strong>chiều tăng dần</strong> của điện tích hạt nhân.
                     </li>
-                    <li>Các nguyên tố có <strong>cùng số lớp electron trong nguyên tử</strong> được xếp cùng một chu kỳ
-                        (hàng ngang).</li>
-                    <li>Các nguyên tố mà nguyên tử có <strong>cấu hình electron tương tự nhau</strong> được xếp cùng một
-                        nhóm.</li>
+                    <li>Các nguyên tố trong cùng một hàng <strong>có cùng số lớp electron trong nguyên tử</strong></li>
+                    <li>Các nguyên tố trong cùng một cột có tính chất gần giống nhau</li>
                 </ul>
             </div>
         </div>
@@ -1648,20 +1595,8 @@
             <div class="info-tooltip">
                 <p>Mỗi nguyên tố hóa học được xếp vào một ô trong bảng tuần hoàn, gọi là ô nguyên tố. Số thứ tự của ô
                     nguyên tố <strong>bằng số hiệu nguyên tử</strong> của nguyên tố trong ô đó (STT ô = Z).</p>
-                <img src="images/thongTinNguyenTo.jpg" alt="" srcset="">
+                <img src="images/onguyento8.jpg" alt="" srcset="">
                 <p style="text-align: center; font-weight: 600;">Những thông tin trong 1 ô nguyên tố</p>
-            </div>
-        </div>
-
-        <div class="info-item">
-            <span class="info-title">Electron hóa trị</span>
-            <div class="info-tooltip">
-                <p>Là những electron có <strong>khả năng tham gia hình thành liên kết hóa học</strong>, thường nằm ở lớp
-                    ngoài cùng hoặc phân lớp sát lớp ngoài cùng nếu chưa bão hòa.</p>
-                <ul>
-                    <li>Với nhóm A, <strong>số electron hóa trị</strong> bằng số thứ tự nhóm.</li>
-                </ul>
-                <img src="images/electronHoaTri.jpg" alt="Electron hóa trị">
             </div>
         </div>
     </div>
@@ -1765,7 +1700,7 @@
                 pronunciation: 'BOH-ron',
                 atomicNumber: 5,
                 mass: 10.81,
-                category: 'metalloid',
+                category: 'nonmetal' ,
                 group: 13,
                 period: 2,
                 block: 'p-block',
@@ -1954,7 +1889,7 @@
                 pronunciation: 'SIL-i-kən',
                 atomicNumber: 14,
                 mass: 28.085,
-                category: 'metalloid',
+                category: 'nonmetal' ,
                 group: 14,
                 period: 3,
                 block: 'p-block',
@@ -2334,7 +2269,7 @@
                 pronunciation: 'jər-MAY-nee-əm',
                 atomicNumber: 32,
                 mass: 72.630,
-                category: 'metalloid',
+                category: 'nonmetal' ,
                 group: 14,
                 period: 4,
                 block: 'p-block',
@@ -2355,7 +2290,7 @@
                 pronunciation: 'AR-sə-nik',
                 atomicNumber: 33,
                 mass: 74.922,
-                category: 'metalloid',
+                category: 'nonmetal' ,
                 group: 15,
                 period: 4,
                 block: 'p-block',
@@ -2733,7 +2668,7 @@
                 pronunciation: 'AN-tə-moh-nee',
                 atomicNumber: 51,
                 mass: 121.760,
-                category: 'metalloid',
+                category: 'nonmetal' ,
                 group: 15,
                 period: 5,
                 block: 'p-block',
@@ -2754,7 +2689,7 @@
                 pronunciation: 'tə-LOOR-ee-əm',
                 atomicNumber: 52,
                 mass: 127.60,
-                category: 'metalloid',
+                category: 'nonmetal' ,
                 group: 16,
                 period: 5,
                 block: 'p-block',
@@ -3426,7 +3361,7 @@
                 pronunciation: 'pə-LOH-nee-əm',
                 atomicNumber: 84,
                 mass: 209,
-                category: 'metalloid',
+                category: 'nonmetal' ,
                 group: 16,
                 period: 6,
                 block: 'p-block',
@@ -4119,7 +4054,7 @@
                 pronunciation: 'TEN-ə-seen',
                 atomicNumber: 117,
                 mass: 294,
-                category: 'halogen nonmetal',
+                category: 'halogen metal',
                 group: 17,
                 period: 7,
                 block: 'p-block',
@@ -4502,13 +4437,7 @@
                     'Electron hóa trị nằm ở phân lớp 3d và 4s'
                 ]
             },
-            'metalloid': {
-                name: 'Á KIM',
-                info: [
-                    'Phụ thuộc vào điều kiện môi trường chúng có thể có các tính chất của kim loại như dẫn điện hay phi kim cách điện. Si và Ge là 2 chất bán dẫn quan trọng và phổ biến',
-
-                ]
-            },
+            
             'nonmetal': {
                 name: 'PHI KIM',
                 info: [
