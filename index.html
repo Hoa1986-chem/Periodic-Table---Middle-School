@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Bảng Tuần Hoàn Hoá Học</title>
-    <link rel="icon" href="images/faviconpng.png" type="image/x-icon"> <!-- Đường dẫn tới favicon của bạn -->
+    <link rel="icon" href="images/faviconpng.ico" type="image/x-icon"> <!-- Đường dẫn tới favicon của bạn -->
     <script async src="https://tally.so/widgets/embed.js"></script>
     <style>
         body {
@@ -110,13 +110,17 @@
             .symbol {
                 font-size: 12px;
             }
+
             .quiz-container {
-                padding: 5px; /* Giảm padding trên màn hình nhỏ */
-                max-width: 100%; /* Chiếm toàn bộ chiều rộng trên mobile */
+                padding: 5px;
+                /* Giảm padding trên màn hình nhỏ */
+                max-width: 100%;
+                /* Chiếm toàn bộ chiều rộng trên mobile */
             }
-        
+
             .quiz-container iframe {
-                height: 500px; /* Giảm chiều cao để phù hợp với màn hình nhỏ */
+                height: 500px;
+                /* Giảm chiều cao để phù hợp với màn hình nhỏ */
             }
         }
 
@@ -761,17 +765,21 @@
             .group-title {
                 left: 3%;
             }
+
             .quiz-container {
-                padding: 0; /* Loại bỏ padding hoàn toàn trên điện thoại nhỏ */
+                padding: 0;
+                /* Loại bỏ padding hoàn toàn trên điện thoại nhỏ */
             }
-        
+
             .quiz-container iframe {
-                height: 400px; /* Giảm thêm chiều cao cho màn hình rất nhỏ */
+                height: 400px;
+                /* Giảm thêm chiều cao cho màn hình rất nhỏ */
             }
-        
+
             /* Đảm bảo nội dung không bị cắt */
             .quiz-mode body {
-                padding-bottom: 20px; /* Thêm padding dưới để tránh nội dung bị che bởi thanh điều hướng mobile */
+                padding-bottom: 20px;
+                /* Thêm padding dưới để tránh nội dung bị che bởi thanh điều hướng mobile */
             }
         }
 
@@ -1364,23 +1372,88 @@
         /* Đảm bảo Quizizz hiển thị đầy đủ */
         .quiz-container iframe {
             width: 100%;
-            height: 635px; /* Chiều cao mặc định cho màn hình lớn */
+            height: 635px;
+            /* Chiều cao mặc định cho màn hình lớn */
             border: none;
-            max-width: 100%; /* Đảm bảo không vượt quá container cha */
-            display: block; /* Loại bỏ khoảng trắng thừa */
+            max-width: 100%;
+            /* Đảm bảo không vượt quá container cha */
+            display: block;
+            /* Loại bỏ khoảng trắng thừa */
         }
+
         .quiz-mode body {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0; /* Loại bỏ padding mặc định của body */
+            padding: 0;
+            /* Loại bỏ padding mặc định của body */
             margin: 0;
-            min-height: 100vh; /* Đảm bảo chiếm toàn bộ chiều cao màn hình */
+            min-height: 100vh;
+            /* Đảm bảo chiếm toàn bộ chiều cao màn hình */
         }
+        /* Nút chuyển trang nổi */
+.floating-btn {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    background: #4CAF50;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    font-size: 14px;
+    line-height: 1.2;
+    padding: 5px;
+    cursor: pointer;
+    border: 2px solid white;
+}
+
+.floating-btn:hover {
+    background: #45a049;
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+/* Cho trang hoa8.html */
+body[data-page="chapter8"] .floating-btn {
+    background: #2196F3;
+}
+
+body[data-page="chapter8"] .floating-btn:hover {
+    background: #1976D2;
+}
+
+/* Ẩn text khi màn hình nhỏ */
+@media (max-width: 480px) {
+    .floating-btn span {
+        display: none;
+    }
+    
+    .floating-btn::after {
+        content: "➔";
+        font-size: 20px;
+    }
+    
+    body[data-page="chapter8"] .floating-btn::after {
+        content: "←";
+    }
+}
     </style>
 </head>
 
 <body>
+    <!-- Nút chuyển trang dạng tròn -->
+    <a href="hoa8.html" class="page-switcher floating-btn">
+        <span>Hoá học THCS</span>
+    </a>
     <audio id="correctSound" src="sounds/correct.mp3"></audio>
     <audio id="wrongSound" src="sounds/wrong.mp3"></audio>
     <h2 style="text-align: center;padding: 0;">BẢNG TUẦN HOÀN CÁC NGUYÊN TỐ HÓA HỌC <br>Theo chương trình giáo dục phổ
@@ -1638,7 +1711,7 @@
                         chiều tăng của số hiệu nguyên tử của nguyên tố</li>
                 </ul>
 
-                <img src="images/mendeleev.jpg" alt="D.I. Mendeleev">
+                <img src="images/mendeleev.webp" alt="D.I. Mendeleev">
                 <p style="text-align: center; font-weight: 600;">Dmitri Ivanovich Mendeleev (1834 - 1907) </p>
             </div>
         </div>
@@ -1648,7 +1721,7 @@
             <div class="info-tooltip">
                 <p>Mỗi nguyên tố hóa học được xếp vào một ô trong bảng tuần hoàn, gọi là ô nguyên tố. Số thứ tự của ô
                     nguyên tố <strong>bằng số hiệu nguyên tử</strong> của nguyên tố trong ô đó (STT ô = Z).</p>
-                <img src="images/thongTinNguyenTo.jpg" alt="" srcset="">
+                <img src="images/thongTinNguyenTo.webp" alt="" srcset="">
                 <p style="text-align: center; font-weight: 600;">Những thông tin trong 1 ô nguyên tố</p>
             </div>
         </div>
@@ -1661,7 +1734,7 @@
                 <ul>
                     <li>Với nhóm A, <strong>số electron hóa trị</strong> bằng số thứ tự nhóm.</li>
                 </ul>
-                <img src="images/electronHoaTri.jpg" alt="Electron hóa trị">
+                <img src="images/electronHoaTri.webp" alt="Electron hóa trị">
             </div>
         </div>
     </div>
@@ -1691,7 +1764,7 @@
                 electronConfig: '1s¹',
                 state: 'Gas',
                 video: 'videos/hydrogen.mp4',
-                image: 'images/hydrogen.jpg',
+                image: 'images/hydrogen.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+1', '-1']
@@ -1712,7 +1785,7 @@
                 electronConfig: '1s²',
                 state: 'Gas',
                 video: 'videos/helium.mp4',
-                image: 'images/helium.jpg',
+                image: 'images/helium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['0']
@@ -1733,7 +1806,7 @@
                 electronConfig: '[He] 2s¹',
                 state: 'Solid',
                 video: 'videos/lithium.mp4',
-                image: 'images/lithium.jpg',
+                image: 'images/lithium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+1']
@@ -1754,7 +1827,7 @@
                 electronConfig: '[He] 2s²',
                 state: 'Solid',
                 video: 'videos/beryllium.mp4',
-                image: 'images/beryllium.jpg',
+                image: 'images/beryllium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2']
@@ -1775,7 +1848,7 @@
                 electronConfig: '[He] 2s² 2p¹',
                 state: 'Solid',
                 video: 'videos/boron.mp4',
-                image: 'images/boron.jpg',
+                image: 'images/boron.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
@@ -1796,7 +1869,7 @@
                 electronConfig: '[He] 2s² 2p²',
                 state: 'Solid',
                 video: 'videos/carbon.mp4',
-                image: 'images/carbon.jpg',
+                image: 'images/carbon.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['-4', '-3', '-2', '-1', '0', '+1', '+2', '+3', '+4']
@@ -1817,7 +1890,7 @@
                 electronConfig: '[He] 2s² 2p³',
                 state: 'Gas',
                 video: 'videos/nitrogen.mp4',
-                image: 'images/nitrogen.jpg',
+                image: 'images/nitrogen.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['-3', '+1', '+2', '+3', '+4', '+5']
@@ -1838,7 +1911,7 @@
                 electronConfig: '[He] 2s² 2p⁴',
                 state: 'Gas',
                 video: 'videos/oxygen.mp4',
-                image: 'images/oxygen.jpg',
+                image: 'images/oxygen.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['-2', '-1', '+2', '-1/2', '-1/3', '+1']
@@ -1859,7 +1932,7 @@
                 electronConfig: '[He] 2s² 2p⁵',
                 state: 'Gas',
                 video: 'videos/fluorine.mp4',
-                image: 'images/fluorine.jpg',
+                image: 'images/fluorine.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['-1']
@@ -1880,7 +1953,7 @@
                 electronConfig: '[He] 2s² 2p⁶',
                 state: 'Gas',
                 video: 'videos/neon.mp4',
-                image: 'images/neon.jpg',
+                image: 'images/neon.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['0']
@@ -1901,7 +1974,7 @@
                 electronConfig: '[Ne] 3s¹',
                 state: 'Solid',
                 video: 'videos/sodium.mp4',
-                image: 'images/sodium.jpg',
+                image: 'images/sodium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+1']
@@ -1922,7 +1995,7 @@
                 electronConfig: '[Ne] 3s²',
                 state: 'Solid',
                 video: 'videos/magnesium.mp4',
-                image: 'images/magnesium.jpg',
+                image: 'images/magnesium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2']
@@ -1943,7 +2016,7 @@
                 electronConfig: '[Ne] 3s² 3p¹',
                 state: 'Solid',
                 video: 'videos/aluminum.mp4',
-                image: 'images/aluminum.jpg',
+                image: 'images/aluminum.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
@@ -1964,7 +2037,7 @@
                 electronConfig: '[Ne] 3s² 3p²',
                 state: 'Solid',
                 video: 'videos/silicon.mp4',
-                image: 'images/silicon.jpg',
+                image: 'images/silicon.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['-4', '+2', '+4']
@@ -1985,7 +2058,7 @@
                 electronConfig: '[Ne] 3s² 3p³',
                 state: 'Solid',
                 video: 'videos/phosphorus.mp4',
-                image: 'images/phosphorus.jpg',
+                image: 'images/phosphorus.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['-3', '+3', '+5', '+1', '+4']
@@ -2006,7 +2079,7 @@
                 electronConfig: '[Ne] 3s² 3p⁴',
                 state: 'Solid',
                 video: 'videos/sulfur.mp4',
-                image: 'images/sulfur.jpg',
+                image: 'images/sulfur.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['-2', '-1', '+4', '+6', '+1', '+2']
@@ -2027,7 +2100,7 @@
                 electronConfig: '[Ne] 3s² 3p⁵',
                 state: 'Gas',
                 video: 'videos/chlorine.mp4',
-                image: 'images/chlorine.jpg',
+                image: 'images/chlorine.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['-1', '+1', '+3', '+5', '+7', '+4']
@@ -2048,7 +2121,7 @@
                 electronConfig: '[Ne] 3s² 3p⁶',
                 state: 'Gas',
                 video: 'videos/argon.mp4',
-                image: 'images/argon.jpg',
+                image: 'images/argon.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['0']
@@ -2069,7 +2142,7 @@
                 electronConfig: '[Ar] 4s¹',
                 state: 'Solid',
                 video: 'videos/potassium.mp4',
-                image: 'images/potassium.jpg',
+                image: 'images/potassium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+1']
@@ -2090,7 +2163,7 @@
                 electronConfig: '[Ar] 4s²',
                 state: 'Solid',
                 video: 'videos/calcium.mp4',
-                image: 'images/calcium.jpg',
+                image: 'images/calcium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2']
@@ -2111,7 +2184,7 @@
                 electronConfig: '[Ar] 3d¹ 4s²',
                 state: 'Solid',
                 video: 'videos/scandium.mp4',
-                image: 'images/scandium.jpg',
+                image: 'images/scandium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
@@ -2132,7 +2205,7 @@
                 electronConfig: '[Ar] 3d² 4s²',
                 state: 'Solid',
                 video: 'videos/titanium.mp4',
-                image: 'images/titanium.jpg',
+                image: 'images/titanium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+3', '+4']
@@ -2153,7 +2226,7 @@
                 electronConfig: '[Ar] 3d³ 4s²',
                 state: 'Solid',
                 video: 'videos/vanadium.mp4',
-                image: 'images/vanadium.jpg',
+                image: 'images/vanadium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+4', '+5', '+3']
@@ -2174,7 +2247,7 @@
                 electronConfig: '[Ar] 3d⁵ 4s¹',
                 state: 'Solid',
                 video: 'videos/chromium.mp4',
-                image: 'images/chromium.jpg',
+                image: 'images/chromium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+3', '+4', '+6']
@@ -2195,7 +2268,7 @@
                 electronConfig: '[Ar] 3d⁵ 4s²',
                 state: 'Solid',
                 video: 'videos/manganese.mp4',
-                image: 'images/manganese.jpg',
+                image: 'images/manganese.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+3', '+4', '+6', '+7', '+5']
@@ -2216,7 +2289,7 @@
                 electronConfig: '[Ar] 3d⁶ 4s²',
                 state: 'Solid',
                 video: 'videos/iron.mp4',
-                image: 'images/iron.jpg',
+                image: 'images/iron.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+3', '+4', '+5', '+6']
@@ -2237,7 +2310,7 @@
                 electronConfig: '[Ar] 3d⁷ 4s²',
                 state: 'Solid',
                 video: 'videos/cobalt.mp4',
-                image: 'images/cobalt.jpg',
+                image: 'images/cobalt.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+3', '+4']
@@ -2260,7 +2333,7 @@
                 electronConfig: '[Ar] 3d⁸ 4s²',
                 state: 'Solid',
                 video: 'videos/nickel.mp4',
-                image: 'images/nickel.jpg',
+                image: 'images/nickel.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+3', '+4']
@@ -2281,7 +2354,7 @@
                 electronConfig: '[Ar] 3d¹⁰ 4s¹',
                 state: 'Solid',
                 video: 'videos/copper.mp4',
-                image: 'images/copper.jpg',
+                image: 'images/copper.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+1', '+2']
@@ -2302,7 +2375,7 @@
                 electronConfig: '[Ar] 3d¹⁰ 4s²',
                 state: 'Solid',
                 video: 'videos/zinc.mp4',
-                image: 'images/zinc.jpg',
+                image: 'images/zinc.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2']
@@ -2323,7 +2396,7 @@
                 electronConfig: '[Ar] 3d¹⁰ 4s² 4p¹',
                 state: 'Solid',
                 video: 'videos/gallium.mp4',
-                image: 'images/gallium.jpg',
+                image: 'images/gallium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
@@ -2344,7 +2417,7 @@
                 electronConfig: '[Ar] 3d¹⁰ 4s² 4p²',
                 state: 'Solid',
                 video: 'videos/germanium.mp4',
-                image: 'images/germanium.jpg',
+                image: 'images/germanium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+4']
@@ -2365,7 +2438,7 @@
                 electronConfig: '[Ar] 3d¹⁰ 4s² 4p³',
                 state: 'Solid',
                 video: 'videos/arsenic.mp4',
-                image: 'images/arsenic.jpg',
+                image: 'images/arsenic.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['-3', '+3', '+5']
@@ -2386,7 +2459,7 @@
                 electronConfig: '[Ar] 3d¹⁰ 4s² 4p⁴',
                 state: 'Solid',
                 video: 'videos/selenium.mp4',
-                image: 'images/selenium.jpg',
+                image: 'images/selenium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['-2', '+4', '+6']
@@ -2407,7 +2480,7 @@
                 electronConfig: '[Ar] 3d¹⁰ 4s² 4p⁵',
                 state: 'Liquid',
                 video: 'videos/bromine.mp4',
-                image: 'images/bromine.jpg',
+                image: 'images/bromine.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['-1', '+1', '+3', '+5', '+7', '+4']
@@ -2428,7 +2501,7 @@
                 electronConfig: '[Ar] 3d¹⁰ 4s² 4p⁶',
                 state: 'Gas',
                 video: 'videos/krypton.mp4',
-                image: 'images/krypton.jpg',
+                image: 'images/krypton.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['0']
@@ -2449,7 +2522,7 @@
                 electronConfig: '[Kr] 5s¹',
                 state: 'Solid',
                 video: 'videos/rubidium.mp4',
-                image: 'images/rubidium.jpg',
+                image: 'images/rubidium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+1']
@@ -2470,7 +2543,7 @@
                 electronConfig: '[Kr] 5s²',
                 state: 'Solid',
                 video: 'videos/strontium.mp4',
-                image: 'images/strontium.jpg',
+                image: 'images/strontium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2']
@@ -2491,7 +2564,7 @@
                 electronConfig: '[Kr] 4d¹ 5s²',
                 state: 'Solid',
                 video: 'videos/yttrium.mp4',
-                image: 'images/yttrium.jpg',
+                image: 'images/yttrium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
@@ -2512,7 +2585,7 @@
                 electronConfig: '[Kr] 4d² 5s²',
                 state: 'Solid',
                 video: 'videos/zirconium.mp4',
-                image: 'images/zirconium.jpg',
+                image: 'images/zirconium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+4', '+2', '+3']
@@ -2533,7 +2606,7 @@
                 electronConfig: '[Kr] 4d⁴ 5s¹',
                 state: 'Solid',
                 video: 'videos/niobium.mp4',
-                image: 'images/niobium.jpg',
+                image: 'images/niobium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+5', '+3', '+2']
@@ -2554,7 +2627,7 @@
                 electronConfig: '[Kr] 4d⁵ 5s¹',
                 state: 'Solid',
                 video: 'videos/molybdenum.mp4',
-                image: 'images/molybdenum.jpg',
+                image: 'images/molybdenum.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+3', '+4', '+5', '+6']
@@ -2575,7 +2648,7 @@
                 electronConfig: '[Kr] 4d⁵ 5s²',
                 state: 'Solid',
                 video: 'videos/technetium.mp4',
-                image: 'images/technetium.jpg',
+                image: 'images/technetium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+4', '+6', '+7', '+2', '+5']
@@ -2596,7 +2669,7 @@
                 electronConfig: '[Kr] 4d⁷ 5s¹',
                 state: 'Solid',
                 video: 'videos/ruthenium.mp4',
-                image: 'images/ruthenium.jpg',
+                image: 'images/ruthenium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+3', '+4', '+6', '+8']
@@ -2617,7 +2690,7 @@
                 electronConfig: '[Kr] 4d⁸ 5s¹',
                 state: 'Solid',
                 video: 'videos/rhodium.mp4',
-                image: 'images/rhodium.jpg',
+                image: 'images/rhodium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+3', '+4', '+6']
@@ -2638,7 +2711,7 @@
                 electronConfig: '[Kr] 4d¹⁰',
                 state: 'Solid',
                 video: 'videos/palladium.mp4',
-                image: 'images/palladium.jpg',
+                image: 'images/palladium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+4']
@@ -2659,7 +2732,7 @@
                 electronConfig: '[Kr] 4d¹⁰ 5s¹',
                 state: 'Solid',
                 video: 'videos/silver.mp4',
-                image: 'images/silver.jpg',
+                image: 'images/silver.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+1', '+2']
@@ -2680,7 +2753,7 @@
                 electronConfig: '[Kr] 4d¹⁰ 5s²',
                 state: 'Solid',
                 video: 'videos/cadmium.mp4',
-                image: 'images/cadmium.jpg',
+                image: 'images/cadmium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2']
@@ -2701,7 +2774,7 @@
                 electronConfig: '[Kr] 4d¹⁰ 5s² 5p¹',
                 state: 'Solid',
                 video: 'videos/indium.mp4',
-                image: 'images/indium.jpg',
+                image: 'images/indium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3', '+1']
@@ -2722,7 +2795,7 @@
                 electronConfig: '[Kr] 4d¹⁰ 5s² 5p²',
                 state: 'Solid',
                 video: 'videos/tin.mp4',
-                image: 'images/tin.jpg',
+                image: 'images/tin.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+4']
@@ -2743,7 +2816,7 @@
                 electronConfig: '[Kr] 4d¹⁰ 5s² 5p³',
                 state: 'Solid',
                 video: 'videos/antimony.mp4',
-                image: 'images/antimony.jpg',
+                image: 'images/antimony.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['-3', '+3', '+5']
@@ -2764,7 +2837,7 @@
                 electronConfig: '[Kr] 4d¹⁰ 5s² 5p⁴',
                 state: 'Solid',
                 video: 'videos/tellurium.mp4',
-                image: 'images/tellurium.jpg',
+                image: 'images/tellurium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['-2', '+4', '+6', '+2']
@@ -2785,7 +2858,7 @@
                 electronConfig: '[Kr] 4d¹⁰ 5s² 5p⁵',
                 state: 'Solid',
                 video: 'videos/iodine.mp4',
-                image: 'images/iodine.jpg',
+                image: 'images/iodine.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['-1', '+1', '+3', '+5', '+7']
@@ -2806,7 +2879,7 @@
                 electronConfig: '[Kr] 4d¹⁰ 5s² 5p⁶',
                 state: 'Gas',
                 video: 'videos/xenon.mp4',
-                image: 'images/xenon.jpg',
+                image: 'images/xenon.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['0']
@@ -2827,7 +2900,7 @@
                 electronConfig: '[Xe] 6s¹',
                 state: 'Solid',
                 video: 'videos/cesium.mp4',
-                image: 'images/cesium.jpg',
+                image: 'images/cesium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+1']
@@ -2848,7 +2921,7 @@
                 electronConfig: '[Xe] 6s²',
                 state: 'Solid',
                 video: 'videos/barium.mp4',
-                image: 'images/barium.jpg',
+                image: 'images/barium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2']
@@ -2869,7 +2942,7 @@
                 electronConfig: '[Xe] 5d¹ 6s²',
                 state: 'Solid',
                 video: 'videos/lanthanum.mp4',
-                image: 'images/lanthanum.jpg',
+                image: 'images/lanthanum.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
@@ -2890,7 +2963,7 @@
                 electronConfig: '[Xe] 4f¹ 5d¹ 6s²',
                 state: 'Solid',
                 video: 'videos/cerium.mp4',
-                image: 'images/cerium.jpg',
+                image: 'images/cerium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3', '+4']
@@ -2911,7 +2984,7 @@
                 electronConfig: '[Xe] 4f³ 6s²',
                 state: 'Solid',
                 video: 'videos/praseodymium.mp4',
-                image: 'images/praseodymium.jpg',
+                image: 'images/praseodymium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3', '+4']
@@ -2932,7 +3005,7 @@
                 electronConfig: '[Xe] 4f⁴ 6s²',
                 state: 'Solid',
                 video: 'videos/neodymium.mp4',
-                image: 'images/neodymium.jpg',
+                image: 'images/neodymium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
@@ -2953,7 +3026,7 @@
                 electronConfig: '[Xe] 4f⁵ 6s²',
                 state: 'Solid',
                 video: 'videos/promethium.mp4',
-                image: 'images/promethium.jpg',
+                image: 'images/promethium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
@@ -2974,7 +3047,7 @@
                 electronConfig: '[Xe] 4f⁶ 6s²',
                 state: 'Solid',
                 video: 'videos/samarium.mp4',
-                image: 'images/samarium.jpg',
+                image: 'images/samarium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+3']
@@ -2995,7 +3068,7 @@
                 electronConfig: '[Xe] 4f⁷ 6s²',
                 state: 'Solid',
                 video: 'videos/europium.mp4',
-                image: 'images/europium.jpg',
+                image: 'images/europium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+3']
@@ -3016,7 +3089,7 @@
                 electronConfig: '[Xe] 4f⁷ 5d¹ 6s²',
                 state: 'Solid',
                 video: 'videos/gadolinium.mp4',
-                image: 'images/gadolinium.jpg',
+                image: 'images/gadolinium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
@@ -3037,7 +3110,7 @@
                 electronConfig: '[Xe] 4f⁹ 6s²',
                 state: 'Solid',
                 video: 'videos/terbium.mp4',
-                image: 'images/terbium.jpg',
+                image: 'images/terbium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3', '+4']
@@ -3058,7 +3131,7 @@
                 electronConfig: '[Xe] 4f¹⁰ 6s²',
                 state: 'Solid',
                 video: 'videos/dysprosium.mp4',
-                image: 'images/dysprosium.jpg',
+                image: 'images/dysprosium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
@@ -3079,7 +3152,7 @@
                 electronConfig: '[Xe] 4f¹¹ 6s²',
                 state: 'Solid',
                 video: 'videos/holmium.mp4',
-                image: 'images/holmium.jpg',
+                image: 'images/holmium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
@@ -3100,7 +3173,7 @@
                 electronConfig: '[Xe] 4f¹² 6s²',
                 state: 'Solid',
                 video: 'videos/erbium.mp4',
-                image: 'images/erbium.jpg',
+                image: 'images/erbium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
@@ -3121,7 +3194,7 @@
                 electronConfig: '[Xe] 4f¹³ 6s²',
                 state: 'Solid',
                 video: 'videos/thulium.mp4',
-                image: 'images/thulium.jpg',
+                image: 'images/thulium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3', '+2']
@@ -3142,7 +3215,7 @@
                 electronConfig: '[Xe] 4f¹⁴ 6s²',
                 state: 'Solid',
                 video: 'videos/ytterbium.mp4',
-                image: 'images/ytterbium.jpg',
+                image: 'images/ytterbium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+3']
@@ -3163,7 +3236,7 @@
                 electronConfig: '[Xe] 4f¹⁴ 5d¹ 6s²',
                 state: 'Solid',
                 video: 'videos/lutetium.mp4',
-                image: 'images/lutetium.jpg',
+                image: 'images/lutetium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
@@ -3184,7 +3257,7 @@
                 electronConfig: '[Xe] 4f¹⁴ 5d² 6s²',
                 state: 'Solid',
                 video: 'videos/hafnium.mp4',
-                image: 'images/hafnium.jpg',
+                image: 'images/hafnium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+4']
@@ -3205,7 +3278,7 @@
                 electronConfig: '[Xe] 4f¹⁴ 5d³ 6s²',
                 state: 'Solid',
                 video: 'videos/tantalum.mp4',
-                image: 'images/tantalum.jpg',
+                image: 'images/tantalum.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+5']
@@ -3226,7 +3299,7 @@
                 electronConfig: '[Xe] 4f¹⁴ 5d⁴ 6s²',
                 state: 'Solid',
                 video: 'videos/tungsten.mp4',
-                image: 'images/tungsten.jpg',
+                image: 'images/tungsten.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+3', '+4', '+5', '+6']
@@ -3247,7 +3320,7 @@
                 electronConfig: '[Xe] 4f¹⁴ 5d⁵ 6s²',
                 state: 'Solid',
                 video: 'videos/rhenium.mp4',
-                image: 'images/rhenium.jpg',
+                image: 'images/rhenium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+4', '+6', '+7', '+3', '+5']
@@ -3268,7 +3341,7 @@
                 electronConfig: '[Xe] 4f¹⁴ 5d⁶ 6s²',
                 state: 'Solid',
                 video: 'videos/osmium.mp4',
-                image: 'images/osmium.jpg',
+                image: 'images/osmium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+3', '+4', '+6', '+8']
@@ -3289,7 +3362,7 @@
                 electronConfig: '[Xe] 4f¹⁴ 5d⁷ 6s²',
                 state: 'Solid',
                 video: 'videos/iridium.mp4',
-                image: 'images/iridium.jpg',
+                image: 'images/iridium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+3', '+4', '+6']
@@ -3310,7 +3383,7 @@
                 electronConfig: '[Xe] 4f¹⁴ 5d⁹ 6s¹',
                 state: 'Solid',
                 video: 'videos/platinum.mp4',
-                image: 'images/platinum.jpg',
+                image: 'images/platinum.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+4', '+6']
@@ -3331,7 +3404,7 @@
                 electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s¹',
                 state: 'Solid',
                 video: 'videos/gold.mp4',
-                image: 'images/gold.jpg',
+                image: 'images/gold.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+1', '+3', '+5']
@@ -3352,7 +3425,7 @@
                 electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s²',
                 state: 'Liquid',
                 video: 'videos/mercury.mp4',
-                image: 'images/mercury.jpg',
+                image: 'images/mercury.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+1', '+2']
@@ -3373,7 +3446,7 @@
                 electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p¹',
                 state: 'Solid',
                 video: 'videos/thallium.mp4',
-                image: 'images/thallium.jpg',
+                image: 'images/thallium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+1', '+3']
@@ -3394,7 +3467,7 @@
                 electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p²',
                 state: 'Solid',
                 video: 'videos/lead.mp4',
-                image: 'images/lead.jpg',
+                image: 'images/lead.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+4']
@@ -3415,7 +3488,7 @@
                 electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p³',
                 state: 'Solid',
                 video: 'videos/bismuth.mp4',
-                image: 'images/bismuth.jpg',
+                image: 'images/bismuth.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3', '+5']
@@ -3436,7 +3509,7 @@
                 electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁴',
                 state: 'Solid',
                 video: 'videos/polonium.mp4',
-                image: 'images/polonium.jpg',
+                image: 'images/polonium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+4']
@@ -3457,7 +3530,7 @@
                 electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁵',
                 state: 'Solid',
                 video: 'videos/astatine.mp4',
-                image: 'images/astatine.jpg',
+                image: 'images/astatine.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['-1', '+1', '+3', '+5', '+7']
@@ -3478,7 +3551,7 @@
                 electronConfig: '[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁶',
                 state: 'Gas',
                 video: 'videos/radon.mp4',
-                image: 'images/radon.jpg',
+                image: 'images/radon.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['0']
@@ -3499,7 +3572,7 @@
                 electronConfig: '[Rn] 7s¹',
                 state: 'Solid',
                 video: 'videos/francium.mp4',
-                image: 'images/francium.jpg',
+                image: 'images/francium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+1']
@@ -3520,7 +3593,7 @@
                 electronConfig: '[Rn] 7s²',
                 state: 'Solid',
                 video: 'videos/radium.mp4',
-                image: 'images/radium.jpg',
+                image: 'images/radium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2']
@@ -3541,7 +3614,7 @@
                 electronConfig: '[Rn] 6d¹ 7s²',
                 state: 'Solid',
                 video: 'videos/actinium.mp4',
-                image: 'images/actinium.jpg',
+                image: 'images/actinium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
@@ -3562,7 +3635,7 @@
                 electronConfig: '[Rn] 6d² 7s²',
                 state: 'Solid',
                 video: 'videos/thorium.mp4',
-                image: 'images/thorium.jpg',
+                image: 'images/thorium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+4']
@@ -3583,7 +3656,7 @@
                 electronConfig: '[Rn] 5f² 6d¹ 7s²',
                 state: 'Solid',
                 video: 'videos/protactinium.mp4',
-                image: 'images/protactinium.jpg',
+                image: 'images/protactinium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+4', '+5']
@@ -3604,7 +3677,7 @@
                 electronConfig: '[Rn] 5f³ 6d¹ 7s²',
                 state: 'Solid',
                 video: 'videos/uranium.mp4',
-                image: 'images/uranium.jpg',
+                image: 'images/uranium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+4', '+6', '+3', '+5']
@@ -3625,7 +3698,7 @@
                 electronConfig: '[Rn] 5f⁴ 6d¹ 7s²',
                 state: 'Solid',
                 video: 'videos/neptunium.mp4',
-                image: 'images/neptunium.jpg',
+                image: 'images/neptunium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3', '+4', '+5', '+6']
@@ -3646,7 +3719,7 @@
                 electronConfig: '[Rn] 5f⁶ 7s²',
                 state: 'Solid',
                 video: 'videos/plutonium.mp4',
-                image: 'images/plutonium.jpg',
+                image: 'images/plutonium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3', '+4', '+5', '+6']
@@ -3667,7 +3740,7 @@
                 electronConfig: '[Rn] 5f⁷ 7s²',
                 state: 'Solid',
                 video: 'videos/americium.mp4',
-                image: 'images/americium.jpg',
+                image: 'images/americium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3', '+4', '+5', '+6']
@@ -3688,7 +3761,7 @@
                 electronConfig: '[Rn] 5f⁷ 6d¹ 7s²',
                 state: 'Solid',
                 video: 'videos/curium.mp4',
-                image: 'images/curium.jpg',
+                image: 'images/curium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3', '+4']
@@ -3709,7 +3782,7 @@
                 electronConfig: '[Rn] 5f⁹ 7s²',
                 state: 'Solid',
                 video: 'videos/berkelium.mp4',
-                image: 'images/berkelium.jpg',
+                image: 'images/berkelium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3', '+4']
@@ -3730,7 +3803,7 @@
                 electronConfig: '[Rn] 5f¹⁰ 7s²',
                 state: 'Solid',
                 video: 'videos/californium.mp4',
-                image: 'images/californium.jpg',
+                image: 'images/californium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
@@ -3751,7 +3824,7 @@
                 electronConfig: '[Rn] 5f¹¹ 7s²',
                 state: 'Solid',
                 video: 'videos/einsteinium.mp4',
-                image: 'images/einsteinium.jpg',
+                image: 'images/einsteinium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
@@ -3772,7 +3845,7 @@
                 electronConfig: '[Rn] 5f¹² 7s²',
                 state: 'Solid',
                 video: 'videos/fermium.mp4',
-                image: 'images/fermium.jpg',
+                image: 'images/fermium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
@@ -3793,7 +3866,7 @@
                 electronConfig: '[Rn] 5f¹³ 7s²',
                 state: 'Solid',
                 video: 'videos/mendelevium.mp4',
-                image: 'images/mendelevium.jpg',
+                image: 'images/mendelevium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3', '+2']
@@ -3814,7 +3887,7 @@
                 electronConfig: '[Rn] 5f¹⁴ 7s²',
                 state: 'Solid',
                 video: 'videos/nobelium.mp4',
-                image: 'images/nobelium.jpg',
+                image: 'images/nobelium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+2', '+3']
@@ -3835,7 +3908,7 @@
                 electronConfig: '[Rn] 5f¹⁴ 6d¹ 7s²',
                 state: 'Solid',
                 video: 'videos/lawrencium.mp4',
-                image: 'images/lawrencium.jpg',
+                image: 'images/lawrencium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+3']
@@ -3856,7 +3929,7 @@
                 electronConfig: '[Rn] 5f¹⁴ 6d² 7s²',
                 state: 'Solid',
                 video: 'videos/rutherfordium.mp4',
-                image: 'images/rutherfordium.jpg',
+                image: 'images/rutherfordium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+4'] // File Word không liệt kê, sử dụng giá trị phổ biến
@@ -3877,7 +3950,7 @@
                 electronConfig: '[Rn] 5f¹⁴ 6d³ 7s²',
                 state: 'Solid',
                 video: 'videos/dubnium.mp4',
-                image: 'images/dubnium.jpg',
+                image: 'images/dubnium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+5'] // File Word không liệt kê, sử dụng giá trị phổ biến
@@ -3898,7 +3971,7 @@
                 electronConfig: '[Rn] 5f¹⁴ 6d⁴ 7s²',
                 state: 'Solid',
                 video: 'videos/seaborgium.mp4',
-                image: 'images/seaborgium.jpg',
+                image: 'images/seaborgium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+6'] // File Word không liệt kê, sử dụng giá trị phổ biến
@@ -3919,7 +3992,7 @@
                 electronConfig: '[Rn] 5f¹⁴ 6d⁵ 7s²',
                 state: 'Solid',
                 video: 'videos/bohrium.mp4',
-                image: 'images/bohrium.jpg',
+                image: 'images/bohrium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+7'] // File Word không liệt kê, sử dụng giá trị phổ biến
@@ -3940,7 +4013,7 @@
                 electronConfig: '[Rn] 5f¹⁴ 6d⁶ 7s²',
                 state: 'Solid',
                 video: 'videos/hassium.mp4',
-                image: 'images/hassium.jpg',
+                image: 'images/hassium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['+8'] // File Word không liệt kê, sử dụng giá trị phổ biến
@@ -3961,7 +4034,7 @@
                 electronConfig: '[Rn] 5f¹⁴ 6d⁷ 7s²',
                 state: 'Solid',
                 video: 'videos/meitnerium.mp4',
-                image: 'images/meitnerium.jpg',
+                image: 'images/meitnerium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: [] // File Word không liệt kê, chưa có dữ liệu xác nhận
@@ -3982,7 +4055,7 @@
                 electronConfig: '[Rn] 5f¹⁴ 6d⁸ 7s²',
                 state: 'Solid',
                 video: 'videos/darmstadtium.mp4',
-                image: 'images/darmstadtium.jpg',
+                image: 'images/darmstadtium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: [] // File Word không liệt kê, chưa có dữ liệu xác nhận
@@ -4003,7 +4076,7 @@
                 electronConfig: '[Rn] 5f¹⁴ 6d⁹ 7s²',
                 state: 'Solid',
                 video: 'videos/roentgenium.mp4',
-                image: 'images/roentgenium.jpg',
+                image: 'images/roentgenium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: [] // File Word không liệt kê, chưa có dữ liệu xác nhận
@@ -4024,7 +4097,7 @@
                 electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s²',
                 state: 'Solid',
                 video: 'videos/copernicium.mp4',
-                image: 'images/copernicium.jpg',
+                image: 'images/copernicium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: [] // File Word không liệt kê, chưa có dữ liệu xác nhận
@@ -4045,7 +4118,7 @@
                 electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p¹',
                 state: 'Solid',
                 video: 'videos/nihonium.mp4',
-                image: 'images/nihonium.jpg',
+                image: 'images/nihonium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: [] // File Word không liệt kê, chưa có dữ liệu xác nhận
@@ -4066,7 +4139,7 @@
                 electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p²',
                 state: 'Solid',
                 video: 'videos/flerovium.mp4',
-                image: 'images/flerovium.jpg',
+                image: 'images/flerovium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: [] // File Word không liệt kê, chưa có dữ liệu xác nhận
@@ -4087,7 +4160,7 @@
                 electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p³',
                 state: 'Solid',
                 video: 'videos/moscovium.mp4',
-                image: 'images/moscovium.jpg',
+                image: 'images/moscovium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: [] // File Word không liệt kê, chưa có dữ liệu xác nhận
@@ -4108,7 +4181,7 @@
                 electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁴',
                 state: 'Solid',
                 video: 'videos/livermorium.mp4',
-                image: 'images/livermorium.jpg',
+                image: 'images/livermorium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: [] // File Word không liệt kê, chưa có dữ liệu xác nhận
@@ -4129,7 +4202,7 @@
                 electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁵',
                 state: 'Solid',
                 video: 'videos/tennessine.mp4',
-                image: 'images/tennessine.jpg',
+                image: 'images/tennessine.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: [] // File Word không liệt kê, chưa có dữ liệu xác nhận
@@ -4150,7 +4223,7 @@
                 electronConfig: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁶',
                 state: 'Gas',
                 video: 'videos/oganesson.mp4',
-                image: 'images/oganesson.jpg',
+                image: 'images/oganesson.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['0'] // File Word không liệt kê, giả định là khí hiếm
