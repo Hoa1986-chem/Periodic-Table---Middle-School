@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Bảng Tuần Hoàn Hoá Học - THCS</title>
+    <title>Bảng Tuần Hoàn Hoá Học</title>
     <link rel="icon" href="images/faviconpng.ico" type="image/x-icon"> <!-- Đường dẫn tới favicon của bạn -->
     <script async src="https://tally.so/widgets/embed.js"></script>
     <style>
@@ -1595,14 +1595,7 @@ body[data-page="chapter8"] .floating-btn:hover {
                         <span class="property-label">Khối lượng:</span>
                         <span id="elementMass" class="property-value"></span>
                     </div>
-                    <div class="property-row">
-                        <span class="property-label">Độ âm điện:</span>
-                        <span id="elementElectronegativity" class="property-value"></span>
-                    </div>
-                    <div class="property-row">
-                        <span class="property-label">Cấu hình electron:</span>
-                        <span id="elementElectronConfig" class="property-value"></span>
-                    </div>
+                    
 
                     <div id="mediaContainer">
                         <video id="elementVideo" controls class="media-element"></video>
@@ -4365,9 +4358,7 @@ body[data-page="chapter8"] .floating-btn:hover {
             document.getElementById('elementSymbol').textContent = element.symbol;
             document.getElementById('elementAtomicNumber').textContent = element.atomicNumber;
             document.getElementById('elementMass').textContent = element.mass;
-            document.getElementById('elementElectronegativity').textContent =
-                element.period === 7 ? '' : (element.electronegativity || 'N/A');
-            document.getElementById('elementElectronConfig').textContent = element.electronConfig || 'N/A';
+            
             document.getElementById('elementPronunciation').textContent = element.pronunciation || 'N/A';
 
             // Xử lý media
@@ -4499,10 +4490,8 @@ body[data-page="chapter8"] .floating-btn:hover {
             'nonmetal': {
                 name: 'PHI KIM',
                 info: [
-                    'Nguyên tử có 5, 6, 7 electron ngoài cùng là phi kim.',
-                    'Nguyên tử có 4 electron có thể là kim loại hoặc phi kim.',
-                    'Tính phi kim là tính chất của 1 nguyên tố mà nguyên tử dễ nhận electron.',
-                    'Trong chu kì, tính phi kim tăng; trong nhóm, tính phi kim giảm.'
+                    'Một số phi kim quen thuộc trong đời sống gồm:<strong> Oxy</strong>, rất quan trọng cho sự sống, được tạo ra trong quang hợp và tham gia vào quá trình hô hấp; <strong>Clo</strong>, thường được dùng để khử trùng nước sinh hoạt.',
+                    'Trong 118 nguyên tố, có chưa đến<strong> 20 phi kim</strong>, tồn tại ở thể rắn, lỏng hoặc khí. Chúng chủ yếu thuộc nhóm <strong> VIIA, VIA, VA </strong>, một số ở<strong> IVA, IIIA</strong> và nguyên tố <strong>H</strong> ở nhóm <strong>IA</strong>.',
                 ]
             },
             'halogen': {
@@ -4515,7 +4504,8 @@ body[data-page="chapter8"] .floating-btn:hover {
             'noble-gas': {
                 name: 'KHÍ HIẾM',
                 info: [
-                    'Nguyên tử có 8 electron ở lớp ngoài cùng là khí hiếm (trừ Helium có 2 electron lớp ngoài cùng).',
+                    'Trong 118 nguyên tố, có <strong>7 nguyên tố khí hiếm</strong> với <strong>lớp electron ngoài cùng bền vững</strong>, khó bị biến đổi hóa học. Chúng được ứng dụng rộng rãi: <strong>He</strong> dùng cho khinh khí cầu, <strong>Ne</strong> dùng trong đèn LED,...',
+                    'Trong bảng tuần hoàn, nguyên tố khí hiếm nằm ở<strong> nhóm VIIIA</strong>.',
                 ]
             },
             'lanthanoid': {
@@ -4530,10 +4520,8 @@ body[data-page="chapter8"] .floating-btn:hover {
             'metal': {
                 name: 'KIM LOẠI',
                 info: [
-                    'Nguyên tử có 1, 2, 3 electron ngoài cùng là kim loại (trừ H, He, B).',
-                    'Nguyên tử có 4 electron có thể là kim loại hoặc phi kim.',
-                    'Tính kim loại là tính chất của 1 nguyên tố mà nguyên tử dễ nhường electron.',
-                    'Trong chu kì, tính kim loại giảm; trong nhóm, tính kim loại tăng.'
+                    'Hầu hết các nguyên tố thuộc <strong>nhóm IA, nhóm IIA, nhóm IIIA</strong> và một số nguyên tố ở các<strong> nhóm IA, VA, VIA</strong>.',
+                    'Các nguyên tố thuộc nhóm<strong> IB đến nhóm VIIIB</strong>, các nguyên tố <strong>lanthanide</strong> và các nguyên tố<strong> actinide</strong> được xếp riêng thành hai hàng ở cuối bảng.',
                 ]
             },
             'group-a-metal': {
