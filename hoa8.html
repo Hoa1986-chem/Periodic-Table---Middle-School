@@ -110,13 +110,17 @@
             .symbol {
                 font-size: 12px;
             }
+
             .quiz-container {
-                padding: 5px; /* Giảm padding trên màn hình nhỏ */
-                max-width: 100%; /* Chiếm toàn bộ chiều rộng trên mobile */
+                padding: 5px;
+                /* Giảm padding trên màn hình nhỏ */
+                max-width: 100%;
+                /* Chiếm toàn bộ chiều rộng trên mobile */
             }
-        
+
             .quiz-container iframe {
-                height: 500px; /* Giảm chiều cao để phù hợp với màn hình nhỏ */
+                height: 500px;
+                /* Giảm chiều cao để phù hợp với màn hình nhỏ */
             }
         }
 
@@ -146,7 +150,7 @@
             margin-top: 2px;
         }
 
-        
+
         .color-custom {
             background: linear-gradient(90deg, #FFD700, #FF8C00);
         }
@@ -160,7 +164,7 @@
         }
 
         .noble-gas {
-            background-color: #FFD700	 !important;
+            background-color: #FFD700 !important;
         }
 
         /* Căn giữa các nút và phần tử */
@@ -636,7 +640,7 @@
 
         /* Thêm vào phần màu sắc */
         .metal {
-            background-color: #afcfff	;
+            background-color: #afcfff;
         }
 
         .group-a-metal {
@@ -733,17 +737,21 @@
             .group-title {
                 left: 3%;
             }
+
             .quiz-container {
-                padding: 0; /* Loại bỏ padding hoàn toàn trên điện thoại nhỏ */
+                padding: 0;
+                /* Loại bỏ padding hoàn toàn trên điện thoại nhỏ */
             }
-        
+
             .quiz-container iframe {
-                height: 400px; /* Giảm thêm chiều cao cho màn hình rất nhỏ */
+                height: 400px;
+                /* Giảm thêm chiều cao cho màn hình rất nhỏ */
             }
-        
+
             /* Đảm bảo nội dung không bị cắt */
             .quiz-mode body {
-                padding-bottom: 20px; /* Thêm padding dưới để tránh nội dung bị che bởi thanh điều hướng mobile */
+                padding-bottom: 20px;
+                /* Thêm padding dưới để tránh nội dung bị che bởi thanh điều hướng mobile */
             }
         }
 
@@ -1332,81 +1340,88 @@
         /* Đảm bảo Quizizz hiển thị đầy đủ */
         .quiz-container iframe {
             width: 100%;
-            height: 635px; /* Chiều cao mặc định cho màn hình lớn */
+            height: 635px;
+            /* Chiều cao mặc định cho màn hình lớn */
             border: none;
-            max-width: 100%; /* Đảm bảo không vượt quá container cha */
-            display: block; /* Loại bỏ khoảng trắng thừa */
+            max-width: 100%;
+            /* Đảm bảo không vượt quá container cha */
+            display: block;
+            /* Loại bỏ khoảng trắng thừa */
         }
+
         .quiz-mode body {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0; /* Loại bỏ padding mặc định của body */
+            padding: 0;
+            /* Loại bỏ padding mặc định của body */
             margin: 0;
-            min-height: 100vh; /* Đảm bảo chiếm toàn bộ chiều cao màn hình */
+            min-height: 100vh;
+            /* Đảm bảo chiếm toàn bộ chiều cao màn hình */
         }
+
         /* Nút chuyển trang nổi */
-.floating-btn {
-    position: fixed;
-    right: 30px;
-    bottom: 30px;
-    background: #4CAF50;
-    color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    text-decoration: none;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1000;
-    font-size: 14px;
-    line-height: 1.2;
-    padding: 5px;
-    cursor: pointer;
-    border: 2px solid white;
-}
+        .floating-btn {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            background: #4CAF50;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            font-size: 14px;
+            line-height: 1.2;
+            padding: 5px;
+            cursor: pointer;
+            border: 2px solid white;
+        }
 
-.floating-btn:hover {
-    background: #45a049;
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-}
+        .floating-btn:hover {
+            background: #45a049;
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
 
-/* Cho trang hoa8.html */
-body[data-page="chapter8"] .floating-btn {
-    background: #2196F3;
-}
+        /* Cho trang hoa8.html */
+        body[data-page="chapter8"] .floating-btn {
+            background: #2196F3;
+        }
 
-body[data-page="chapter8"] .floating-btn:hover {
-    background: #1976D2;
-}
+        body[data-page="chapter8"] .floating-btn:hover {
+            background: #1976D2;
+        }
 
-/* Ẩn text khi màn hình nhỏ */
-@media (max-width: 480px) {
-    .floating-btn span {
-        display: none;
-    }
-    
-    .floating-btn::after {
-        content: "➔";
-        font-size: 20px;
-    }
-    
-    body[data-page="chapter8"] .floating-btn::after {
-        content: "←";
-    }
-}
+        /* Ẩn text khi màn hình nhỏ */
+        @media (max-width: 480px) {
+            .floating-btn span {
+                display: none;
+            }
+
+            .floating-btn::after {
+                content: "➔";
+                font-size: 20px;
+            }
+
+            body[data-page="chapter8"] .floating-btn::after {
+                content: "←";
+            }
+        }
     </style>
 </head>
 
 <body>
     <a href="index.html" class="page-switcher floating-btn" data-page="chapter8">
         <span>Hoá học THPT</span>
-      </a>
+    </a>
     <audio id="correctSound" src="sounds/correct.mp3"></audio>
     <audio id="wrongSound" src="sounds/wrong.mp3"></audio>
     <h2 style="text-align: center;padding: 0;">BẢNG TUẦN HOÀN CÁC NGUYÊN TỐ HÓA HỌC <br>Theo chương trình giáo dục phổ
@@ -1423,8 +1438,8 @@ body[data-page="chapter8"] .floating-btn:hover {
 
     <!-- Thêm phần chuyển đổi chế độ -->
     <div class="mode-switcher">
-        <button class="active-mode" onclick="showPeriodicTable()">Bảng Tuần Hoàn</button>
-        <button onclick="showGameMode()">Game tìm nguyên tố</button>
+        <button id="btnTable" class="active-mode" onclick="showPeriodicTable()">Bảng Tuần Hoàn</button>
+        <button id="btnGame" onclick="showGameMode()">Game tìm nguyên tố</button>
     </div>
 
     <div class="score-container">
@@ -1594,7 +1609,7 @@ body[data-page="chapter8"] .floating-btn:hover {
                         <span class="property-label">Khối lượng:</span>
                         <span id="elementMass" class="property-value"></span>
                     </div>
-                    
+
 
                     <div id="mediaContainer">
                         <video id="elementVideo" controls class="media-element"></video>
@@ -1696,8 +1711,8 @@ body[data-page="chapter8"] .floating-btn:hover {
                 boilingPoint: -268.93,
                 electronConfig: '1s²',
                 state: 'Gas',
-                    video: 'https://hoahoangchemistry.edu.vn/wp-content/uploads/2025/05/helium.mp4',
-                    image: 'https://hoahoangchemistry.edu.vn/wp-content/uploads/2025/05/helium.webp',
+                video: 'https://hoahoangchemistry.edu.vn/wp-content/uploads/2025/05/helium.mp4',
+                image: 'https://hoahoangchemistry.edu.vn/wp-content/uploads/2025/05/helium.webp',
                 guessed: false,
                 revealed: false,
                 oxidationStates: ['0']
@@ -1750,7 +1765,7 @@ body[data-page="chapter8"] .floating-btn:hover {
                 pronunciation: 'BOH-ron',
                 atomicNumber: 5,
                 mass: 10.81,
-                category: 'nonmetal' ,
+                category: 'nonmetal',
                 group: 13,
                 period: 2,
                 block: 'p-block',
@@ -1939,7 +1954,7 @@ body[data-page="chapter8"] .floating-btn:hover {
                 pronunciation: 'SIL-i-kən',
                 atomicNumber: 14,
                 mass: 28.085,
-                category: 'nonmetal' ,
+                category: 'nonmetal',
                 group: 14,
                 period: 3,
                 block: 'p-block',
@@ -2319,7 +2334,7 @@ body[data-page="chapter8"] .floating-btn:hover {
                 pronunciation: 'jər-MAY-nee-əm',
                 atomicNumber: 32,
                 mass: 72.630,
-                category: 'nonmetal' ,
+                category: 'nonmetal',
                 group: 14,
                 period: 4,
                 block: 'p-block',
@@ -2340,7 +2355,7 @@ body[data-page="chapter8"] .floating-btn:hover {
                 pronunciation: 'AR-sə-nik',
                 atomicNumber: 33,
                 mass: 74.922,
-                category: 'nonmetal' ,
+                category: 'nonmetal',
                 group: 15,
                 period: 4,
                 block: 'p-block',
@@ -2718,7 +2733,7 @@ body[data-page="chapter8"] .floating-btn:hover {
                 pronunciation: 'AN-tə-moh-nee',
                 atomicNumber: 51,
                 mass: 121.760,
-                category: 'nonmetal' ,
+                category: 'nonmetal',
                 group: 15,
                 period: 5,
                 block: 'p-block',
@@ -2739,7 +2754,7 @@ body[data-page="chapter8"] .floating-btn:hover {
                 pronunciation: 'tə-LOOR-ee-əm',
                 atomicNumber: 52,
                 mass: 127.60,
-                category: 'nonmetal' ,
+                category: 'nonmetal',
                 group: 16,
                 period: 5,
                 block: 'p-block',
@@ -3411,7 +3426,7 @@ body[data-page="chapter8"] .floating-btn:hover {
                 pronunciation: 'pə-LOH-nee-əm',
                 atomicNumber: 84,
                 mass: 209,
-                category: 'nonmetal' ,
+                category: 'nonmetal',
                 group: 16,
                 period: 6,
                 block: 'p-block',
@@ -4357,7 +4372,7 @@ body[data-page="chapter8"] .floating-btn:hover {
             document.getElementById('elementSymbol').textContent = element.symbol;
             document.getElementById('elementAtomicNumber').textContent = element.atomicNumber;
             document.getElementById('elementMass').textContent = element.mass;
-            
+
             document.getElementById('elementPronunciation').textContent = element.pronunciation || 'N/A';
 
             // Xử lý media
@@ -4485,13 +4500,13 @@ body[data-page="chapter8"] .floating-btn:hover {
                     'Electron hóa trị nằm ở phân lớp 3d và 4s'
                 ]
             },
-            
+
             'nonmetal': {
                 name: 'PHI KIM',
                 info: [
                     'Một số phi kim rất quen thuộc trong đời sống của chúng ta như: </br>Oxygen là phi kim không thể thiếu với sự sống của hầu hết sinh vật, được tạo ra trong quá trình quang hợp và được sử dụng trong quá trình hô hấp; </br>Chlorine có thể được sử dụng để khử trùng nước sinh hoạt.',
                     'Chlorine có thể được sử dụng để khử trùng nước sinh hoạt. Trong số 118 nguyên tố hóa học đã biết, có chưa đến 20 nguyên tố là phi kim. Ở điều kiện thường, chúng có thể ở thể rắn, thể lỏng hay thể khí. Chúng gồm: </br>Hầu hết các nguyên tố thuộc nhóm VIIA, VIA, VA; </br> Một số nguyên tố thuộc nhóm IVA, IIIA.\n Nguyên tố H ở nhóm IA',
-                    ]
+                ]
             },
             'halogen': {
                 name: 'HALOGEN',
@@ -4519,7 +4534,7 @@ body[data-page="chapter8"] .floating-btn:hover {
             'metal': {
                 name: 'KIM LOẠI',
                 info: [
-                'Trong số 118 nguyên tố hóa học đã biết có hơn 90 nguyên tố kim loại. Chúng gồm:',
+                    'Trong số 118 nguyên tố hóa học đã biết có hơn 90 nguyên tố kim loại. Chúng gồm:',
                     'Hầu hết các nguyên tố thuộc <strong>nhóm IA, nhóm IIA, nhóm IIIA</strong> và một số nguyên tố ở các<strong> nhóm IA, VA, VIA</strong>.',
                     'Các nguyên tố thuộc nhóm<strong> IB đến nhóm VIIIB</strong>, các nguyên tố <strong>lanthanide</strong> và các nguyên tố<strong> actinide</strong> được xếp riêng thành hai hàng ở cuối bảng.',
                 ]
@@ -4659,24 +4674,49 @@ body[data-page="chapter8"] .floating-btn:hover {
         // Hàm chuyển đổi chế độ
         function showPeriodicTable() {
             document.body.classList.remove('game-mode', 'quiz-mode');
-            document.getElementById('gamePanel').style.display = 'none';
-            document.querySelector('.vertical-controls').style.display = 'flex';
-            document.querySelector('.controls').style.display = 'block';
-            document.querySelector('.info-section').style.display = 'block';
+
+            const gamePanel = document.getElementById('gamePanel');
+            if (gamePanel) gamePanel.style.display = 'none';
+
+            const verticalControls = document.querySelector('.vertical-controls');
+            if (verticalControls) verticalControls.style.display = 'flex';
+
+            const controls = document.querySelector('.controls');
+            if (controls) controls.style.display = 'block';
+
+            const infoSection = document.querySelector('.info-section');
+            if (infoSection) infoSection.style.display = 'block';
+
             document.querySelectorAll('.mode-switcher button').forEach(btn => btn.classList.remove('active-mode'));
-            document.querySelector('.mode-switcher button:first-child').classList.add('active-mode');
+
+            const btnTable = document.getElementById('btnTable');
+            if (btnTable) btnTable.classList.add('active-mode');
         }
 
         function showGameMode() {
             document.body.classList.add('game-mode');
             document.body.classList.remove('quiz-mode');
-            document.getElementById('gamePanel').style.display = 'block';
-            document.querySelector('.vertical-controls').style.display = 'none';
-            document.querySelector('.controls').style.display = 'none';
-            document.querySelector('.info-section').style.display = 'none';
+
+            const gamePanel = document.getElementById('gamePanel');
+            if (gamePanel) gamePanel.style.display = 'block';
+
+            const verticalControls = document.querySelector('.vertical-controls');
+            if (verticalControls) verticalControls.style.display = 'none';
+
+            const controls = document.querySelector('.controls');
+            if (controls) controls.style.display = 'none';
+
+            const infoSection = document.querySelector('.info-section');
+            if (infoSection) infoSection.style.display = 'none';
+
+            // Bỏ class active ở tất cả
             document.querySelectorAll('.mode-switcher button').forEach(btn => btn.classList.remove('active-mode'));
-            document.querySelector('.mode-switcher button:nth-child(2)').classList.add('active-mode');
+
+            // Đánh dấu active cho nút game
+            const btnGame = document.getElementById('btnGame');
+            if (btnGame) btnGame.classList.add('active-mode');
         }
+
 
         function showQuizMode() {
             document.body.classList.remove('game-mode');
