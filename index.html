@@ -35,6 +35,21 @@
             /* Thêm vào để ô lớn định vị đúng */
         }
 
+        .s-block {
+            background-color: rgb(78, 218, 78) !important;
+        }
+
+        .p-block {
+            background-color: pink !important;
+        }
+
+        .d-block {
+            background-color: yellow !important;
+        }
+
+        .f-block {
+            background-color: orange !important;
+        }
 
 
         .element {
@@ -152,7 +167,7 @@
 
         /* Màu sắc các nhóm */
         .alkali-metal {
-            background-color: #FF6666 !important;
+            background-color: #FF6666;
         }
 
         .color-custom {
@@ -160,39 +175,39 @@
         }
 
         .alkaline-earth {
-            background-color: #FFDEAD !important;
+            background-color: #FFDEAD;
         }
 
         .transition-metal {
-            background-color: #FFB6C1 !important;
+            background-color: #FFB6C1;
         }
 
         .post-transition {
-            background-color: #D3D3D3 !important;
+            background-color: #D3D3D3;
         }
 
         .metalloid {
-            background-color: #98FB98 !important;
+            background-color: #98FB98;
         }
 
         .nonmetal {
-            background-color: #87CEEB !important;
+            background-color: #87CEEB;
         }
 
         .halogen {
-            background-color: #87CEEB !important;
+            background-color: #87CEEB;
         }
 
         .noble-gas {
-            background-color: #DDA0DD !important;
+            background-color: #DDA0DD;
         }
 
         .lanthanoid {
-            background-color: #FFA07A !important;
+            background-color: #FFA07A;
         }
 
         .actinoid {
-            background-color: #FFD700 !important;
+            background-color: #FFD700;
         }
 
         /* Căn giữa các nút và phần tử */
@@ -213,7 +228,7 @@
             border-radius: 25px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
-            background: #f0f0f0;
+            background-color: white;
         }
 
         .highlight:not(.alkali-metal):not(.alkaline-earth):not(.transition-metal):not(.post-transition):not(.metalloid):not(.nonmetal):not(.halogen):not(.noble-gas):not(.lanthanoid):not(.actinoid) {
@@ -666,13 +681,8 @@
             opacity: 1;
         }
 
-        /* Thêm vào phần màu sắc */
-        .metal {
-            background-color: #FFB6C1;
-        }
-
         .group-a-metal {
-            background-color: #D3D3D3 !important;
+            background-color: #D3D3D3;
         }
 
 
@@ -1231,11 +1241,6 @@
             }
         }
 
-        /* Thêm style cho đồng vị bền */
-        .stable-isotope {
-            background-color: #48C9B0 !important;
-        }
-
         /* Cải thiện bố cục gamePanel */
         #gamePanel {
             text-align: center;
@@ -1391,61 +1396,62 @@
             min-height: 100vh;
             /* Đảm bảo chiếm toàn bộ chiều cao màn hình */
         }
+
         /* Nút chuyển trang nổi */
-.floating-btn {
-    position: fixed;
-    right: 30px;
-    bottom: 30px;
-    background: #4CAF50;
-    color: white;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    text-decoration: none;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1000;
-    font-size: 14px;
-    line-height: 1.2;
-    padding: 5px;
-    cursor: pointer;
-    border: 2px solid white;
-}
+        .floating-btn {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            background: #4CAF50;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            font-size: 14px;
+            line-height: 1.2;
+            padding: 5px;
+            cursor: pointer;
+            border: 2px solid white;
+        }
 
-.floating-btn:hover {
-    background: #45a049;
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-}
+        .floating-btn:hover {
+            background: #45a049;
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
 
-/* Cho trang hoa8.html */
-body[data-page="chapter8"] .floating-btn {
-    background: #2196F3;
-}
+        /* Cho trang hoa8.html */
+        body[data-page="chapter8"] .floating-btn {
+            background: #2196F3;
+        }
 
-body[data-page="chapter8"] .floating-btn:hover {
-    background: #1976D2;
-}
+        body[data-page="chapter8"] .floating-btn:hover {
+            background: #1976D2;
+        }
 
-/* Ẩn text khi màn hình nhỏ */
-@media (max-width: 480px) {
-    .floating-btn span {
-        display: none;
-    }
-    
-    .floating-btn::after {
-        content: "➔";
-        font-size: 20px;
-    }
-    
-    body[data-page="chapter8"] .floating-btn::after {
-        content: "←";
-    }
-}
+        /* Ẩn text khi màn hình nhỏ */
+        @media (max-width: 480px) {
+            .floating-btn span {
+                display: none;
+            }
+
+            .floating-btn::after {
+                content: "➔";
+                font-size: 20px;
+            }
+
+            body[data-page="chapter8"] .floating-btn::after {
+                content: "←";
+            }
+        }
     </style>
 </head>
 
@@ -1526,12 +1532,13 @@ body[data-page="chapter8"] .floating-btn:hover {
     </div>
 
     <div class="vertical-controls">
-        <button class="control-btn nonmetal">Phi kim</button>
-        <button class="control-btn metal">Kim loại</button>
-        <button class="control-btn metalloid">Á kim</button>
-        <button class="control-btn noble-gas">Khí hiếm</button>
-
-
+        <div class="control-section">
+            <span class="section-label">Cấu hình electron:</span>
+            <button style="background: #FF6666 ;" class="control-btn s-block">Khối các nguyên tố s</button>
+            <button style="background: #90EE90 ;" class="control-btn p-block">Khối các nguyên tố p</button>
+            <button style="background: #87CEEB ;" class="control-btn d-block">Khối các nguyên tố d</button>
+            <button style="background: #D8BFD8;" class="control-btn f-block">Khối các nguyên tố f</button>
+        </div>
     </div>
 
     <div class="quiz-container">
@@ -1667,17 +1674,19 @@ body[data-page="chapter8"] .floating-btn:hover {
             <button class="control-btn alkaline-earth">Kiềm thổ</button>
             <button class="control-btn transition-metal">Kim loại chuyển tiếp</button>
             <button class="control-btn halogen">Halogen</button>
-            <button class="control-btn lanthanoid">Họ Lantan</button>
-            <button class="control-btn actinoid">Họ Actini</button>
+            <button class="control-btn lanthanoid">Họ Lanthanide</button>
+            <button class="control-btn actinoid">Họ Actinides</button>
         </div>
+    </div>
 
-        <div class="control-section">
-            <span class="section-label">Cấu hình electron:</span>
-            <button style="background: #FF6666 ;" class="control-btn s-block">Khối các nguyên tố s</button>
-            <button style="background: #90EE90 ;" class="control-btn p-block">Khối các nguyên tố p</button>
-            <button style="background: #87CEEB ;" class="control-btn d-block">Khối các nguyên tố d</button>
-            <button style="background: #D8BFD8;" class="control-btn f-block">Khối các nguyên tố f</button>
-        </div>
+    
+    <div class="controls">
+        <button class="control-btn nonmetal">Phi kim</button>
+        <button class="control-btn metal">Kim loại</button>
+        <button class="control-btn metalloid">Á kim</button>
+        <button class="control-btn noble-gas">Khí hiếm</button>
+    </div>
+
     </div>
     <!-- Thêm vào sau phần controls -->
     <div class="info-section">
@@ -2935,7 +2944,7 @@ body[data-page="chapter8"] .floating-btn:hover {
                 category: 'lanthanoid metal',
                 group: 'N/A',
                 period: 6,
-                block: 'f-block',
+                block: 'd-block',
                 electronegativity: 1.1,
                 meltingPoint: 920,
                 boilingPoint: 3464,
@@ -3229,7 +3238,7 @@ body[data-page="chapter8"] .floating-btn:hover {
                 category: 'lanthanoid metal',
                 group: 3,
                 period: 6,
-                block: 'd-block',
+                block: 'f-block',
                 electronegativity: 1.27,
                 meltingPoint: 1652,
                 boilingPoint: 3402,
@@ -3607,7 +3616,7 @@ body[data-page="chapter8"] .floating-btn:hover {
                 category: 'actinoid metal',
                 group: 'N/A',
                 period: 7,
-                block: 'f-block',
+                block: 'd-block',
                 electronegativity: 1.1,
                 meltingPoint: 1050,
                 boilingPoint: 3200,
@@ -3901,7 +3910,7 @@ body[data-page="chapter8"] .floating-btn:hover {
                 category: 'actinoid metal',
                 group: 3,
                 period: 7,
-                block: 'd-block',
+                block: 'f-block',
                 electronegativity: 1.3,
                 meltingPoint: 1627,
                 boilingPoint: null,
@@ -4586,7 +4595,7 @@ body[data-page="chapter8"] .floating-btn:hover {
                 name: 'PHI KIM',
                 info: [
                     'Nguyên tử có 5, 6, 7 electron ngoài cùng là phi kim.',
-                    'Nguyên tử có 4 electron có thể là kim loại hoặc phi kim.',
+                    'Nguyên tử có 4e có thể là kim loại hoặc phi kim.',
                     'Tính phi kim là tính chất của 1 nguyên tố mà nguyên tử dễ nhận electron.',
                     'Trong chu kì, tính phi kim tăng; trong nhóm, tính phi kim giảm.'
                 ]
@@ -4616,9 +4625,9 @@ body[data-page="chapter8"] .floating-btn:hover {
             'metal': {
                 name: 'KIM LOẠI',
                 info: [
-                    'Nguyên tử có 1, 2, 3 electron ngoài cùng là kim loại (trừ H, He, B).',
-                    'Nguyên tử có 4 electron có thể là kim loại hoặc phi kim.',
-                    'Tính kim loại là tính chất của 1 nguyên tố mà nguyên tử dễ nhường electron.',
+                    'Nguyên tử có 1,2,3 electron ngoài cùng (trừ H, He, B) là kim loại.',
+                    'Nguyên tử có 4e có thể là kim loại hoặc phi kim.',
+                    'Tính kim loại: khả năng nhường e của nguyên tử.',
                     'Trong chu kì, tính kim loại giảm; trong nhóm, tính kim loại tăng.'
                 ]
             },
